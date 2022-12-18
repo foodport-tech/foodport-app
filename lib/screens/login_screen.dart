@@ -38,11 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               // App Logo .svg Image
               SvgPicture.asset(
-                'assets/images/foodport_logo.svg',
-                color: primaryColor,
-                height: 64,
+                'assets/images/foodport_text_logo.svg',
+                color: orange1Color,
+                height: 48,
               ),
-              const SizedBox(height: 64),
+              const SizedBox(height: 32),
+
               // Email Text Field Input
               TextFieldInput(
                 hintText: 'Enter your email',
@@ -50,6 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textEditingController: _emailController,
               ),
               const SizedBox(height: 12),
+
               // Password Text Field Input
               TextFieldInput(
                 hintText: 'Enter your password',
@@ -58,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPassword: true,
               ),
               const SizedBox(height: 12),
+
               // Login Button
               InkWell(
                 child: Container(
@@ -109,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+              const SizedBox(height: 12),
             ],
           ),
         ),
