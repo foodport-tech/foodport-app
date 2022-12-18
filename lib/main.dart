@@ -8,6 +8,7 @@ import '../responsive/tablet_screen_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
 import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 
 void main() async {
   // Initialise Firebase
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
-      home: LoginScreen(),
+      home: SignupScreen(), // LoginScreen(),
       // home: const ResponsiveLayout(
       //   mobileScreenLayout: MobileScreenLayout(),
       //   tabletScreenLayout: TabletScreenLayout(),
