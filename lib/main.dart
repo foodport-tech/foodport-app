@@ -8,6 +8,7 @@ import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
 
 void main() async {
+  // Initialise Firebase
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -22,6 +23,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
+
   runApp(const MyApp());
 }
 
