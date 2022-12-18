@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
 import '../responsive/tablet_screen_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
+import 'screens/login_screen.dart';
 
 void main() async {
   // Initialise Firebase
@@ -39,11 +41,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor,
       ),
-      home: const ResponsiveLayout(
-        mobileScreenLayout: MobileScreenLayout(),
-        tabletScreenLayout: TabletScreenLayout(),
-        webScreenLayout: WebScreenLayout(),
-      ), //const HomeScreen(),
+      home: LoginScreen(),
+      // home: const ResponsiveLayout(
+      //   mobileScreenLayout: MobileScreenLayout(),
+      //   tabletScreenLayout: TabletScreenLayout(),
+      //   webScreenLayout: WebScreenLayout(),
+      // ),
+      // home: HomeScreen(),
     );
   }
 }
