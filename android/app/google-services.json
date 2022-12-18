@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975078029701",
+    "project_id": "foodport-app-183e3",
+    "storage_bucket": "foodport-app-183e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975078029701:android:6761ecbee3ec38620e6cec",
+        "android_client_info": {
+          "package_name": "com.foodport.foodport_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975078029701-sbmebvi5i06ol3glfd402r9kpe57spig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI0ee-4zYyGN0SyCk5Jgh52PyVpyA2how"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975078029701-sbmebvi5i06ol3glfd402r9kpe57spig.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
