@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Email Text Field Input
               TextFieldInput(
-                hintText: 'Enter your email',
+                hintText: 'Phone number, username or email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Password Text Field Input
               TextFieldInput(
-                hintText: 'Enter your password',
+                hintText: 'Password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
                 isPassword: true,
@@ -65,7 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
               // Login Button
               InkWell(
                 child: Container(
-                  child: const Text('Log in'),
+                  child: const Text(
+                    'Log in',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -92,7 +97,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: Text("Don't have an account? "),
+                    child: Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: secondaryColor),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
@@ -101,9 +109,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: () {},
                     child: Container(
                       child: Text(
-                        "Sign up",
+                        "Sign Up",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: orange1Color,
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(

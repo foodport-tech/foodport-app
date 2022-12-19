@@ -7,8 +7,8 @@ import '../responsive/responsive_layout_screen.dart';
 import '../responsive/tablet_screen_layout.dart';
 import '../responsive/web_screen_layout.dart';
 import '../utils/colors.dart';
-import 'screens/login_screen.dart';
-import 'screens/signup_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/signup_screen.dart';
 
 void main() async {
   // Initialise Firebase
@@ -39,10 +39,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Foodport',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: mobileBackgroundColor,
-      ),
-      home: SignupScreen(), // LoginScreen(),
+      // theme: ThemeData.dark().copyWith(
+      //   scaffoldBackgroundColor: mobileBackgroundColor,
+      // ),
+      // home: LoginScreen(),
+      home: SignupScreen(),
       // home: const ResponsiveLayout(
       //   mobileScreenLayout: MobileScreenLayout(),
       //   tabletScreenLayout: TabletScreenLayout(),

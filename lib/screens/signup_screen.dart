@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../resources/auth_methods.dart';
 import '../utils/colors.dart';
 import '../widgets/text_field_input.dart';
 
@@ -74,10 +75,19 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Login Button
+              // Sign up Button
               InkWell(
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernameController.text,
+                  );
+
+                  print(res);
+                },
                 child: Container(
-                  child: const Text('Log in'),
+                  child: const Text('Sign up'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
