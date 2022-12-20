@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodport_app/resources/auth_methods.dart';
-import 'package:foodport_app/utils/utils.dart';
 
+import '../resources/auth_methods.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/tablet_screen_layout.dart';
+import '../responsive/web_screen_layout.dart';
+import '../screens/signup_screen.dart';
+import '../utils/utils.dart';
 import '../utils/colors.dart';
 import '../widgets/text_field_input.dart';
 
@@ -43,11 +48,25 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     if (res == 'success') {
-      //
+      // Switch to Home Screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            tabletScreenLayout: TabletScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     } else {
       // Show pop message to user
       showSnackBar(res, context);
     }
+  }
+
+  void navigateToSignupScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
   }
 
   @override
@@ -141,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToSignupScreen,
                     child: Container(
                       child: Text(
                         "Sign Up",
