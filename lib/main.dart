@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:foodport_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../responsive/mobile_screen_layout.dart';
 import '../responsive/responsive_layout_screen.dart';
@@ -37,54 +39,61 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Foodport',
-      // theme: ThemeData.dark().copyWith(
-      //   scaffoldBackgroundColor: mobileBackgroundColor,
-      // ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Foodport',
+        // theme: ThemeData.dark().copyWith(
+        //   scaffoldBackgroundColor: mobileBackgroundColor,
+        // ),
 
-      home: StreamBuilder(
-        // 'authStateChanges()' Run only when user log in or log out
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          // Connection State: Active (e.g. logged in)
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              return const ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
-                tabletScreenLayout: TabletScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('${snapshot.error}'),
+        home: StreamBuilder(
+          // 'authStateChanges()' Run only when user log in or log out
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            // Connection State: Active (e.g. logged in)
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return const ResponsiveLayout(
+                  mobileScreenLayout: MobileScreenLayout(),
+                  tabletScreenLayout: TabletScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
+            }
+
+            // Connection State: Waiting
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
               );
             }
-          }
 
-          // Connection State: Waiting
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            );
-          }
+            // Other situation. E.g. Snapshot don't have any data
+            return const LoginScreen();
+          },
+        ),
 
-          // Other situation. E.g. Snapshot don't have any data
-          return const LoginScreen();
-        },
+        // home: LoginScreen(),
+        // home: SignupScreen(),
+        // home: const ResponsiveLayout(
+        //   mobileScreenLayout: MobileScreenLayout(),
+        //   tabletScreenLayout: TabletScreenLayout(),
+        //   webScreenLayout: WebScreenLayout(),
+        // ),
+        // home: HomeScreen(),
       ),
-
-      // home: LoginScreen(),
-      // home: SignupScreen(),
-      // home: const ResponsiveLayout(
-      //   mobileScreenLayout: MobileScreenLayout(),
-      //   tabletScreenLayout: TabletScreenLayout(),
-      //   webScreenLayout: WebScreenLayout(),
-      // ),
-      // home: HomeScreen(),
     );
   }
 }

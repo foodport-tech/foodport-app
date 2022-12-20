@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:foodport_app/resources/storage_methods.dart';
+
+import '../resources/storage_methods.dart';
+import '../models/user.dart' as model;
 
 class AuthMethods {
   // Get an instance of FirebaseAuth class,
@@ -9,6 +11,16 @@ class AuthMethods {
   // from the FirebaseAuth class
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // Get user detail
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(snap);
+  }
 
   // Sign Up User
   Future<String> signupUser({
@@ -29,17 +41,23 @@ class AuthMethods {
 
         print(cred.user!.uid);
 
+        model.User user = model.User(
+          uid: cred.user!.uid,
+          email: email,
+          username: username,
+          bio: '',
+          photoUrl: '',
+          follower: [],
+          following: [],
+        );
+
         // Add User to Database
-        await _firestore.collection('users').doc(cred.user!.uid).set({
-          // 'user!' got a '!', as it can return a null 'User?'
-          // .doc(cred.user!.uid) means create a document with the 'document id' = 'user!.uid' (user id)
-          'username': username,
-          'uid': cred.user!.uid,
-          'email': email,
-          'bio': '',
-          'followers': [],
-          'following': [],
-        });
+        // 'user!' got a '!', as it can return a null 'User?'
+        // .doc(cred.user!.uid) means create a document with the 'document id' = 'user!.uid' (user id)
+        await _firestore
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set(user.toJson());
 
         res = "success";
       }
