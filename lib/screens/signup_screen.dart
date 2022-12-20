@@ -47,6 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
 
     if (res != 'success') {
+      // Show pop message to user
       showSnackBar(res, context);
     }
   }

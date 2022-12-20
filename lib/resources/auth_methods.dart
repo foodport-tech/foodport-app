@@ -57,4 +57,33 @@ class AuthMethods {
   }
 
   // Login User
+  Future<String> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = "Some error occured";
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        res = 'success';
+      } else {
+        res = "Please enter all the fields";
+      }
+      // } on FirebaseAuthException catch (err) {
+      //   if (err.code == 'wrong-password') {
+      //     res = "The password is incorrect.";
+      //   } else if (err.code == 'weak-password') {
+      //     res = "Password should be at least 6 characters";
+      //   }
+    } catch (err) {
+      res = err.toString();
+    }
+
+    return res;
+  }
 }
