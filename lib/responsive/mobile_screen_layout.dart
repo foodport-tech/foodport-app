@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodport_app/utils/colors.dart';
 
+import '../utils/global_variables.dart';
+
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
 
@@ -42,13 +44,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
 
     return Scaffold(
       body: PageView(
-        children: [
-          Text('feed'),
-          Text('explore'),
-          Text('map'),
-          Text('inbox'),
-          Text('profile'),
-        ],
+        children: homeScreenItems,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
@@ -72,7 +68,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.map_outlined,
+              Icons.add,
               color: _page == 2 ? primaryColor : secondaryColor,
             ),
             backgroundColor: primaryColor,
