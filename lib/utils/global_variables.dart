@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodport_app/screens/add_post_screen.dart';
+import 'package:foodport_app/screens/create_post_screen.dart';
 
 const tabletScreenSize = 576;
 const webScreenSize = 992;

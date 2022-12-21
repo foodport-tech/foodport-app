@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodport_app/providers/user_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
+  double _ratingValueDelicious = 3;
+  double _ratingValueRecommend = 3;
+  double _ratingValueWorthIt = 3;
+  String _ratingDescriptionDelicious = 'Moderately';
+  String _ratingDescriptionRecommend = 'Moderately';
+  String _ratingDescriptionWorthIt = 'Moderately';
+
+  _getRatingDescription(double ratingValue) {
+    if (ratingValue == 1.0) {
+      return 'Not at all';
+    } else if (ratingValue == 2.0) {
+      return 'Slightly';
+    } else if (ratingValue == 3.0) {
+      return 'Moderately';
+    } else if (ratingValue == 4.0) {
+      return 'Very';
+    } else if (ratingValue == 5.0) {
+      return 'Extremely';
+    }
+  }
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -110,8 +131,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         maxLines: 5,
                       ),
                     ),
-                    Container(
-                      height: 8,
+                    const SizedBox(
                       width: 8,
                     ),
                     Container(
@@ -139,12 +159,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   ]),
                   const Divider(thickness: 1.5),
                   const SizedBox(height: 12),
+
                   // Rating: Delicious
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: Text(
+                        child: const Text(
                           "Delicious",
                           style: TextStyle(
                             fontSize: 16,
@@ -153,45 +174,32 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.star_rounded,
-                              size: 24,
-                              color: Colors.yellow[700],
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.star_rounded,
-                              size: 24,
-                              color: Colors.yellow[700],
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.star_rounded,
-                              size: 24,
-                              color: Colors.yellow[700],
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.star_rounded,
-                              size: 24,
-                              color: Colors.yellow[700],
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.star_outline_rounded,
-                              size: 24,
-                              color: Colors.yellow[700],
-                            ),
-                          ],
+                        child: RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemSize: 32,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              _ratingValueDelicious = rating;
+                              _ratingDescriptionDelicious =
+                                  _getRatingDescription(rating);
+                            });
+                          },
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          "Very",
-                          style: TextStyle(
+                          _ratingDescriptionDelicious,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: neutral1Color,
                           ),
@@ -205,7 +213,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: Text(
+                        child: const Text(
                           "Recommend",
                           style: TextStyle(
                             fontSize: 16,
@@ -214,45 +222,32 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.recommend,
-                              size: 24,
-                              color: red1Color,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.recommend,
-                              size: 24,
-                              color: red1Color,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.recommend,
-                              size: 24,
-                              color: red1Color,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.recommend_outlined,
-                              size: 24,
-                              color: red1Color,
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.recommend_outlined,
-                              size: 24,
-                              color: red1Color,
-                            ),
-                          ],
+                        child: RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemSize: 32,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          itemBuilder: (context, _) => Icon(
+                            Icons.recommend,
+                            color: red1Color,
+                          ),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              _ratingValueRecommend = rating;
+                              _ratingDescriptionRecommend =
+                                  _getRatingDescription(rating);
+                            });
+                          },
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          "Moderately",
-                          style: TextStyle(
+                          _ratingDescriptionRecommend,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: neutral1Color,
                           ),
@@ -261,12 +256,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  // Rating: Worth it
+                  // Rating: Worth It
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.25,
-                        child: Text(
+                        child: const Text(
                           "Worth It",
                           style: TextStyle(
                             fontSize: 16,
@@ -275,45 +270,32 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         ),
                       ),
                       Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.monetization_on,
-                              size: 24,
-                              color: Color.fromRGBO(199, 178, 115, 1),
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.monetization_on,
-                              size: 24,
-                              color: Color.fromRGBO(199, 178, 115, 1),
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.monetization_on_outlined,
-                              size: 24,
-                              color: Color.fromRGBO(199, 178, 115, 1),
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.monetization_on_outlined,
-                              size: 24,
-                              color: Color.fromRGBO(199, 178, 115, 1),
-                            ),
-                            SizedBox(width: 4),
-                            Icon(
-                              Icons.monetization_on_outlined,
-                              size: 24,
-                              color: Color.fromRGBO(199, 178, 115, 1),
-                            ),
-                          ],
+                        child: RatingBar.builder(
+                          initialRating: 3,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemSize: 32,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.monetization_on,
+                            color: Color.fromRGBO(199, 178, 115, 1),
+                          ),
+                          onRatingUpdate: (rating) {
+                            setState(() {
+                              _ratingValueWorthIt = rating;
+                              _ratingDescriptionWorthIt =
+                                  _getRatingDescription(rating);
+                            });
+                          },
                         ),
                       ),
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          "Slightly",
-                          style: TextStyle(
+                          _ratingDescriptionWorthIt,
+                          style: const TextStyle(
                             fontSize: 16,
                             color: neutral1Color,
                           ),
@@ -438,7 +420,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // TODO: Send data to database
+                          // 'rating_delicious': _ratingValueDelicious
+                          // 'rating_recommend': _ratingValueRecommend
+                          // 'rating_worth_it': _ratingValueWorthIt
+                          // 'food_menu_id':
+                        },
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(primaryColor),
