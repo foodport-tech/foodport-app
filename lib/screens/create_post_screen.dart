@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:foodport_app/providers/user_provider.dart';
+import 'package:foodport_app/resources/firestore_methods.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +27,34 @@ class _AddPostScreenState extends State<AddPostScreen> {
   String _ratingDescriptionDelicious = 'Moderately';
   String _ratingDescriptionRecommend = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
+  String? _foodMenuId; // TODO: Allow user to link to a Food Menu
+
+  void publishPost(
+    String uid,
+    String username,
+  ) async {
+    try {
+      // TODO: Send data to database
+      String res = await FirestoreMethods().publishPost(
+        uid,
+        username,
+        _reviewController.text,
+        _file!,
+        _ratingValueDelicious,
+        _ratingValueRecommend,
+        _ratingValueWorthIt,
+        _foodMenuId,
+      );
+
+      if (res == 'success') {
+        showSnackBar('Posted!', context);
+      } else {
+        showSnackBar(res, context);
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
 
   _getRatingDescription(double ratingValue) {
     if (ratingValue == 1.0) {
@@ -85,6 +114,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ],
           );
         });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _reviewController.dispose();
   }
 
   @override
@@ -420,13 +455,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-                          // TODO: Send data to database
-                          // 'rating_delicious': _ratingValueDelicious
-                          // 'rating_recommend': _ratingValueRecommend
-                          // 'rating_worth_it': _ratingValueWorthIt
-                          // 'food_menu_id':
-                        },
+                        onPressed: () => publishPost(
+                          userProvider.getUser.uid,
+                          userProvider.getUser.username,
+                        ),
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(primaryColor),
