@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodport_app/utils/colors.dart';
+import 'package:intl/intl.dart';
 
 class PostCardIG extends StatelessWidget {
-  const PostCardIG({super.key});
+  final snap;
+  const PostCardIG({
+    super.key,
+    required this.snap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +41,8 @@ class PostCardIG extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'username',
-                          style: TextStyle(
+                          snap['username'],
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -86,7 +91,7 @@ class PostCardIG extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.35,
             width: double.infinity,
             child: Image.network(
-              '',
+              snap['photoUrl'],
               fit: BoxFit.cover,
             ),
           ),
@@ -138,7 +143,7 @@ class PostCardIG extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                   child: Text(
-                    '1,231 likes',
+                    '${snap['likes'].length} likes',
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
@@ -155,14 +160,14 @@ class PostCardIG extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: 'username',
+                          text: snap['username'],
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         TextSpan(
                           text: '  ',
                         ),
                         TextSpan(
-                          text: 'This is some caption of the post',
+                          text: snap['review'],
                         ),
                       ],
                     ),
@@ -186,7 +191,10 @@ class PostCardIG extends StatelessWidget {
                   color: Colors.deepOrange,
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    "22/12/2021",
+                    // DateFormat import from package 'intl'
+                    DateFormat.yMMMd().format(
+                      snap['datePublished'].toDate(),
+                    ),
                     style: TextStyle(
                       fontSize: 16,
                       color: secondaryColor,
