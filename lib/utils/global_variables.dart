@@ -9,9 +9,8 @@ const webScreenSize = 992;
 const homeScreenItems = [
   FeedPostScreen(),
   // For Screen 3: Create Post
-  AddPostScreen(),
   Center(child: Text('explore')),
-  Center(child: Text('Create Post')),
+  AddPostScreen(),
   Center(child: Text('inbox')),
   Center(child: Text('profile')),
 ];

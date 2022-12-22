@@ -18,6 +18,7 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
+  // Post's Image file
   Uint8List? _file;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
@@ -28,11 +29,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
   String _ratingDescriptionRecommend = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
   String? _foodMenuId; // TODO: Allow user to link to a Food Menu
+  bool _isLoading = false;
 
   void publishPost(
     String uid,
     String username,
   ) async {
+    _isLoading = true;
     try {
       // TODO: Send data to database
       String res = await FirestoreMethods().publishPost(
@@ -47,8 +50,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
       );
 
       if (res == 'success') {
+        setState(() {
+          _isLoading = false;
+        });
         showSnackBar('Posted!', context);
+        clearImage();
+
+        // TODO: Direct to Feed Post Screen
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         showSnackBar(res, context);
       }
     } catch (e) {
@@ -116,6 +128,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
         });
   }
 
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -147,6 +165,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            _isLoading
+                ? const LinearProgressIndicator()
+                : const Padding(
+                    padding: EdgeInsets.only(top: 0),
+                  ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(

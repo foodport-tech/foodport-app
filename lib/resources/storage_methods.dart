@@ -25,7 +25,7 @@ class StorageMethods {
       String id = const Uuid().v1();
       // Create sub path in user's folder
       // .child(posts).child({uid}).child({id}) -> posts/{uid}/{postId}
-      ref.child(id);
+      ref = ref.child(id);
     }
 
     // Store the file in storage
