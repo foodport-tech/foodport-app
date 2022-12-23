@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:foodport_app/utils/colors.dart';
+import 'package:foodport_app/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class PostCard extends StatelessWidget {
+import '../models/user.dart' as model;
+import '../providers/user_provider.dart';
+import '../utils/colors.dart';
+
+class PostCard extends StatefulWidget {
   final snap;
   const PostCard({super.key, this.snap});
 
   @override
+  State<PostCard> createState() => _PostCardState();
+}
+
+class _PostCardState extends State<PostCard> {
+  bool isLikeAnimating = false;
+
+  @override
   Widget build(BuildContext context) {
+    final model.User user = Provider.of<UserProvider>(context).getUser;
+
     return Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
@@ -32,17 +46,47 @@ class PostCard extends StatelessWidget {
         child: Column(
           children: [
             // IMAGE SECTION
-            Container(
-              height: MediaQuery.of(context).size.height * 0.35,
-              width: double.infinity,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0)),
-                child: Image.network(
-                  snap['photoUrl'],
-                  fit: BoxFit.cover,
-                ),
+            GestureDetector(
+              onDoubleTap: () {
+                setState(() {
+                  isLikeAnimating = true;
+                });
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16.0),
+                          topRight: Radius.circular(16.0)),
+                      child: Image.network(
+                        widget.snap['photoUrl'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: isLikeAnimating ? 1 : 0,
+                    child: LikeAnimation(
+                      child: const Icon(
+                        Icons.favorite,
+                        color: red2Color,
+                        size: 100,
+                      ),
+                      isAnimating: isLikeAnimating,
+                      duration: const Duration(milliseconds: 400),
+                      onEnd: () {
+                        setState(() {
+                          isLikeAnimating = false;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -80,7 +124,7 @@ class PostCard extends StatelessWidget {
                                   width: 4,
                                 ),
                                 Text(
-                                  snap['ratingValueDelicious']
+                                  widget.snap['ratingValueDelicious']
                                       .round()
                                       .toString(),
                                   style: TextStyle(
@@ -98,7 +142,7 @@ class PostCard extends StatelessWidget {
                                   width: 4,
                                 ),
                                 Text(
-                                  snap['ratingValueRecommend']
+                                  widget.snap['ratingValueRecommend']
                                       .round()
                                       .toString(),
                                   style: TextStyle(
@@ -116,7 +160,9 @@ class PostCard extends StatelessWidget {
                                   width: 4,
                                 ),
                                 Text(
-                                  snap['ratingValueWorthIt'].round().toString(),
+                                  widget.snap['ratingValueWorthIt']
+                                      .round()
+                                      .toString(),
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
@@ -130,7 +176,7 @@ class PostCard extends StatelessWidget {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                snap['username'],
+                                widget.snap['username'],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -143,7 +189,7 @@ class PostCard extends StatelessWidget {
                             // Review Section
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(snap['review']),
+                              child: Text(widget.snap['review']),
                             ),
                             const SizedBox(
                               height: 16,
@@ -192,7 +238,7 @@ class PostCard extends StatelessWidget {
                                   DateFormat(
                                     'dd MMMM yyyy · hh:mm aa',
                                   ).format(
-                                    snap['datePublished'].toDate(),
+                                    widget.snap['datePublished'].toDate(),
                                   ),
                                   style: TextStyle(
                                     fontSize: 12,
@@ -222,11 +268,20 @@ class PostCard extends StatelessWidget {
                           const SizedBox(height: 16),
 
                           // Like Section
-                          Icon(
-                            Icons.favorite,
-                            size: 24,
-                            color: red2Color,
+                          LikeAnimation(
+                            isAnimating:
+                                widget.snap['likes'].contains(user.uid),
+                            smallLike: true,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.favorite,
+                                size: 24,
+                                color: red2Color,
+                              ),
+                            ),
                           ),
+
                           Text("18.5k"),
                           const SizedBox(height: 16),
 
