@@ -55,4 +55,39 @@ class FirestoreMethods {
 
     return res;
   }
+
+  Future<void> likePost(String postId, String uid, List likes) async {
+    try {
+      // Situation: Already liked
+      if (likes.contains(uid)) {
+        // Remove user's 'uid' from 'likes'
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid]),
+        });
+      } else {
+        // Add user's 'uid' into 'likes'
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid]),
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> doubleTapLikePost(String postId, String uid, List likes) async {
+    try {
+      // Situation: Already liked
+      if (likes.contains(uid)) {
+        // Nothing happens
+      } else {
+        // Add user's 'uid' into 'likes'
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid]),
+        });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

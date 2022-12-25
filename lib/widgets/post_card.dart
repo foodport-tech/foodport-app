@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../models/user.dart' as model;
 import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
 import '../utils/colors.dart';
 
 class PostCard extends StatefulWidget {
@@ -47,7 +48,12 @@ class _PostCardState extends State<PostCard> {
           children: [
             // IMAGE SECTION
             GestureDetector(
-              onDoubleTap: () {
+              onDoubleTap: () async {
+                await FirestoreMethods().doubleTapLikePost(
+                  widget.snap['postId'],
+                  user.uid,
+                  widget.snap['likes'],
+                );
                 setState(() {
                   isLikeAnimating = true;
                 });
@@ -59,7 +65,7 @@ class _PostCardState extends State<PostCard> {
                     height: MediaQuery.of(context).size.height * 0.35,
                     width: double.infinity,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(16.0),
                           topRight: Radius.circular(16.0)),
                       child: Image.network(
@@ -72,11 +78,6 @@ class _PostCardState extends State<PostCard> {
                     duration: const Duration(milliseconds: 200),
                     opacity: isLikeAnimating ? 1 : 0,
                     child: LikeAnimation(
-                      child: const Icon(
-                        Icons.favorite,
-                        color: red2Color,
-                        size: 100,
-                      ),
                       isAnimating: isLikeAnimating,
                       duration: const Duration(milliseconds: 400),
                       onEnd: () {
@@ -84,6 +85,11 @@ class _PostCardState extends State<PostCard> {
                           isLikeAnimating = false;
                         });
                       },
+                      child: const Icon(
+                        Icons.favorite,
+                        color: red2Color,
+                        size: 100,
+                      ),
                     ),
                   ),
                 ],
@@ -116,54 +122,54 @@ class _PostCardState extends State<PostCard> {
                             Container(
                                 child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.star,
                                   color: Colors.amber,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   widget.snap['ratingValueDelicious']
                                       .round()
                                       .toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.recommend,
                                   color: red1Color,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   widget.snap['ratingValueRecommend']
                                       .round()
                                       .toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 8,
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons.monetization_on,
                                   color: Color.fromRGBO(199, 178, 115, 1),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   widget.snap['ratingValueWorthIt']
                                       .round()
                                       .toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                   ),
                                 ),
@@ -177,7 +183,7 @@ class _PostCardState extends State<PostCard> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 widget.snap['username'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -198,7 +204,7 @@ class _PostCardState extends State<PostCard> {
                             // Ingredients Section
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(
+                              child: const Text(
                                 "Ingredients",
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
@@ -207,7 +213,7 @@ class _PostCardState extends State<PostCard> {
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(
+                              child: const Text(
                                   "bread, egg, ham, patty, cheese, mayonaise, blackpepper"),
                             ),
                             const SizedBox(
@@ -217,7 +223,7 @@ class _PostCardState extends State<PostCard> {
                             // Nutritions Section
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(
+                              child: const Text(
                                 "Nutritions",
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
@@ -226,8 +232,8 @@ class _PostCardState extends State<PostCard> {
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                  "NutritionsNutritionsNutritionsNutritions"),
+                              child: const Text(
+                                  "calories-266g, fat-10g, sodium-396mg, carbohydrates-30g, fiber-1g, sugars-5g, protein-13g"),
                             ),
 
                             Expanded(
@@ -240,7 +246,7 @@ class _PostCardState extends State<PostCard> {
                                   ).format(
                                     widget.snap['datePublished'].toDate(),
                                   ),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 12,
                                   ),
                                 ),
@@ -250,7 +256,7 @@ class _PostCardState extends State<PostCard> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
 
@@ -260,11 +266,11 @@ class _PostCardState extends State<PostCard> {
                       child: Column(
                         children: [
                           // Food Menu Section
-                          Icon(
+                          const Icon(
                             Icons.menu_book_outlined,
                             size: 24,
                           ),
-                          Text("6793"),
+                          const Text("6793"),
                           const SizedBox(height: 16),
 
                           // Like Section
@@ -273,20 +279,31 @@ class _PostCardState extends State<PostCard> {
                                 widget.snap['likes'].contains(user.uid),
                             smallLike: true,
                             child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.favorite,
-                                size: 24,
-                                color: red2Color,
-                              ),
+                              onPressed: () async {
+                                await FirestoreMethods().likePost(
+                                  widget.snap['postId'],
+                                  user.uid,
+                                  widget.snap['likes'],
+                                );
+                              },
+                              icon: widget.snap['likes'].contains(user.uid)
+                                  ? const Icon(
+                                      Icons.favorite,
+                                      size: 24,
+                                      color: red2Color,
+                                    )
+                                  : const Icon(
+                                      Icons.favorite_border,
+                                    ),
                             ),
                           ),
 
-                          Text("18.5k"),
+                          // Display amount of likes
+                          Text("${widget.snap['likes'].length} likes"),
                           const SizedBox(height: 16),
 
                           // Comment Section
-                          Icon(
+                          const Icon(
                             Icons.comment_outlined,
                             size: 24,
                           ),
@@ -294,7 +311,7 @@ class _PostCardState extends State<PostCard> {
                           const SizedBox(height: 16),
 
                           // Save Post Section
-                          Icon(
+                          const Icon(
                             Icons.bookmark_outline,
                             size: 24,
                           ),
@@ -302,7 +319,7 @@ class _PostCardState extends State<PostCard> {
                           const SizedBox(height: 16),
 
                           // Share Post Section
-                          Icon(
+                          const Icon(
                             Icons.share_outlined,
                             size: 24,
                           ),
@@ -310,7 +327,7 @@ class _PostCardState extends State<PostCard> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                   ],
