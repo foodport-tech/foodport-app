@@ -56,6 +56,7 @@ class FirestoreMethods {
     return res;
   }
 
+  // Like post in Feed Post Screen
   Future<void> likePost(String postId, String uid, List likes) async {
     try {
       // Situation: Already liked
@@ -75,6 +76,7 @@ class FirestoreMethods {
     }
   }
 
+  // Double tap image to like post in Feed Post Screen
   Future<void> doubleTapLikePost(String postId, String uid, List likes) async {
     try {
       // Situation: Already liked
@@ -89,5 +91,41 @@ class FirestoreMethods {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  // Post comment in Feed Post Screen
+  Future<String> postComment(
+    String uid, // 'uid' Commentor's user ID
+    String name, // 'name' Commentor's name
+    String profilePic, // 'profilePic' Commentor's profile picture
+    String postId, // 'widget.postId' Post ID
+    String comment, // 'commentEditingController.text' Commentor's comment
+  ) async {
+    String res = "Some error occurred";
+    try {
+      if (comment.isNotEmpty) {
+        // if the likes list contains the user uid, we need to remove it
+        String commentId = const Uuid().v1();
+        _firestore
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .doc(commentId)
+            .set({
+          'profilePic': profilePic,
+          'name': name,
+          'uid': uid,
+          'comment': comment,
+          'commentId': commentId,
+          'datePublished': DateTime.now(),
+        });
+        res = 'success';
+      } else {
+        res = "Please enter text";
+      }
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 }

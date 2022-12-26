@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodport_app/screens/comments_screen.dart';
+import 'package:foodport_app/utils/utils.dart';
 import 'package:foodport_app/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,29 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+  int commentLen = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
+  void getComments() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+
+      commentLen = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +136,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Expanded(
@@ -301,14 +326,16 @@ class _PostCardState extends State<PostCard> {
                           ),
 
                           // Display amount of likes
-                          Text("${widget.snap['likes'].length} likes"),
+                          Text("${widget.snap['likes'].length}"),
                           const SizedBox(height: 16),
 
                           // Comment Section
                           IconButton(
                             onPressed: () => Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => CommentsScreen(),
+                                builder: (context) => CommentsScreen(
+                                  postId: widget.snap['postId'].toString(),
+                                ),
                               ),
                             ),
                             icon: const Icon(
@@ -316,7 +343,7 @@ class _PostCardState extends State<PostCard> {
                               size: 24,
                             ),
                           ),
-                          const Text("1774"),
+                          Text("$commentLen"),
                           const SizedBox(height: 16),
 
                           // Save Post Section

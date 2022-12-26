@@ -1,18 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:foodport_app/utils/colors.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/user.dart' as model;
+import '../providers/user_provider.dart';
+import '../resources/firestore_methods.dart';
+import '../utils/utils.dart';
 import '../widgets/comment_card.dart';
 
 class CommentsScreen extends StatefulWidget {
-  const CommentsScreen({super.key});
+  final postId; // Get post's ID from PostCard (parent widget)
+  const CommentsScreen({super.key, required this.postId});
 
   @override
   State<CommentsScreen> createState() => _CommentsScreenState();
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
+  final TextEditingController commentEditingController =
+      TextEditingController();
+
+  void postComment(String uid, String name, String profilePic) async {
+    try {
+      String res = await FirestoreMethods().postComment(
+        uid, // Commentor's user ID
+        name, // Commentor's name
+        profilePic, // Commentor's profile picture
+        widget.postId, // Post ID
+        commentEditingController.text, // Commentor's comment
+      );
+
+      if (res != 'success') {
+        showSnackBar(
+          res,
+          context,
+        );
+      }
+      setState(() {
+        commentEditingController.text = "";
+      });
+    } catch (err) {
+      showSnackBar(
+        err.toString(),
+        context,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final model.User user = Provider.of<UserProvider>(context).getUser;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -28,7 +67,35 @@ class _CommentsScreenState extends State<CommentsScreen> {
           ),
         ),
       ),
-      body: CommentCard(),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .doc(widget.postId)
+            .collection('comments')
+            .orderBy(
+              'datePublished',
+              descending: false, // 'false' Latest comment will be at bottom
+            )
+            .snapshots(),
+        builder: (
+          context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+        ) {
+          // If state is waiting for connection
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (ctx, index) => CommentCard(
+              snap: snapshot.data!.docs[index],
+            ),
+          );
+        },
+      ),
       bottomNavigationBar: SafeArea(
         child: Container(
           height: kToolbarHeight,
@@ -39,21 +106,26 @@ class _CommentsScreenState extends State<CommentsScreen> {
           child: Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage(''),
+                backgroundImage: NetworkImage(user.photoUrl),
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 16, right: 8),
+                  padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
+                    controller: commentEditingController,
                     decoration: InputDecoration(
-                      hintText: "Comment as username",
+                      hintText: "Comment as @${user.username}",
                       border: InputBorder.none,
                     ),
                   ),
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () => postComment(
+                  user.uid, // Commentor's user ID
+                  user.username, // Commentor's username
+                  user.photoUrl, // Commentor's profile picture
+                ),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     vertical: 8,

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:foodport_app/utils/colors.dart';
 import 'package:intl/intl.dart';
 
-class CommentCard extends StatefulWidget {
-  const CommentCard({super.key});
+import '../utils/colors.dart';
 
-  @override
-  State<CommentCard> createState() => _CommentCardState();
-}
+class CommentCard extends StatelessWidget {
+  final snap;
+  const CommentCard({super.key, required this.snap});
 
-class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +17,9 @@ class _CommentCardState extends State<CommentCard> {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(''),
+            backgroundImage: NetworkImage(
+              snap.data()['profilePic'],
+            ),
             radius: 18,
           ),
           Expanded(
@@ -34,17 +33,17 @@ class _CommentCardState extends State<CommentCard> {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'username',
+                          text: snap.data()['name'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: neutral1Color,
                           ),
                         ),
                         const TextSpan(
-                          text: "  ",
+                          text: " ",
                         ),
                         TextSpan(
-                          text: 'Some comments go here..',
+                          text: '${snap.data()['comment']}',
                           style: TextStyle(
                             color: neutral1Color,
                           ),
@@ -55,13 +54,12 @@ class _CommentCardState extends State<CommentCard> {
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      "dd MMMM yyyy",
                       // DateFormat import from package 'intl'
-                      // DateFormat(
-                      //   'dd MMMM yyyy · hh:mm aa',
-                      // ).format(
-                      //   widget.snap['datePublished'].toDate(),
-                      // ),
+                      DateFormat(
+                        'dd MMMM yyyy · hh:mm aa',
+                      ).format(
+                        snap.data()['datePublished'].toDate(),
+                      ),
                       style: const TextStyle(
                         fontSize: 12,
                         color: neutral3Color,
