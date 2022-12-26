@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodport_app/screens/comments_screen.dart';
 import 'package:foodport_app/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -248,6 +249,7 @@ class _PostCardState extends State<PostCard> {
                                   ),
                                   style: const TextStyle(
                                     fontSize: 12,
+                                    color: neutral3Color,
                                   ),
                                 ),
                               ),
@@ -303,11 +305,18 @@ class _PostCardState extends State<PostCard> {
                           const SizedBox(height: 16),
 
                           // Comment Section
-                          const Icon(
-                            Icons.comment_outlined,
-                            size: 24,
+                          IconButton(
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => CommentsScreen(),
+                              ),
+                            ),
+                            icon: const Icon(
+                              Icons.comment_outlined,
+                              size: 24,
+                            ),
                           ),
-                          Text("1774"),
+                          const Text("1774"),
                           const SizedBox(height: 16),
 
                           // Save Post Section
@@ -315,7 +324,7 @@ class _PostCardState extends State<PostCard> {
                             Icons.bookmark_outline,
                             size: 24,
                           ),
-                          Text("7093"),
+                          const Text("7093"),
                           const SizedBox(height: 16),
 
                           // Share Post Section
@@ -323,7 +332,7 @@ class _PostCardState extends State<PostCard> {
                             Icons.share_outlined,
                             size: 24,
                           ),
-                          Text("5604"),
+                          const Text("5604"),
                         ],
                       ),
                     ),
