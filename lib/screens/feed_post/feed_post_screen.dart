@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../models/post.dart';
 import '../../utils/colors.dart';
 import 'feed_post_nearby_screen.dart';
 import 'feed_post_following_screen.dart';
 import 'feed_post_for_you_screen.dart';
 
 class FeedPostScreen extends StatelessWidget {
-  FeedPostScreen({super.key});
+  const FeedPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +78,9 @@ class FeedPostScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            FeedPostNearbyScreen(),
+            // FeedPostNearbyScreen(),
             FeedPostFollowingScreen(),
-            FeedPostForYouScreen(),
+            // FeedPostForYouScreen(),
           ],
         ),
       ),
