@@ -78,9 +78,9 @@ class FeedPostScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            // FeedPostNearbyScreen(),
+            FeedPostNearbyScreen(),
             FeedPostFollowingScreen(),
-            // FeedPostForYouScreen(),
+            FeedPostForYouScreen(),
           ],
         ),
       ),

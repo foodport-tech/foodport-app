@@ -12,6 +12,7 @@ class PostCard extends StatefulWidget {
   final double postRatingStar;
   final double postRatingWorthIt;
   final String postReview;
+  final String userId;
 
   const PostCard({
     super.key,
@@ -22,6 +23,7 @@ class PostCard extends StatefulWidget {
     required this.postRatingStar,
     required this.postRatingWorthIt,
     required this.postReview,
+    required this.userId,
   });
 
   @override
@@ -189,7 +191,7 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'username',
+                                widget.userId, // Find username from userId
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),

@@ -8,6 +8,7 @@ import '../providers/user_provider_ig.dart';
 import '../screens/feed_post/feed_post_screen.dart';
 import '../screens/dish_detail_screen.dart';
 import '../utils/colors.dart';
+import 'providers/posts.dart';
 
 void main() async {
   // Initialise Firebase
@@ -35,12 +36,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => UserProvider(),
-        ),
-      ],
+    // ChangeNotifierProvider: To register a class which can then listen in the child widget
+    return ChangeNotifierProvider(
+      // Provide instance of Posts() class to all child widgets
+      create: (BuildContext context) => Posts(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Foodport',
@@ -50,7 +49,7 @@ class MyApp extends StatelessWidget {
             accentColor: orange1Color,
             backgroundColor: neutral6Color,
           ),
-          fontFamily: 'OpenSans',
+          //fontFamily: 'OpenSans',
           // Fetch from Google Fonts
           // textTheme: GoogleFonts.openSansTextTheme(
           //   Theme.of(context).textTheme,

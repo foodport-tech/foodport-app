@@ -6,6 +6,7 @@ class Post {
   final double postRatingRecommend;
   final double postRatingWorthIt;
   final DateTime postPublishDateTime;
+  final String userId;
   final postLike;
   final postComment;
   final postShare;
@@ -20,6 +21,7 @@ class Post {
     required this.postRatingRecommend,
     required this.postRatingWorthIt,
     required this.postPublishDateTime,
+    required this.userId,
     this.postLike,
     this.postComment,
     this.postShare,
