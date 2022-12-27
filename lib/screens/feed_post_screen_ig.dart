@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/colors.dart';
-import '../widgets/post_card_ig.dart';
+import '../widgets/post_card/post_card_ig.dart';
 
 class FeedPostScreenIG extends StatelessWidget {
   const FeedPostScreenIG({super.key});

@@ -1,20 +1,28 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:foodport_app/screens/comments_screen.dart';
-import 'package:foodport_app/screens/dish_detail_screen.dart';
-import 'package:foodport_app/utils/utils.dart';
-import 'package:foodport_app/widgets/like_animation.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-import '../models/user_ig.dart' as model;
-import '../providers/user_provider_ig.dart';
-import '../resources/firestore_methods.dart';
-import '../utils/colors.dart';
+import '../../screens/dish_detail_screen.dart';
+import '../../utils/colors.dart';
+import '../like_animation.dart';
 
 class PostCard extends StatefulWidget {
-  //final snap;
-  const PostCard({super.key});
+  final String postId;
+  final String postPhotoUrl;
+  final DateTime postPublishDateTime;
+  final double postRatingRecommend;
+  final double postRatingStar;
+  final double postRatingWorthIt;
+  final String postReview;
+
+  const PostCard({
+    super.key,
+    required this.postId,
+    required this.postPhotoUrl,
+    required this.postPublishDateTime,
+    required this.postRatingRecommend,
+    required this.postRatingStar,
+    required this.postRatingWorthIt,
+    required this.postReview,
+  });
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -27,32 +35,10 @@ class _PostCardState extends State<PostCard> {
   @override
   void initState() {
     super.initState();
-    // TOFIX: Firebase
-    // getComments();
   }
-
-  // TOFIX: Firebase
-  // void getComments() async {
-  //   try {
-  //     QuerySnapshot snap = await FirebaseFirestore.instance
-  //         .collection('posts')
-  //         .doc(widget.snap['postId'])
-  //         .collection('comments')
-  //         .get();
-
-  //     commentLen = snap.docs.length;
-  //   } catch (e) {
-  //     showSnackBar(e.toString(), context);
-  //   }
-
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // TOFIX: Data Model
-    // final model.User user = Provider.of<UserProvider>(context).getUser;
-
     return Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
@@ -78,13 +64,7 @@ class _PostCardState extends State<PostCard> {
           children: [
             // IMAGE SECTION
             GestureDetector(
-              onDoubleTap: () async {
-                // TOFIX: Firebase
-                // await FirestoreMethods().doubleTapLikePost(
-                //   widget.snap['postId'],
-                //   user.uid,
-                //   widget.snap['likes'],
-                // );
+              onDoubleTap: () {
                 setState(() {
                   isLikeAnimating = true;
                 });
@@ -100,9 +80,7 @@ class _PostCardState extends State<PostCard> {
                           topLeft: Radius.circular(16.0),
                           topRight: Radius.circular(16.0)),
                       child: Image.network(
-                        'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
-                        // TOFIX: Firebase
-                        // widget.snap['photoUrl'],
+                        widget.postPhotoUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -153,68 +131,57 @@ class _PostCardState extends State<PostCard> {
                           children: [
                             // Rating Section
                             Container(
-                                child: Row(
-                              children: [
-                                // Rating - Star
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  '3',
-                                  // TOFIX: Firebase
-                                  // widget.snap['ratingValueDelicious']
-                                  //     .round()
-                                  //     .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                              child: Row(
+                                children: [
+                                  // Rating - Star
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amber,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(
-                                  Icons.recommend,
-                                  color: red1Color,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  '4',
-                                  // TOFIX: Firebase
-                                  // widget.snap['ratingValueRecommend']
-                                  //     .round()
-                                  //     .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  const SizedBox(
+                                    width: 4,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                const Icon(
-                                  Icons.monetization_on,
-                                  color: Color.fromRGBO(199, 178, 115, 1),
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  '5',
-                                  // TOFIX: Firebase
-                                  // widget.snap['ratingValueWorthIt']
-                                  //     .round()
-                                  //     .toString(),
-                                  style: const TextStyle(
-                                    fontSize: 16,
+                                  Text(
+                                    widget.postRatingStar.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            )),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  const Icon(
+                                    Icons.recommend,
+                                    color: red1Color,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    widget.postRatingRecommend.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  const Icon(
+                                    Icons.monetization_on,
+                                    color: Color.fromRGBO(199, 178, 115, 1),
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    widget.postRatingWorthIt.toString(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             const SizedBox(
                               height: 12,
                             ),
@@ -223,8 +190,6 @@ class _PostCardState extends State<PostCard> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'username',
-                                // TOFIX: Firebase
-                                // widget.snap['username'],
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -238,10 +203,8 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "review, a sentence of review..",
+                                widget.postReview,
                               ),
-                              // TOFIX: Firebase
-                              //child: Text(widget.snap['review']),
                             ),
                             const SizedBox(
                               height: 16,
@@ -287,13 +250,6 @@ class _PostCardState extends State<PostCard> {
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
                                   'dd MMMM yyyy · hh:mm aa',
-                                  // TOFIX: Firebase
-                                  // DateFormat import from package 'intl'
-                                  // DateFormat(
-                                  //   'dd MMMM yyyy · hh:mm aa',
-                                  // ).format(
-                                  //   widget.snap['datePublished'].toDate(),
-                                  // ),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: neutral3Color,
@@ -347,22 +303,6 @@ class _PostCardState extends State<PostCard> {
                             smallLike: true,
                             child: IconButton(
                               onPressed: () {},
-                              // onPressed: () async {
-                              //   await FirestoreMethods().likePost(
-                              //     widget.snap['postId'],
-                              //     user.uid,
-                              //     widget.snap['likes'],
-                              //   );
-                              // },
-                              // icon: widget.snap['likes'].contains(user.uid)
-                              //     ? const Icon(
-                              //         Icons.favorite,
-                              //         size: 24,
-                              //         color: red2Color,
-                              //       )
-                              //     : const Icon(
-                              //         Icons.favorite_border,
-                              //       ),
                               icon: const Icon(
                                 // Temp
                                 Icons.favorite,
@@ -381,14 +321,6 @@ class _PostCardState extends State<PostCard> {
                           // Comment Section
                           IconButton(
                             onPressed: () {},
-                            // TOFIX: Firebase
-                            // onPressed: () => Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => CommentsScreen(
-                            //       postId: widget.snap['postId'].toString(),
-                            //     ),
-                            //   ),
-                            // ),
                             icon: const Icon(
                               Icons.comment_outlined,
                               size: 24,

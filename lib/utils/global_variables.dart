@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/feed_post_screen.dart';
+import '../screens/feed_post/feed_post_screen.dart';
 import '../screens/create_post_screen.dart';
 import '../screens/feed_post_screen_ig.dart';
 import '../screens/profile_screen_ig.dart';
