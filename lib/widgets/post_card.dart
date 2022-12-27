@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodport_app/screens/comments_screen.dart';
+import 'package:foodport_app/screens/dish_detail_screen.dart';
 import 'package:foodport_app/utils/utils.dart';
 import 'package:foodport_app/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart' as model;
-import '../providers/user_provider.dart';
+import '../models/user_ig.dart' as model;
+import '../providers/user_provider_ig.dart';
 import '../resources/firestore_methods.dart';
 import '../utils/colors.dart';
 
 class PostCard extends StatefulWidget {
-  final snap;
-  const PostCard({super.key, this.snap});
+  //final snap;
+  const PostCard({super.key});
 
   @override
   State<PostCard> createState() => _PostCardState();
@@ -26,28 +27,31 @@ class _PostCardState extends State<PostCard> {
   @override
   void initState() {
     super.initState();
-    getComments();
+    // TOFIX: Firebase
+    // getComments();
   }
 
-  void getComments() async {
-    try {
-      QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection('posts')
-          .doc(widget.snap['postId'])
-          .collection('comments')
-          .get();
+  // TOFIX: Firebase
+  // void getComments() async {
+  //   try {
+  //     QuerySnapshot snap = await FirebaseFirestore.instance
+  //         .collection('posts')
+  //         .doc(widget.snap['postId'])
+  //         .collection('comments')
+  //         .get();
 
-      commentLen = snap.docs.length;
-    } catch (e) {
-      showSnackBar(e.toString(), context);
-    }
+  //     commentLen = snap.docs.length;
+  //   } catch (e) {
+  //     showSnackBar(e.toString(), context);
+  //   }
 
-    setState(() {});
-  }
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final model.User user = Provider.of<UserProvider>(context).getUser;
+    // TOFIX: Data Model
+    // final model.User user = Provider.of<UserProvider>(context).getUser;
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -75,11 +79,12 @@ class _PostCardState extends State<PostCard> {
             // IMAGE SECTION
             GestureDetector(
               onDoubleTap: () async {
-                await FirestoreMethods().doubleTapLikePost(
-                  widget.snap['postId'],
-                  user.uid,
-                  widget.snap['likes'],
-                );
+                // TOFIX: Firebase
+                // await FirestoreMethods().doubleTapLikePost(
+                //   widget.snap['postId'],
+                //   user.uid,
+                //   widget.snap['likes'],
+                // );
                 setState(() {
                   isLikeAnimating = true;
                 });
@@ -95,7 +100,9 @@ class _PostCardState extends State<PostCard> {
                           topLeft: Radius.circular(16.0),
                           topRight: Radius.circular(16.0)),
                       child: Image.network(
-                        widget.snap['photoUrl'],
+                        'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
+                        // TOFIX: Firebase
+                        // widget.snap['photoUrl'],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -148,6 +155,7 @@ class _PostCardState extends State<PostCard> {
                             Container(
                                 child: Row(
                               children: [
+                                // Rating - Star
                                 const Icon(
                                   Icons.star,
                                   color: Colors.amber,
@@ -156,9 +164,11 @@ class _PostCardState extends State<PostCard> {
                                   width: 4,
                                 ),
                                 Text(
-                                  widget.snap['ratingValueDelicious']
-                                      .round()
-                                      .toString(),
+                                  '3',
+                                  // TOFIX: Firebase
+                                  // widget.snap['ratingValueDelicious']
+                                  //     .round()
+                                  //     .toString(),
                                   style: const TextStyle(
                                     fontSize: 16,
                                   ),
@@ -174,9 +184,11 @@ class _PostCardState extends State<PostCard> {
                                   width: 4,
                                 ),
                                 Text(
-                                  widget.snap['ratingValueRecommend']
-                                      .round()
-                                      .toString(),
+                                  '4',
+                                  // TOFIX: Firebase
+                                  // widget.snap['ratingValueRecommend']
+                                  //     .round()
+                                  //     .toString(),
                                   style: const TextStyle(
                                     fontSize: 16,
                                   ),
@@ -192,9 +204,11 @@ class _PostCardState extends State<PostCard> {
                                   width: 4,
                                 ),
                                 Text(
-                                  widget.snap['ratingValueWorthIt']
-                                      .round()
-                                      .toString(),
+                                  '5',
+                                  // TOFIX: Firebase
+                                  // widget.snap['ratingValueWorthIt']
+                                  //     .round()
+                                  //     .toString(),
                                   style: const TextStyle(
                                     fontSize: 16,
                                   ),
@@ -208,7 +222,9 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.snap['username'],
+                                'username',
+                                // TOFIX: Firebase
+                                // widget.snap['username'],
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -221,7 +237,11 @@ class _PostCardState extends State<PostCard> {
                             // Review Section
                             Container(
                               alignment: Alignment.centerLeft,
-                              child: Text(widget.snap['review']),
+                              child: Text(
+                                "review, a sentence of review..",
+                              ),
+                              // TOFIX: Firebase
+                              //child: Text(widget.snap['review']),
                             ),
                             const SizedBox(
                               height: 16,
@@ -266,12 +286,14 @@ class _PostCardState extends State<PostCard> {
                               child: Container(
                                 alignment: Alignment.bottomLeft,
                                 child: Text(
+                                  'dd MMMM yyyy · hh:mm aa',
+                                  // TOFIX: Firebase
                                   // DateFormat import from package 'intl'
-                                  DateFormat(
-                                    'dd MMMM yyyy · hh:mm aa',
-                                  ).format(
-                                    widget.snap['datePublished'].toDate(),
-                                  ),
+                                  // DateFormat(
+                                  //   'dd MMMM yyyy · hh:mm aa',
+                                  // ).format(
+                                  //   widget.snap['datePublished'].toDate(),
+                                  // ),
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: neutral3Color,
@@ -293,57 +315,88 @@ class _PostCardState extends State<PostCard> {
                       child: Column(
                         children: [
                           // Food Menu Section
-                          const Icon(
-                            Icons.menu_book_outlined,
-                            size: 24,
+                          // TODO: If post tagged dish, then only show this
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu_book_outlined,
+                              size: 24,
+                            ),
+                            onPressed: () {
+                              // Better method
+                              Navigator.of(context).pushNamed(
+                                DishDetailScreen.routeName,
+                                // arguments: dishId,
+                              );
+                              // Not a good method:
+                              // Navigator.of(context).push(
+                              //   MaterialPageRoute(
+                              //     builder: (ctx) => DishDetailScreen(),
+                              //   ),
+                              // );
+                            },
                           ),
                           const Text("6793"),
                           const SizedBox(height: 16),
 
                           // Like Section
                           LikeAnimation(
-                            isAnimating:
-                                widget.snap['likes'].contains(user.uid),
+                            isAnimating: true, // Temp
+                            // TOFIX: Firebase
+                            // isAnimating:
+                            //     widget.snap['likes'].contains(user.uid),
                             smallLike: true,
                             child: IconButton(
-                              onPressed: () async {
-                                await FirestoreMethods().likePost(
-                                  widget.snap['postId'],
-                                  user.uid,
-                                  widget.snap['likes'],
-                                );
-                              },
-                              icon: widget.snap['likes'].contains(user.uid)
-                                  ? const Icon(
-                                      Icons.favorite,
-                                      size: 24,
-                                      color: red2Color,
-                                    )
-                                  : const Icon(
-                                      Icons.favorite_border,
-                                    ),
+                              onPressed: () {},
+                              // onPressed: () async {
+                              //   await FirestoreMethods().likePost(
+                              //     widget.snap['postId'],
+                              //     user.uid,
+                              //     widget.snap['likes'],
+                              //   );
+                              // },
+                              // icon: widget.snap['likes'].contains(user.uid)
+                              //     ? const Icon(
+                              //         Icons.favorite,
+                              //         size: 24,
+                              //         color: red2Color,
+                              //       )
+                              //     : const Icon(
+                              //         Icons.favorite_border,
+                              //       ),
+                              icon: const Icon(
+                                // Temp
+                                Icons.favorite,
+                                size: 24,
+                                color: red2Color,
+                              ),
                             ),
                           ),
 
                           // Display amount of likes
-                          Text("${widget.snap['likes'].length}"),
+                          Text('123'), // Temp
+                          // TOFIX: Firebase
+                          // Text("${widget.snap['likes'].length}"),
                           const SizedBox(height: 16),
 
                           // Comment Section
                           IconButton(
-                            onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => CommentsScreen(
-                                  postId: widget.snap['postId'].toString(),
-                                ),
-                              ),
-                            ),
+                            onPressed: () {},
+                            // TOFIX: Firebase
+                            // onPressed: () => Navigator.of(context).push(
+                            //   MaterialPageRoute(
+                            //     builder: (context) => CommentsScreen(
+                            //       postId: widget.snap['postId'].toString(),
+                            //     ),
+                            //   ),
+                            // ),
                             icon: const Icon(
                               Icons.comment_outlined,
                               size: 24,
                             ),
                           ),
-                          Text("$commentLen"),
+                          Text('12'), // Temp
+                          // TOFIX: Firebase
+                          // Text("$commentLen"),
                           const SizedBox(height: 16),
 
                           // Save Post Section

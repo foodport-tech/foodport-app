@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/post.dart';
+import '../models/post_ig.dart';
 import 'storage_methods.dart';
 
 class FirestoreMethods {

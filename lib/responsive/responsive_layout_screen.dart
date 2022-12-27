@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodport_app/providers/user_provider.dart';
+import 'package:foodport_app/providers/user_provider_ig.dart';
 import 'package:provider/provider.dart';
 import '../utils/colors.dart';
 import '../utils/global_variables.dart';

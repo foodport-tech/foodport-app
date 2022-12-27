@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/post.dart';
-import '../widgets/post_card.dart';
 import '../utils/colors.dart';
+import 'feed_post/feed_post_nearby_screen.dart';
+import 'feed_post/feed_post_following_screen.dart';
+import 'feed_post/feed_post_for_you_screen.dart';
 
 class FeedPostScreen extends StatelessWidget {
   final List<Post> loadedPosts = [
@@ -30,78 +32,79 @@ class FeedPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        elevation: 0, // Remove shadow
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.add,
-            color: neutral1Color,
-          ),
-          onPressed: () {},
-        ),
-        title: Row(
-          children: [
-            Text(
-              'Nearby',
-              style: TextStyle(color: neutral1Color),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'Following',
-              style: TextStyle(color: primaryColor),
-            ),
-            SizedBox(
-              width: 16,
-            ),
-            Text(
-              'For You',
-              style: TextStyle(color: neutral1Color),
-            ),
-          ],
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-        actions: [
-          IconButton(
+    return DefaultTabController(
+      // "length: 3" refer to 'Nearby', 'Following' , 'For You'
+      length: 3,
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          elevation: 0, // Remove shadow
+          backgroundColor: Colors.transparent,
+
+          // Add Content Button
+          leading: IconButton(
             icon: const Icon(
-              Icons.search,
+              Icons.add,
               color: neutral1Color,
             ),
-            tooltip: 'Open shopping cart',
-            onPressed: () {
-              // handle the press
-            },
+            onPressed: () {},
           ),
-        ],
-      ),
-      body: StreamBuilder(
-        // To get real time data
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (
-          context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
-        ) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return PageView.builder(
-            // To list the Amount of posts Available in Database,
-            // or else will display infinity amount of posts
-            scrollDirection: Axis.vertical,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) => PostCard(
-              // Pass data from Firebase
-              // 'index' Means for each item in the database
-              snap: snapshot.data!.docs[index].data(),
+
+          // Feed Post Navigation
+          title: const TabBar(
+            // Both Selected & Unselected label
+            labelStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        },
+            // Selected Label
+            labelColor: orange1Color,
+            // Unselected Label
+            unselectedLabelColor: neutral1Color,
+
+            // Indicator (Underline below the Tab)
+            indicatorWeight: 0.01,
+            indicatorColor: Colors.transparent,
+
+            // Tabs
+            tabs: [
+              Tab(
+                text: 'Nearby',
+              ),
+              Tab(
+                text: 'Following',
+              ),
+              Tab(
+                text: 'For You',
+              ),
+            ],
+
+            // Padding (for each tab)
+            labelPadding: EdgeInsets.all(0),
+            // Padding (for entire tabs)
+            padding: EdgeInsets.symmetric(horizontal: 16),
+          ),
+
+          // Search Button
+          actions: [
+            IconButton(
+              icon: const Icon(
+                Icons.search,
+                color: neutral1Color,
+              ),
+              onPressed: () {
+                // handle the press
+              },
+            ),
+          ],
+        ),
+        body: const TabBarView(
+          children: [
+            FeedPostNearbyScreen(),
+            FeedPostFollowingScreen(),
+            FeedPostForYouScreen(),
+          ],
+        ),
       ),
     );
   }

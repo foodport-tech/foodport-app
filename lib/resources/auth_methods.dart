@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../resources/storage_methods.dart';
-import '../models/user.dart' as model;
+import '../models/user_ig.dart' as model;
 
 class AuthMethods {
   // Get an instance of FirebaseAuth class,

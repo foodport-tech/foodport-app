@@ -2,16 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:foodport_app/providers/user_provider_ig.dart';
 import 'package:provider/provider.dart';
 
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/responsive_layout_screen.dart';
-import '../responsive/tablet_screen_layout.dart';
-import '../responsive/web_screen_layout.dart';
+import '../providers/user_provider_ig.dart';
+import '../screens/feed_post_screen.dart';
+import '../screens/dish_detail_screen.dart';
 import '../utils/colors.dart';
-import '../screens/login_screen.dart';
-import '../screens/signup_screen.dart';
 
 void main() async {
   // Initialise Firebase
@@ -46,55 +42,61 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Foodport',
-        theme: ThemeData(scaffoldBackgroundColor: mobileBackgroundColor),
-        // theme: ThemeData.dark().copyWith(
-        //   scaffoldBackgroundColor: mobileBackgroundColor,
-        // ),
+          debugShowCheckedModeBanner: false,
+          title: 'Foodport',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch(
+              primaryColorDark: neutral1Color,
+              accentColor: orange1Color,
+              backgroundColor: neutral6Color,
+            ),
+            fontFamily: 'OpenSans',
+            // Fetch from Google Fonts
+            // textTheme: GoogleFonts.openSansTextTheme(
+            //   Theme.of(context).textTheme,
+            // ),
+          ),
+          darkTheme: ThemeData.dark(),
+          home: FeedPostScreen(),
+          routes: {
+            // DishDetailScreen.routeName = '/dish_detail'
+            DishDetailScreen.routeName: (ctx) => DishDetailScreen(),
+          }
 
-        home: StreamBuilder(
-          // 'authStateChanges()' Run only when user log in or log out
-          stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) {
-            // Connection State: Active (e.g. logged in)
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
-                return const ResponsiveLayout(
-                  mobileScreenLayout: MobileScreenLayout(),
-                  tabletScreenLayout: TabletScreenLayout(),
-                  webScreenLayout: WebScreenLayout(),
-                );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('${snapshot.error}'),
-                );
-              }
-            }
+          // home: StreamBuilder(
+          //   // 'authStateChanges()' Run only when user log in or log out
+          //   stream: FirebaseAuth.instance.authStateChanges(),
+          //   builder: (context, snapshot) {
+          //     // Connection State: Active (e.g. logged in)
+          //     if (snapshot.connectionState == ConnectionState.active) {
+          //       if (snapshot.hasData) {
+          //         return const ResponsiveLayout(
+          //           mobileScreenLayout: MobileScreenLayout(),
+          //           tabletScreenLayout: TabletScreenLayout(),
+          //           webScreenLayout: WebScreenLayout(),
+          //         );
+          //       } else if (snapshot.hasError) {
+          //         return Center(
+          //           child: Text('${snapshot.error}'),
+          //         );
+          //       }
+          //     }
 
-            // Connection State: Waiting
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              );
-            }
+          //     // Connection State: Waiting
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const Center(
+          //         child: CircularProgressIndicator(
+          //           color: Colors.white,
+          //         ),
+          //       );
+          //     }
 
-            // Other situation. E.g. Snapshot don't have any data
-            return const LoginScreen();
-          },
-        ),
+          //     // Other situation. E.g. Snapshot don't have any data
+          //     return const LoginScreen();
+          //   },
+          // ),
 
-        // home: LoginScreen(),
-        // home: SignupScreen(),
-        // home: const ResponsiveLayout(
-        //   mobileScreenLayout: MobileScreenLayout(),
-        //   tabletScreenLayout: TabletScreenLayout(),
-        //   webScreenLayout: WebScreenLayout(),
-        // ),
-        // home: HomeScreen(),
-      ),
+          ),
     );
   }
 }

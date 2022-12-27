@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:foodport_app/providers/user_provider.dart';
+import 'package:foodport_app/providers/user_provider_ig.dart';
 import 'package:foodport_app/resources/firestore_methods.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart' as model;
+import '../models/user_ig.dart' as model;
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 
