@@ -13,7 +13,7 @@ const webScreenSize = 992;
 // Display different screens for different bottom bar button in mobile_screen_layout.dart
 List<Widget> homeScreenItems = [
   // FeedPostScreenIG(),
-  const FeedPostScreen(),
+  FeedPostScreen(),
   // For Screen 3: Create Post
   const SearchScreenIG(),
   //Center(child: Text('explore')),

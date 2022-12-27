@@ -1,32 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:foodport_app/widgets/post_card.dart';
 
-import '../models/post.dart';
-import '../widgets/post_card.dart';
 import '../utils/colors.dart';
 
 class FeedPostScreen extends StatelessWidget {
-  final List<Post> loadedPosts = [
-    Post(
-      postId: 'p1',
-      postPhotoUrl: 'https://',
-      postPublishDateTime: DateTime(2022, 12, 25),
-      postRatingRecommend: 4.0,
-      postRatingStar: 3.0,
-      postRatingWorthIt: 5.0,
-      postReview: 'This food is good.',
-    ),
-    Post(
-      postId: 'p2',
-      postPhotoUrl: 'https://',
-      postPublishDateTime: DateTime(2022, 11, 30),
-      postRatingRecommend: 3.0,
-      postRatingStar: 4.0,
-      postRatingWorthIt: 4.0,
-      postReview: 'The cheese is delicious.',
-    ),
-  ];
-  FeedPostScreen({super.key});
+  const FeedPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +60,8 @@ class FeedPostScreen extends StatelessWidget {
       body: StreamBuilder(
         // To get real time data
         stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (
-          context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
-        ) {
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -96,7 +73,6 @@ class FeedPostScreen extends StatelessWidget {
             scrollDirection: Axis.vertical,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) => PostCard(
-              // Pass data from Firebase
               // 'index' Means for each item in the database
               snap: snapshot.data!.docs[index].data(),
             ),
