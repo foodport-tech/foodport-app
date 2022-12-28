@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/post.dart';
 import '../../screens/dish_detail_screen.dart';
 import '../../utils/colors.dart';
 import '../like_animation.dart';
 
 class PostCard extends StatefulWidget {
-  final String postId;
-  final String postPhotoUrl;
-  final DateTime postPublishDateTime;
-  final double postRatingRecommend;
-  final double postRatingStar;
-  final double postRatingWorthIt;
-  final String postReview;
-  final String userId;
-  String? dishId;
+  // TEST Listener posts[index]
+  // final String postId;
+  // final String postPhotoUrl;
+  // final DateTime postPublishDateTime;
+  // final double postRatingRecommend;
+  // final double postRatingStar;
+  // final double postRatingWorthIt;
+  // final String postReview;
+  // final String userId;
+  // String? dishId;
 
   PostCard({
     super.key,
-    required this.postId,
-    required this.postPhotoUrl,
-    required this.postPublishDateTime,
-    required this.postRatingRecommend,
-    required this.postRatingStar,
-    required this.postRatingWorthIt,
-    required this.postReview,
-    required this.userId,
-    this.dishId,
+    //   required this.postId,
+    //   required this.postPhotoUrl,
+    //   required this.postPublishDateTime,
+    //   required this.postRatingRecommend,
+    //   required this.postRatingStar,
+    //   required this.postRatingWorthIt,
+    //   required this.postReview,
+    //   required this.userId,
+    //   this.dishId,
   });
 
   @override
@@ -43,6 +46,8 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    final post = Provider.of<Post>(context);
+
     return Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
@@ -84,7 +89,7 @@ class _PostCardState extends State<PostCard> {
                           topLeft: Radius.circular(16.0),
                           topRight: Radius.circular(16.0)),
                       child: Image.network(
-                        widget.postPhotoUrl,
+                        post.postPhotoUrl,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -146,7 +151,7 @@ class _PostCardState extends State<PostCard> {
                                     width: 4,
                                   ),
                                   Text(
-                                    widget.postRatingStar.toString(),
+                                    post.postRatingStar.toString(),
                                     style: const TextStyle(
                                       fontSize: 16,
                                     ),
@@ -162,7 +167,7 @@ class _PostCardState extends State<PostCard> {
                                     width: 4,
                                   ),
                                   Text(
-                                    widget.postRatingRecommend.toString(),
+                                    post.postRatingRecommend.toString(),
                                     style: const TextStyle(
                                       fontSize: 16,
                                     ),
@@ -178,7 +183,7 @@ class _PostCardState extends State<PostCard> {
                                     width: 4,
                                   ),
                                   Text(
-                                    widget.postRatingWorthIt.toString(),
+                                    post.postRatingWorthIt.toString(),
                                     style: const TextStyle(
                                       fontSize: 16,
                                     ),
@@ -193,7 +198,7 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.userId, // Find username from userId
+                                post.userId, // Find username from userId
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -207,7 +212,7 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.postReview,
+                                post.postReview,
                               ),
                             ),
                             const SizedBox(
@@ -285,7 +290,7 @@ class _PostCardState extends State<PostCard> {
                               // Better method
                               Navigator.of(context).pushNamed(
                                 DishDetailScreen.routeName,
-                                arguments: widget.postId,
+                                arguments: post.postId,
                                 // arguments: widget.dishId,
                               );
                               // Not a good method:
