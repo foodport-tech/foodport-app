@@ -13,8 +13,9 @@ class PostCard extends StatefulWidget {
   final double postRatingWorthIt;
   final String postReview;
   final String userId;
+  String? dishId;
 
-  const PostCard({
+  PostCard({
     super.key,
     required this.postId,
     required this.postPhotoUrl,
@@ -24,6 +25,7 @@ class PostCard extends StatefulWidget {
     required this.postRatingWorthIt,
     required this.postReview,
     required this.userId,
+    this.dishId,
   });
 
   @override
@@ -283,7 +285,7 @@ class _PostCardState extends State<PostCard> {
                               // Better method
                               Navigator.of(context).pushNamed(
                                 DishDetailScreen.routeName,
-                                // arguments: dishId,
+                                arguments: widget.dishId,
                               );
                               // Not a good method:
                               // Navigator.of(context).push(

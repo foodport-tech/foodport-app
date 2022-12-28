@@ -11,7 +11,7 @@ class FeedPostFollowingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Listener
     final postsData = Provider.of<Posts>(context);
-    // IMPROVEMENT: postsData.followingItems
+    // IMPROVEMENT: postsData.followingPostItems
     // to only get posts from the accounts followed
     final posts = postsData.postItems;
 

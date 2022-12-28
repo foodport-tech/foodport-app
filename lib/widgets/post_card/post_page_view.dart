@@ -22,6 +22,7 @@ class PostsPageView extends StatelessWidget {
         postRatingWorthIt: posts[index].postRatingWorthIt,
         postReview: posts[index].postReview,
         userId: posts[index].userId,
+        dishId: posts[index].dishId,
       ),
     );
   }
