@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/post.dart';
+import 'post.dart';
 
 class Posts with ChangeNotifier {
   // Data Source - Post Content

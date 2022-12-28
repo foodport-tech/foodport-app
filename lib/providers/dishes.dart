@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodport_app/models/dish.dart';
 
-import '../models/post.dart';
+import 'post.dart';
 
 class Dishes with ChangeNotifier {
   // Data Source - Dish Content

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/post.dart';
+import '../../providers/post.dart';
 import '../../providers/posts.dart';
 import 'post_card.dart';
 
