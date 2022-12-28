@@ -16,7 +16,7 @@ class PostCardSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final post = Provider.of<Post>(context, listen: false);
+    final post = Provider.of<Post>(context, listen: true);
 
     return Container(
       alignment: Alignment.topCenter,
@@ -55,13 +55,24 @@ class PostCardSideBar extends StatelessWidget {
             //     widget.snap['likes'].contains(user.uid),
             smallLike: true,
             child: IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                // Temp
-                Icons.favorite,
-                size: 24,
-                color: red2Color,
-              ),
+              onPressed: () {
+                // TODO: Replace 'u1' to current user's userId
+                post.toggleLikeStatus('u1');
+              },
+              // TODO: Replace 'u1' to current user's userId
+              icon: (post.postView.containsKey('u1'))
+                  ? const Icon(
+                      // Temp
+                      Icons.favorite,
+                      size: 24,
+                      color: red2Color,
+                    )
+                  : const Icon(
+                      // Temp
+                      Icons.favorite_border,
+                      size: 24,
+                      color: neutral1Color,
+                    ),
             ),
           ),
 

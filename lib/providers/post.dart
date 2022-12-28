@@ -49,22 +49,16 @@ class Post with ChangeNotifier {
     this.dishId,
   });
 
-  void toggleLikeStatus(userId) {
+  toggleLikeStatus(userId) {
     // If 'postLike' contain 'userId':
     if (postView.containsKey(userId)) {
       // Remove 'userId' from 'postLike'
       postView.remove(userId);
-      print("postView.remove($userId)");
-      // Print the new Map result
-      print("postView: $postView");
     }
     // Else ('postLike' not contain 'userId'):
     else {
       // Add 'userId' to 'postLike'
       postView.putIfAbsent("$userId", () => []);
-      print("postView.putIfAbsent('$userId', () => [])");
-      // Print the new Map result
-      print("postView: $postView");
     }
 
     notifyListeners();
