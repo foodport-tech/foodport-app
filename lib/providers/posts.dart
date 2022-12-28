@@ -6,16 +6,50 @@ class Posts with ChangeNotifier {
   // Data Source - Post Content
   List<Post> _items = [
     Post(
-        postId: 'p1',
-        postPhotoUrl:
-            'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
-        postPublishDateTime: DateTime(2022, 12, 25),
-        postRatingRecommend: 4.0,
-        postRatingStar: 3.0,
-        postRatingWorthIt: 5.0,
-        postReview: 'This food is good.',
-        userId: 'u3',
-        dishId: 'd1'),
+      postId: 'p1',
+      postPhotoUrl:
+          'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
+      postReview: 'This food is good.',
+      postRatingRecommend: 4.0,
+      postRatingStar: 3.0,
+      postRatingWorthIt: 5.0,
+      postPublishDateTime: DateTime(2022, 12, 25),
+      userId: 'u3',
+      dishId: 'd1',
+      postPublishIpAddress: '',
+      postView: {
+        'u1': [],
+        'u2': [],
+      },
+      postLike: {
+        'u1': [],
+        'u2': [],
+      },
+      postCommentView: {
+        'u1': [],
+        'u2': [],
+      },
+      postComment: {
+        'u1': [],
+        'u2': [],
+      },
+      postShare: {
+        'u1': [],
+        'u2': [],
+      },
+      postSave: {
+        'u1': [],
+        'u2': [],
+      },
+      postMenuVisit: {
+        'u1': [],
+        'u2': [],
+      },
+      postMenuSellerVisit: {
+        'u1': [],
+        'u2': [],
+      },
+    ),
     Post(
       postId: 'p2',
       postPhotoUrl:
@@ -57,8 +91,8 @@ class Posts with ChangeNotifier {
     return [..._items];
   }
 
-  Post findByDishId(String dishId) {
-    return _items.firstWhere((post) => post.dishId == dishId);
+  Post findByPostId(String postId) {
+    return _items.firstWhere((post) => post.postId == postId);
   }
 
   void createPost() {

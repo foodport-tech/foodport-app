@@ -16,7 +16,7 @@ class DishDetailScreen extends StatelessWidget {
     // Data pass from database -> 'posts.dart'
     // 'listen: false' As only get data once, and to not keep updating widget when data changes
     final loadedPost =
-        Provider.of<Posts>(context, listen: false).findByDishId(dishId!);
+        Provider.of<Posts>(context, listen: false).findByPostId(dishId!);
 
     // If want to get full dish data
     //final loadedDish = Provider.of<Dishes>(context).findByDishId(dishId);
