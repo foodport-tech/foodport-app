@@ -285,7 +285,8 @@ class _PostCardState extends State<PostCard> {
                               // Better method
                               Navigator.of(context).pushNamed(
                                 DishDetailScreen.routeName,
-                                arguments: widget.dishId,
+                                arguments: widget.postId,
+                                // arguments: widget.dishId,
                               );
                               // Not a good method:
                               // Navigator.of(context).push(

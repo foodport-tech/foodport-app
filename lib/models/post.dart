@@ -1,4 +1,6 @@
-class Post {
+import 'package:flutter/foundation.dart';
+
+class Post with ChangeNotifier {
   final String postId;
   final String postPhotoUrl;
   final String postReview;

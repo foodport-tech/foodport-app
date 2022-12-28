@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/dishes.dart';
 import '../providers/posts.dart';
 
 class DishDetailScreen extends StatelessWidget {
@@ -11,19 +12,22 @@ class DishDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get dishId
     // Data pass from Navigator(arguments:) of 'post_card.dart'
-    final dishId = ModalRoute.of(context)!.settings.arguments as String?;
+    final postId = ModalRoute.of(context)!.settings.arguments as String?;
+    //TEST final dishId = ModalRoute.of(context)!.settings.arguments as String?;
+    //TEST print(dishId);
 
     // Data pass from database -> 'posts.dart'
     // 'listen: false' As only get data once, and to not keep updating widget when data changes
     final loadedPost =
-        Provider.of<Posts>(context, listen: false).findByPostId(dishId!);
+        Provider.of<Posts>(context, listen: false).findByPostId(postId!);
 
-    // If want to get full dish data
-    //final loadedDish = Provider.of<Dishes>(context).findByDishId(dishId);
+    // To get full dish data
+    // final loadedDish =
+    //     Provider.of<Dishes>(context, listen: false).findByDishId(dishId!);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedPost.dishId ?? ''),
+        title: Text(loadedPost.postId),
         //title: Text(loadedDish.dishId),
       ),
     );
