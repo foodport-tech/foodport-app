@@ -67,8 +67,9 @@ class _PostCardState extends State<PostCard> {
                     width: double.infinity,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0)),
+                        topLeft: Radius.circular(16.0),
+                        topRight: Radius.circular(16.0),
+                      ),
                       child: Image.network(
                         post.postPhotoUrl,
                         fit: BoxFit.cover,

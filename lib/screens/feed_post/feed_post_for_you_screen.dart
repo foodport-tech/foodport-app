@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/posts.dart';
-import '../../widgets/post_card/post_page_view.dart';
+import '../../utils/colors.dart';
+import '../../widgets/post_card/post_card_page_view.dart';
 
 class FeedPostForYouScreen extends StatelessWidget {
   FeedPostForYouScreen({super.key});
@@ -16,7 +17,8 @@ class FeedPostForYouScreen extends StatelessWidget {
     final posts = postsData.postItems;
 
     return Scaffold(
-      body: PostsPageView(posts: posts),
+      backgroundColor: mobileBackgroundColor,
+      body: PostCardPageView(posts: posts),
     );
   }
 }

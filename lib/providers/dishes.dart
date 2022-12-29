@@ -28,6 +28,36 @@ class Dishes with ChangeNotifier {
       dishNutrition: 'd2 nutrition',
       dishInfoContributor: '',
     ),
+    Dish(
+      dishId: 'd3',
+      dishName: 'Fish Burger',
+      dishPrice: 18.20,
+      sellerId: '',
+      postId: [],
+      dishIngredient: 'd3 ingredient',
+      dishNutrition: 'd3 nutrition',
+      dishInfoContributor: '',
+    ),
+    Dish(
+      dishId: 'd4',
+      dishName: 'Lamb Burger',
+      dishPrice: 15.90,
+      sellerId: '',
+      postId: [],
+      dishIngredient: 'd2 ingredient',
+      dishNutrition: 'd2 nutrition',
+      dishInfoContributor: '',
+    ),
+    Dish(
+      dishId: 'd5',
+      dishName: 'Fish Burger',
+      dishPrice: 18.20,
+      sellerId: '',
+      postId: [],
+      dishIngredient: 'd3 ingredient',
+      dishNutrition: 'd3 nutrition',
+      dishInfoContributor: '',
+    ),
   ];
 
   List<Dish> get dishItems {

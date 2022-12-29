@@ -11,13 +11,15 @@ class FeedPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 2,
       // "length: 3" refer to 'Nearby', 'Following' , 'For You'
       length: 3,
+
       child: Scaffold(
         extendBodyBehindAppBar: false,
         appBar: AppBar(
           elevation: 0, // Remove shadow
-          backgroundColor: Colors.transparent,
+          backgroundColor: neutral6Color,
 
           // Add Content Button
           leading: IconButton(

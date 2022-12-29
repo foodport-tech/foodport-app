@@ -107,6 +107,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           ),
         ),
       ),
+      backgroundColor: mobileBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [

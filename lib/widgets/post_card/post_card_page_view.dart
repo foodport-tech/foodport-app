@@ -5,13 +5,14 @@ import '../../providers/post.dart';
 import '../../providers/posts.dart';
 import 'post_card.dart';
 
-class PostsPageView extends StatelessWidget {
+class PostCardPageView extends StatelessWidget {
   final posts;
-  const PostsPageView({super.key, required this.posts});
+  PostCardPageView({super.key, required this.posts});
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
+      // onPageChanged: (pageIndex) {} // To track the current page
       scrollDirection: Axis.vertical,
       itemCount: posts.length,
       itemBuilder: (context, index) => ChangeNotifierProvider<Post>.value(
