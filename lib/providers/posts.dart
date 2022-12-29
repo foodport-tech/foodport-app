@@ -54,13 +54,45 @@ class Posts with ChangeNotifier {
       postId: 'p2',
       postPhotoUrl:
           'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
-      postPublishDateTime: DateTime(2022, 11, 30),
+      postReview: 'The cheese is delicious.',
       postRatingRecommend: 3.0,
       postRatingStar: 4.0,
       postRatingWorthIt: 4.0,
-      postReview: 'The cheese is delicious.',
+      postPublishDateTime: DateTime(2022, 11, 30),
       userId: 'u4',
       dishId: null,
+      postPublishIpAddress: '',
+      postView: {
+        'u1': [],
+        'u2': [],
+      },
+      postLike: {
+        'u2': [],
+      },
+      postCommentView: {
+        'u1': [],
+        'u2': [],
+      },
+      postComment: {
+        'u1': [],
+        'u2': [],
+      },
+      postShare: {
+        'u1': [],
+        'u2': [],
+      },
+      postSave: {
+        'u1': [],
+        'u2': [],
+      },
+      postMenuVisit: {
+        'u1': [],
+        'u2': [],
+      },
+      postMenuSellerVisit: {
+        'u1': [],
+        'u2': [],
+      },
     ),
   ];
 

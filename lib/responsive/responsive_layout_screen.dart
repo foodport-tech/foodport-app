@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodport_app/providers/user_provider_ig.dart';
 import 'package:provider/provider.dart';
-import '../utils/colors.dart';
 import '../utils/global_variables.dart';
 
 class ResponsiveLayout extends StatefulWidget {
@@ -22,13 +21,13 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   @override
   void initState() {
     super.initState();
-    addData();
+    // addData();
   }
 
-  addData() async {
-    UserProvider _userProvider = Provider.of(context, listen: false);
-    await _userProvider.refreshUser();
-  }
+  // addData() async {
+  //   UserProvider _userProvider = Provider.of(context, listen: false);
+  //   await _userProvider.refreshUser();
+  // }
 
   @override
   Widget build(BuildContext context) {

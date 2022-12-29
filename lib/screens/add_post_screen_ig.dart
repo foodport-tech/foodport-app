@@ -1,20 +1,23 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodport_app/providers/user_provider_ig.dart';
+import 'package:foodport_app/resources/firestore_methods.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../models/user_ig.dart' as model;
 import '../utils/colors.dart';
 import '../utils/utils.dart';
 
-class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({super.key});
+class AddPostScreen extends StatefulWidget {
+  const AddPostScreen({super.key});
 
   @override
-  State<CreatePostScreen> createState() => _CreatePostScreenState();
+  State<AddPostScreen> createState() => _AddPostScreenState();
 }
 
-class _CreatePostScreenState extends State<CreatePostScreen> {
+class _AddPostScreenState extends State<AddPostScreen> {
   // Post's Image file
   Uint8List? _file;
   // Controller for Review Field
@@ -25,6 +28,59 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   String _ratingDescriptionDelicious = 'Moderately';
   String _ratingDescriptionRecommend = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
+  String? _foodMenuId; // TODO: Allow user to link to a Food Menu
+  bool _isLoading = false;
+
+  void publishPost(
+    String uid,
+    String username,
+  ) async {
+    _isLoading = true;
+    try {
+      // TODO: Send data to database
+      String res = await FirestoreMethods().publishPost(
+        uid,
+        username,
+        _reviewController.text,
+        _file!,
+        _ratingValueDelicious,
+        _ratingValueRecommend,
+        _ratingValueWorthIt,
+        _foodMenuId,
+      );
+
+      if (res == 'success') {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar('Posted!', context);
+        clearImage();
+
+        // TODO: Direct to Feed Post Screen
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        showSnackBar(res, context);
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
+
+  _getRatingDescription(double ratingValue) {
+    if (ratingValue == 1.0) {
+      return 'Not at all';
+    } else if (ratingValue == 2.0) {
+      return 'Slightly';
+    } else if (ratingValue == 3.0) {
+      return 'Moderately';
+    } else if (ratingValue == 4.0) {
+      return 'Very';
+    } else if (ratingValue == 5.0) {
+      return 'Extremely';
+    }
+  }
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -73,22 +129,22 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
-  _getRatingDescription(double ratingValue) {
-    if (ratingValue == 1.0) {
-      return 'Not at all';
-    } else if (ratingValue == 2.0) {
-      return 'Slightly';
-    } else if (ratingValue == 3.0) {
-      return 'Moderately';
-    } else if (ratingValue == 4.0) {
-      return 'Very';
-    } else if (ratingValue == 5.0) {
-      return 'Extremely';
-    }
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _reviewController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -110,6 +166,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            _isLoading
+                ? const LinearProgressIndicator()
+                : const Padding(
+                    padding: EdgeInsets.only(top: 0),
+                  ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -418,11 +479,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
-                        // onPressed: () => publishPost(
-                        //   userProvider.getUser.uid,
-                        //   userProvider.getUser.username,
-                        // ),
+                        onPressed: () => publishPost(
+                          userProvider.getUser.uid,
+                          userProvider.getUser.username,
+                        ),
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(primaryColor),

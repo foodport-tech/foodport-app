@@ -9,6 +9,10 @@ import '../screens/feed_post/feed_post_screen.dart';
 import '../screens/dish_detail_screen.dart';
 import '../utils/colors.dart';
 import 'providers/posts.dart';
+import 'responsive/mobile_screen_layout.dart';
+import 'responsive/responsive_layout_screen.dart';
+import 'responsive/tablet_screen_layout.dart';
+import 'responsive/web_screen_layout.dart';
 
 void main() async {
   // Initialise Firebase
@@ -56,12 +60,92 @@ class MyApp extends StatelessWidget {
           // ),
         ),
         darkTheme: ThemeData.dark(),
-        home: FeedPostScreen(),
+        // home: FeedPostScreen(),
+        initialRoute: '/', // default is '/'
         routes: {
-          // DishDetailScreen.routeName = '/dish_detail'
-          DishDetailScreen.routeName: (ctx) => DishDetailScreen(),
+          // Home:
+          '/': (context) => ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                tabletScreenLayout: TabletScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              ),
+          // Main 1: '/feed_post'
+          // Main 2: '/explore'
+          // Main 3: '/create_post'
+          // Main 4: '/inbox'
+          // Main 5: '/profile'
+          // '/dish_detail'
+          DishDetailScreen.routeName: (context) => DishDetailScreen(),
+          // Auth: '/login'
+          // Auth: '/signup'
+        },
+        // When route does not work correctly
+        // onGenerateRoute: (settings) {},
+        // Fallback Screen - E.g. 404 Screen
+        onUnknownRoute: (settings) {
+          return MaterialPageRoute(
+            // TODO: Replace with 404 screen
+            builder: (context) => FeedPostScreen(),
+          );
         },
       ),
     );
   }
 }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider.value(
+//           value: Auth(),
+//         ),
+//         ChangeNotifierProxyProvider<Auth, Products>(
+//           builder: (ctx, auth, previousProducts) => Products(
+//                 auth.token,
+//                 auth.userId,
+//                 previousProducts == null ? [] : previousProducts.items,
+//               ),
+//         ),
+//         ChangeNotifierProvider.value(
+//           value: Cart(),
+//         ),
+//         ChangeNotifierProxyProvider<Auth, Orders>(
+//           builder: (ctx, auth, previousOrders) => Orders(
+//                 auth.token,
+//                 auth.userId,
+//                 previousOrders == null ? [] : previousOrders.orders,
+//               ),
+//         ),
+//       ],
+//       child: Consumer<Auth>(
+//         builder: (ctx, auth, _) => MaterialApp(
+//               title: 'MyShop',
+//               theme: ThemeData(
+//                 primarySwatch: Colors.purple,
+//                 accentColor: Colors.deepOrange,
+//                 fontFamily: 'Lato',
+//               ),
+//               home: auth.isAuth
+//                   ? ProductsOverviewScreen()
+//                   : FutureBuilder(
+//                       future: auth.tryAutoLogin(),
+//                       builder: (ctx, authResultSnapshot) =>
+//                           authResultSnapshot.connectionState ==
+//                                   ConnectionState.waiting
+//                               ? SplashScreen()
+//                               : AuthScreen(),
+//                     ),
+//               routes: {
+//                 ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+//                 CartScreen.routeName: (ctx) => CartScreen(),
+//                 OrdersScreen.routeName: (ctx) => OrdersScreen(),
+//                 UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+//                 EditProductScreen.routeName: (ctx) => EditProductScreen(),
+//               },
+//             ),
+//       ),
+//     );
+//   }
+// }

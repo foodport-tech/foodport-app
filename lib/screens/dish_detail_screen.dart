@@ -13,6 +13,9 @@ class DishDetailScreen extends StatelessWidget {
     // Get dishId
     // Data pass from Navigator(arguments:) of 'post_card.dart'
     final postId = ModalRoute.of(context)!.settings.arguments as String?;
+    // Map<String, String?>;
+    // final postId = routeArgs['postId'];
+    // final currentActiveUserId = routeArgs['currentActiveUserId'];
     //TEST final dishId = ModalRoute.of(context)!.settings.arguments as String?;
     //TEST print(dishId);
 

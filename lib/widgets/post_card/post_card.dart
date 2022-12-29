@@ -94,24 +94,24 @@ class _PostCardState extends State<PostCard> {
                       ),
                     ),
                   ),
-                  AnimatedOpacity(
-                    duration: const Duration(milliseconds: 200),
-                    opacity: isLikeAnimating ? 1 : 0,
-                    child: LikeAnimation(
-                      isAnimating: isLikeAnimating,
-                      duration: const Duration(milliseconds: 400),
-                      onEnd: () {
-                        setState(() {
-                          isLikeAnimating = false;
-                        });
-                      },
-                      child: const Icon(
-                        Icons.favorite,
-                        color: red2Color,
-                        size: 100,
-                      ),
-                    ),
-                  ),
+                  // AnimatedOpacity(
+                  //   duration: const Duration(milliseconds: 200),
+                  //   opacity: isLikeAnimating ? 1 : 0,
+                  //   child: LikeAnimation(
+                  //     isAnimating: isLikeAnimating,
+                  //     duration: const Duration(milliseconds: 400),
+                  //     onEnd: () {
+                  //       setState(() {
+                  //         isLikeAnimating = false;
+                  //       });
+                  //     },
+                  //     child: const Icon(
+                  //       Icons.favorite,
+                  //       color: red2Color,
+                  //       size: 100,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -251,7 +251,8 @@ class _PostCardState extends State<PostCard> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: const Text(
-                                  "calories-266g, fat-10g, sodium-396mg, carbohydrates-30g, fiber-1g, sugars-5g, protein-13g"),
+                                "calories-266g, fat-10g, sodium-396mg, carbohydrates-30g, fiber-1g, sugars-5g, protein-13g",
+                              ),
                             ),
 
                             Expanded(

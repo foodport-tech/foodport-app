@@ -16,7 +16,10 @@ class PostCardSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final post = Provider.of<Post>(context, listen: true);
+    // TODO: Replace Provider with Stateful widget for the toggleLikeStatus()
+    //final post = Provider.of<Post>(context, listen: false);
+
+    bool _likeStatus = post.postLike.containsKey('u1');
 
     return Container(
       alignment: Alignment.topCenter,
@@ -34,6 +37,11 @@ class PostCardSideBar extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 DishDetailScreen.routeName,
                 arguments: post.postId,
+                // arguments: {
+                //   'postId': post.postId,
+                //   // TODO: Replace with current active user's userId
+                //   'currentActiveUserId': 'u1',
+                // },
                 // arguments: widget.dishId,
               );
               // Not a good method:
@@ -48,31 +56,22 @@ class PostCardSideBar extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Like Section
-          LikeAnimation(
-            isAnimating: true, // Temp
-            // TOFIX: Firebase
-            // isAnimating:
-            //     widget.snap['likes'].contains(user.uid),
-            smallLike: true,
-            child: IconButton(
-              onPressed: () {
-                // TODO: Replace 'u1' to current user's userId
-                post.toggleLikeStatus('u1');
-              },
+
+          IconButton(
+            onPressed: () {
               // TODO: Replace 'u1' to current user's userId
-              icon: (post.postView.containsKey('u1'))
-                  ? const Icon(
-                      // Temp
-                      Icons.favorite,
-                      size: 24,
-                      color: red2Color,
-                    )
-                  : const Icon(
-                      // Temp
-                      Icons.favorite_border,
-                      size: 24,
-                      color: neutral1Color,
-                    ),
+              post.toggleLikeStatus('u1');
+              _likeStatus = post.postLike.containsKey('u1');
+              print(_likeStatus);
+            },
+            // TODO: Replace 'u1' to current user's userId
+            icon: Consumer<Post>(
+              builder: (context, value, child) => Icon(
+                // Temp
+                _likeStatus ? Icons.favorite : Icons.favorite_border,
+                size: 24,
+                color: _likeStatus ? red2Color : neutral1Color,
+              ),
             ),
           ),
 

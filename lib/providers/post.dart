@@ -51,14 +51,14 @@ class Post with ChangeNotifier {
 
   toggleLikeStatus(userId) {
     // If 'postLike' contain 'userId':
-    if (postView.containsKey(userId)) {
+    if (postLike.containsKey(userId)) {
       // Remove 'userId' from 'postLike'
-      postView.remove(userId);
+      postLike.remove(userId);
     }
     // Else ('postLike' not contain 'userId'):
     else {
       // Add 'userId' to 'postLike'
-      postView.putIfAbsent("$userId", () => []);
+      postLike.putIfAbsent("$userId", () => []);
     }
 
     notifyListeners();
