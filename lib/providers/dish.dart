@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 class Dish with ChangeNotifier {
   final String dishId;
-  final String dishName;
+  final String? dishName;
   final double? dishPrice;
   final String? sellerId;
   final postId;
@@ -11,7 +11,7 @@ class Dish with ChangeNotifier {
   final dishInfoContributor;
   Dish({
     required this.dishId,
-    required this.dishName,
+    this.dishName,
     this.dishPrice,
     this.sellerId,
     this.postId,

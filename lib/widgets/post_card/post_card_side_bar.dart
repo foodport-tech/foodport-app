@@ -17,7 +17,7 @@ class PostCardSideBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Replace Provider with Stateful widget for the toggleLikeStatus()
-    //final post = Provider.of<Post>(context, listen: false);
+    final post = Provider.of<Post>(context, listen: false);
 
     bool _likeStatus = post.postLike.containsKey('u1');
 

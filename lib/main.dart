@@ -8,6 +8,7 @@ import '../providers/user_provider_ig.dart';
 import '../screens/feed_post/feed_post_screen.dart';
 import '../screens/dish_detail_screen.dart';
 import '../utils/colors.dart';
+import 'providers/dishes.dart';
 import 'providers/posts.dart';
 import 'responsive/mobile_screen_layout.dart';
 import 'responsive/responsive_layout_screen.dart';
@@ -41,9 +42,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ChangeNotifierProvider: To register a class which can then listen in the child widget
-    return ChangeNotifierProvider(
-      // Provide instance of Posts() class to all child widgets
-      create: (BuildContext context) => Posts(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          // Provide instance of Posts() class to all child widgets
+          create: (BuildContext context) => Posts(),
+        ),
+        ChangeNotifierProvider(
+          // Provide instance of Dishes() class to all child widgets
+          create: (BuildContext context) => Dishes(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Foodport',
@@ -96,30 +105,30 @@ class MyApp extends StatelessWidget {
 // class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         ChangeNotifierProvider.value(
-//           value: Auth(),
-//         ),
-//         ChangeNotifierProxyProvider<Auth, Products>(
-//           builder: (ctx, auth, previousProducts) => Products(
-//                 auth.token,
-//                 auth.userId,
-//                 previousProducts == null ? [] : previousProducts.items,
-//               ),
-//         ),
-//         ChangeNotifierProvider.value(
-//           value: Cart(),
-//         ),
-//         ChangeNotifierProxyProvider<Auth, Orders>(
-//           builder: (ctx, auth, previousOrders) => Orders(
-//                 auth.token,
-//                 auth.userId,
-//                 previousOrders == null ? [] : previousOrders.orders,
-//               ),
-//         ),
-//       ],
-//       child: Consumer<Auth>(
+    // return MultiProvider(
+    //   providers: [
+    //     ChangeNotifierProvider.value(
+    //       value: Auth(),
+    //     ),
+    //     ChangeNotifierProxyProvider<Auth, Products>(
+    //       builder: (ctx, auth, previousProducts) => Products(
+    //             auth.token,
+    //             auth.userId,
+    //             previousProducts == null ? [] : previousProducts.items,
+    //           ),
+    //     ),
+    //     ChangeNotifierProvider.value(
+    //       value: Cart(),
+    //     ),
+    //     ChangeNotifierProxyProvider<Auth, Orders>(
+    //       builder: (ctx, auth, previousOrders) => Orders(
+    //             auth.token,
+    //             auth.userId,
+    //             previousOrders == null ? [] : previousOrders.orders,
+    //           ),
+    //     ),
+    //   ],
+    //   child: Consumer<Auth>(
 //         builder: (ctx, auth, _) => MaterialApp(
 //               title: 'MyShop',
 //               theme: ThemeData(

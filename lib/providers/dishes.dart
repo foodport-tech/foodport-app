@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodport_app/models/dish.dart';
+import 'package:foodport_app/providers/dish.dart';
 
 import 'post.dart';
 
@@ -14,8 +14,8 @@ class Dishes with ChangeNotifier {
       postId: [
         'p1',
       ],
-      dishIngredient: '',
-      dishNutrition: '',
+      dishIngredient: 'd1 ingredient',
+      dishNutrition: 'd1 nutrition',
       dishInfoContributor: '',
     ),
     Dish(
@@ -24,8 +24,8 @@ class Dishes with ChangeNotifier {
       dishPrice: 15.90,
       sellerId: '',
       postId: [],
-      dishIngredient: '',
-      dishNutrition: '',
+      dishIngredient: 'd2 ingredient',
+      dishNutrition: 'd2 nutrition',
       dishInfoContributor: '',
     ),
   ];

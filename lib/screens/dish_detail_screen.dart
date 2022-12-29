@@ -26,12 +26,13 @@ class DishDetailScreen extends StatelessWidget {
         Provider.of<Posts>(context, listen: false).findByPostId(postId!);
 
     // To get full dish data
-    // final loadedDish =
-    //     Provider.of<Dishes>(context, listen: false).findByDishId(dishId!);
+    final dishId = loadedPost.dishId;
+    final loadedDish =
+        Provider.of<Dishes>(context, listen: false).findByDishId(dishId!);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedPost.postId),
+        title: Text(loadedDish.dishName!),
         //title: Text(loadedDish.dishId),
       ),
     );

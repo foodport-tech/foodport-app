@@ -60,7 +60,7 @@ class Posts with ChangeNotifier {
       postRatingWorthIt: 4.0,
       postPublishDateTime: DateTime(2022, 11, 30),
       userId: 'u4',
-      dishId: null,
+      dishId: 'd2',
       postPublishIpAddress: '',
       postView: {
         'u1': [],
