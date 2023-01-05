@@ -207,13 +207,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  // Rating: Recommend
+                  // Rating: Eat Again
                   Row(
                     children: [
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.25,
                         child: const Text(
-                          "Recommend",
+                          "Eat Again",
                           style: TextStyle(
                             fontSize: 16,
                             color: neutral1Color,

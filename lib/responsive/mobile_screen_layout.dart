@@ -53,15 +53,23 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         backgroundColor: mobileBackgroundColor,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
+            icon: Image.asset(
+              'assets/images/icons/home.png',
+              width: 20,
+              height: 20,
               color: _page == 0 ? primaryColor : secondaryColor,
             ),
+            // icon: Icon(
+            //   Icons.home_outlined,
+            //   color: _page == 0 ? primaryColor : secondaryColor,
+            // ),
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.explore_outlined,
+            icon: Image.asset(
+              'assets/images/icons/explore.png',
+              width: 20,
+              height: 20,
               color: _page == 1 ? primaryColor : secondaryColor,
             ),
             backgroundColor: primaryColor,
@@ -74,17 +82,41 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.inbox_outlined,
+            icon: Image.asset(
+              'assets/images/icons/inbox.png',
+              width: 20,
+              height: 20,
               color: _page == 3 ? primaryColor : secondaryColor,
             ),
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              color: _page == 4 ? primaryColor : secondaryColor,
+            icon: Container(
+              height: 32,
+              width: 32,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                  color: _page == 4 ? primaryColor : secondaryColor,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(14.0),
+                child: Container(
+                  child: Image.network(
+                    'https://images.unsplash.com/photo-1606122017369-d782bbb78f32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXQlMjBwaG90b2dyYXBoeXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=100&q=60',
+                    height: 28,
+                    width: 28,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
+            // icon: Icon(
+            //   Icons.person_outline,
+            //   color: _page == 4 ? primaryColor : secondaryColor,
+            // ),
             backgroundColor: primaryColor,
           ),
         ],

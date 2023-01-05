@@ -10,8 +10,8 @@ class Posts with ChangeNotifier {
       postPhotoUrl:
           'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
       postReview: 'This food is good.',
-      postRatingRecommend: 4.0,
-      postRatingStar: 3.0,
+      postRatingEatAgain: 4.0,
+      postRatingDelicious: 3.0, //postRatingStar: 3.0,
       postRatingWorthIt: 5.0,
       postPublishDateTime: DateTime(2022, 12, 25),
       userId: 'u3',
@@ -55,8 +55,8 @@ class Posts with ChangeNotifier {
       postPhotoUrl:
           'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
       postReview: 'The cheese is delicious.',
-      postRatingRecommend: 3.0,
-      postRatingStar: 4.0,
+      postRatingEatAgain: 3.0,
+      postRatingDelicious: 4.0,
       postRatingWorthIt: 4.0,
       postPublishDateTime: DateTime(2022, 11, 30),
       userId: 'u4',

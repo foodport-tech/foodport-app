@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodport_app/widgets/dish_rating.dart';
 
 import '../../providers/post.dart';
 import '../../utils/colors.dart';
@@ -36,58 +37,13 @@ class PostCardBottomContent extends StatelessWidget {
                 child: Column(
                   children: [
                     // Rating Section
-                    Container(
-                      child: Row(
-                        children: [
-                          // Rating - Star
-                          const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            post.postRatingStar.toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          const Icon(
-                            Icons.recommend,
-                            color: red1Color,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            post.postRatingRecommend.toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          const Icon(
-                            Icons.monetization_on,
-                            color: Color.fromRGBO(199, 178, 115, 1),
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            post.postRatingWorthIt.toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
+                    DishRating(
+                      dishRatingDelicious: post.postRatingDelicious,
+                      dishRatingEatAgain: post.postRatingEatAgain,
+                      dishRatingWorthIt: post.postRatingWorthIt,
+                      showTotalRating: false,
                     ),
+
                     const SizedBox(
                       height: 12,
                     ),

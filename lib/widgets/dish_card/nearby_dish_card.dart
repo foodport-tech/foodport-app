@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodport_app/widgets/dish_rating.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/dish.dart';
@@ -66,9 +67,9 @@ class NearbyDishCard extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                       top: 12.0,
-                      left: 16.0,
-                      right: 16.0,
-                      bottom: 16.0,
+                      left: 12.0,
+                      right: 12.0,
+                      bottom: 12.0,
                     ),
                     child: Column(
                       children: [
@@ -90,37 +91,15 @@ class NearbyDishCard extends StatelessWidget {
                         // Rating
                         Container(
                           alignment: Alignment.topLeft,
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.star,
-                                size: 16,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                '5.0',
-                                style: TextStyle(
-                                  color: neutral1Color,
-                                  fontFamily: 'OpenSans',
-                                ),
-                              ),
-                              SizedBox(width: 8),
-                              Icon(
-                                Icons.star,
-                                size: 16,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                '4.9',
-                                style: TextStyle(
-                                  color: neutral1Color,
-                                  fontFamily: 'OpenSans',
-                                ),
-                              ),
-                            ],
+                          child: DishRating(
+                            dishRatingDelicious: 5.0,
+                            dishRatingEatAgain: 4.9,
+                            dishRatingWorthIt: 4.8,
+                            showTotalRating: false,
+                            totalRating: 123,
                           ),
                         ),
-                        SizedBox(height: 27),
+                        SizedBox(height: 28),
 
                         // Price
                         Container(

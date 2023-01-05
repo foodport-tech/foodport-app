@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/dish.dart';
 import '../../utils/colors.dart';
+import '../dish_rating.dart';
 
 class TrendingDishCard extends StatelessWidget {
   const TrendingDishCard({
@@ -105,34 +106,12 @@ class TrendingDishCard extends StatelessWidget {
                         SizedBox(height: 8),
 
                         // Rating
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              size: 16,
-                            ),
-                            Text(
-                              '4.9',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: neutral3Color,
-                                fontFamily: 'OpenSans',
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Icon(
-                              Icons.star,
-                              size: 16,
-                            ),
-                            Text(
-                              '5.0',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: neutral3Color,
-                                fontFamily: 'OpenSans',
-                              ),
-                            ),
-                          ],
+                        DishRating(
+                          dishRatingDelicious: 5.0,
+                          dishRatingEatAgain: 4.9,
+                          dishRatingWorthIt: 4.8,
+                          showTotalRating: false,
+                          totalRating: 123,
                         ),
                         SizedBox(height: 8),
 

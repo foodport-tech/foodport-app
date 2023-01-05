@@ -27,7 +27,7 @@ class ExploreScreen extends StatelessWidget {
         elevation: 0, // Remove shadow
         backgroundColor: mobileBackgroundColor,
         titleSpacing: 0,
-        toolbarHeight: 80,
+        toolbarHeight: 64,
         title: Container(
           padding: EdgeInsets.only(top: 16, left: 16, bottom: 16),
           child: Row(
@@ -38,23 +38,28 @@ class ExploreScreen extends StatelessWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                   ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 12.0,
+                      top: 8.0,
+                      bottom: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
                           Icons.search,
                           color: neutral1Color,
                         ),
-                        onPressed: () {},
-                      ),
-                      Text(
-                        'Viral golden chicken burger',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: neutral3Color,
-                            fontFamily: 'OpenSans'),
-                      ),
-                    ],
+                        Text(
+                          'Viral golden chicken burger',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: neutral3Color,
+                              fontFamily: 'OpenSans'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

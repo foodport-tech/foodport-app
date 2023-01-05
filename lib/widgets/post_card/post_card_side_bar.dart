@@ -27,12 +27,14 @@ class PostCardSideBar extends StatelessWidget {
         children: [
           // Food Menu Section
           // TODO: If post tagged dish, then only show this
-          IconButton(
-            icon: const Icon(
-              Icons.menu_book_outlined,
-              size: 24,
+          GestureDetector(
+            child: Image.asset(
+              'assets/images/icons/menu.png',
+              width: 24,
+              height: 24,
+              color: neutral1Color,
             ),
-            onPressed: () {
+            onTap: () {
               // Better method
               Navigator.of(context).pushNamed(
                 DishDetailScreen.routeName,
@@ -52,29 +54,32 @@ class PostCardSideBar extends StatelessWidget {
               // );
             },
           ),
+          SizedBox(height: 8),
           const Text("6793"),
           const SizedBox(height: 16),
 
           // Like Section
 
-          IconButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               // TODO: Replace 'u1' to current user's userId
               post.toggleLikeStatus('u1');
               _likeStatus = post.postLike.containsKey('u1');
               print(_likeStatus);
             },
-            // TODO: Replace 'u1' to current user's userId
-            icon: Consumer<Post>(
-              builder: (context, value, child) => Icon(
+            child: Consumer<Post>(
+              builder: (context, value, child) => Image.asset(
                 // Temp
-                _likeStatus ? Icons.favorite : Icons.favorite_border,
-                size: 24,
+                _likeStatus
+                    ? 'assets/images/icons/love_filled.png'
+                    : 'assets/images/icons/love.png',
+                width: 24,
+                height: 24,
                 color: _likeStatus ? red2Color : neutral1Color,
               ),
             ),
           ),
-
+          SizedBox(height: 8),
           // Display amount of likes
           Text('123'), // Temp
           // TOFIX: Firebase
@@ -82,31 +87,37 @@ class PostCardSideBar extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Comment Section
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.comment_outlined,
-              size: 24,
-            ),
+          Image.asset(
+            'assets/images/icons/comment.png',
+            width: 24,
+            height: 24,
+            color: neutral1Color,
           ),
+          SizedBox(height: 8),
           Text('12'), // Temp
           // TOFIX: Firebase
           // Text("$commentLen"),
           const SizedBox(height: 16),
 
           // Save Post Section
-          const Icon(
-            Icons.bookmark_outline,
-            size: 24,
+          Image.asset(
+            'assets/images/icons/bookmark.png',
+            width: 24,
+            height: 24,
+            color: neutral1Color,
           ),
+          SizedBox(height: 8),
           const Text("7093"),
           const SizedBox(height: 16),
 
           // Share Post Section
-          const Icon(
-            Icons.share_outlined,
-            size: 24,
+          Image.asset(
+            'assets/images/icons/share.png',
+            width: 24,
+            height: 24,
+            color: neutral1Color,
           ),
+          SizedBox(height: 8),
           const Text("5604"),
         ],
       ),

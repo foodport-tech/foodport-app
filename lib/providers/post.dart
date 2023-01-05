@@ -4,8 +4,8 @@ class Post with ChangeNotifier {
   final String postId;
   final String postPhotoUrl;
   final String postReview;
-  final double postRatingStar;
-  final double postRatingRecommend;
+  final double postRatingDelicious;
+  final double postRatingEatAgain;
   final double postRatingWorthIt;
   final DateTime postPublishDateTime;
   final String userId;
@@ -32,8 +32,8 @@ class Post with ChangeNotifier {
     required this.postId,
     required this.postPhotoUrl,
     required this.postReview,
-    required this.postRatingStar,
-    required this.postRatingRecommend,
+    required this.postRatingDelicious,
+    required this.postRatingEatAgain,
     required this.postRatingWorthIt,
     required this.postPublishDateTime,
     required this.userId,
