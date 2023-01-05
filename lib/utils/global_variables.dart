@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodport_app/screens/profile_screen.dart';
 
-import '../screens/explore_screen.dart';
-import '../screens/feed_post/feed_post_screen.dart';
+import '../screens/explore_screen/explore_screen.dart';
+import '../screens/feed_post_screen/feed_post_screen.dart';
 import '../screens/create_post_screen.dart';
-import '../screens/feed_post_screen_ig.dart';
-import '../screens/profile_screen_ig.dart';
-import '../screens/search_screen_ig.dart';
+import '../screens/ig_screen/feed_post_screen_ig.dart';
+import '../screens/ig_screen/profile_screen_ig.dart';
+import '../screens/ig_screen/search_screen_ig.dart';
 
 const tabletScreenSize = 576;
 const webScreenSize = 992;

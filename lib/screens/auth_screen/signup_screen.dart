@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:foodport_app/responsive/mobile_screen_layout.dart';
+import 'package:foodport_app/responsive/responsive_layout_screen.dart';
+import 'package:foodport_app/responsive/tablet_screen_layout.dart';
+import 'package:foodport_app/responsive/web_screen_layout.dart';
+import 'package:foodport_app/screens/auth_screen/login_screen.dart';
+import 'package:foodport_app/utils/utils.dart';
 
-import '../resources/auth_methods.dart';
-import '../responsive/responsive_layout_screen.dart';
-import '../responsive/mobile_screen_layout.dart';
-import '../responsive/tablet_screen_layout.dart';
-import '../responsive/web_screen_layout.dart';
-import '../screens/signup_screen.dart';
-import '../utils/utils.dart';
-import '../utils/colors.dart';
-import '../widgets/text_field_input.dart';
+import '../../resources/auth_methods.dart';
+import '../../utils/colors.dart';
+import '../../widgets/text_field_input.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -28,27 +30,32 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _bioController.dispose();
+    _usernameController.dispose();
   }
 
-  void loginUser() async {
-    // Refresh screen to show 'loading' in 'Log in button'
+  void signupUser() async {
+    // Refresh screen to show 'loading' in 'Sign up button'
     setState(() {
       _isLoading = true;
     });
 
-    // Authenticate user's login credential
-    String res = await AuthMethods().loginUser(
+    String res = await AuthMethods().signupUser(
       email: _emailController.text,
       password: _passwordController.text,
+      username: _usernameController.text,
     );
 
-    // Refresh screen to stop showing 'loading' in 'Log in button'
+    // Refresh screen to stop showing 'loading' in 'Sign up button'
     setState(() {
       _isLoading = false;
     });
 
-    if (res == 'success') {
-      // Switch to Home Screen
+    // When Signup Success
+    if (res != 'success') {
+      // Show pop message to user
+      showSnackBar(res, context);
+    } else {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
@@ -58,15 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       );
-    } else {
-      // Show pop message to user
-      showSnackBar(res, context);
     }
   }
 
-  void navigateToSignupScreen() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
+  void navigateToLoginScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+      ),
+    );
   }
 
   @override
@@ -92,9 +99,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 32),
 
+              // Username Text Field Input
+              TextFieldInput(
+                hintText: 'Enter your username',
+                textInputType: TextInputType.emailAddress,
+                textEditingController: _usernameController,
+              ),
+              const SizedBox(height: 12),
+
               // Email Text Field Input
               TextFieldInput(
-                hintText: 'Phone number, username or email',
+                hintText: 'Enter your email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
@@ -102,29 +117,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Password Text Field Input
               TextFieldInput(
-                hintText: 'Password',
+                hintText: 'Enter your password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
                 isPassword: true,
               ),
               const SizedBox(height: 12),
 
-              // Login Button
+              // Sign up Button
               InkWell(
-                onTap: loginUser,
+                onTap: signupUser,
                 child: Container(
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Text(
-                          'Log in',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -136,6 +139,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     color: orange1Color,
                   ),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text(
+                          'Sign up',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(
@@ -151,22 +166,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: secondaryColor),
-                    ),
+                    child: Text("Don't have an account? "),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
                   ),
                   GestureDetector(
-                    onTap: navigateToSignupScreen,
+                    onTap: navigateToLoginScreen,
                     child: Container(
                       child: Text(
-                        "Sign Up",
+                        "Login",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: orange1Color,
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(

@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../screens/profile_screen_ig.dart';
-import '../utils/colors.dart';
-import '../utils/global_variables.dart';
+import 'profile_screen_ig.dart';
+import '../../utils/colors.dart';
+import '../../utils/global_variables.dart';
 
 class SearchScreenIG extends StatefulWidget {
   const SearchScreenIG({super.key});

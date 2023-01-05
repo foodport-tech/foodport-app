@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user_provider_ig.dart';
-import '../screens/feed_post/feed_post_screen.dart';
+import 'screens/1_feed_post_screen/feed_post_screen.dart';
 import '../screens/dish_detail_screen.dart';
 import '../utils/colors.dart';
 import 'providers/dishes.dart';

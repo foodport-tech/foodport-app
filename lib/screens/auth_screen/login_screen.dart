@@ -1,28 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodport_app/responsive/mobile_screen_layout.dart';
-import 'package:foodport_app/responsive/responsive_layout_screen.dart';
-import 'package:foodport_app/responsive/tablet_screen_layout.dart';
-import 'package:foodport_app/responsive/web_screen_layout.dart';
-import 'package:foodport_app/screens/login_screen.dart';
-import 'package:foodport_app/utils/utils.dart';
 
-import '../resources/auth_methods.dart';
-import '../utils/colors.dart';
-import '../widgets/text_field_input.dart';
+import '../../resources/auth_methods.dart';
+import '../../responsive/responsive_layout_screen.dart';
+import '../../responsive/mobile_screen_layout.dart';
+import '../../responsive/tablet_screen_layout.dart';
+import '../../responsive/web_screen_layout.dart';
+import 'signup_screen.dart';
+import '../../utils/utils.dart';
+import '../../utils/colors.dart';
+import '../../widgets/text_field_input.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -30,32 +28,27 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _bioController.dispose();
-    _usernameController.dispose();
   }
 
-  void signupUser() async {
-    // Refresh screen to show 'loading' in 'Sign up button'
+  void loginUser() async {
+    // Refresh screen to show 'loading' in 'Log in button'
     setState(() {
       _isLoading = true;
     });
 
-    String res = await AuthMethods().signupUser(
+    // Authenticate user's login credential
+    String res = await AuthMethods().loginUser(
       email: _emailController.text,
       password: _passwordController.text,
-      username: _usernameController.text,
     );
 
-    // Refresh screen to stop showing 'loading' in 'Sign up button'
+    // Refresh screen to stop showing 'loading' in 'Log in button'
     setState(() {
       _isLoading = false;
     });
 
-    // When Signup Success
-    if (res != 'success') {
-      // Show pop message to user
-      showSnackBar(res, context);
-    } else {
+    if (res == 'success') {
+      // Switch to Home Screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
@@ -65,15 +58,15 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ),
       );
+    } else {
+      // Show pop message to user
+      showSnackBar(res, context);
     }
   }
 
-  void navigateToLoginScreen() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
+  void navigateToSignupScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
   }
 
   @override
@@ -99,17 +92,9 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(height: 32),
 
-              // Username Text Field Input
-              TextFieldInput(
-                hintText: 'Enter your username',
-                textInputType: TextInputType.emailAddress,
-                textEditingController: _usernameController,
-              ),
-              const SizedBox(height: 12),
-
               // Email Text Field Input
               TextFieldInput(
-                hintText: 'Enter your email',
+                hintText: 'Phone number, username or email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
@@ -117,17 +102,29 @@ class _SignupScreenState extends State<SignupScreen> {
 
               // Password Text Field Input
               TextFieldInput(
-                hintText: 'Enter your password',
+                hintText: 'Password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
                 isPassword: true,
               ),
               const SizedBox(height: 12),
 
-              // Sign up Button
+              // Login Button
               InkWell(
-                onTap: signupUser,
+                onTap: loginUser,
                 child: Container(
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text(
+                          'Log in',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -139,18 +136,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     color: orange1Color,
                   ),
-                  child: _isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Text(
-                          'Sign up',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
                 ),
               ),
               const SizedBox(
@@ -166,18 +151,22 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: Text("Don't have an account? "),
+                    child: Text(
+                      "Don't have an account? ",
+                      style: TextStyle(color: secondaryColor),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),
                   ),
                   GestureDetector(
-                    onTap: navigateToLoginScreen,
+                    onTap: navigateToSignupScreen,
                     child: Container(
                       child: Text(
-                        "Login",
+                        "Sign Up",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: orange1Color,
                         ),
                       ),
                       padding: const EdgeInsets.symmetric(
