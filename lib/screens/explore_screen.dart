@@ -236,6 +236,7 @@ class ExploreScreen extends StatelessWidget {
                             ),
                             child: Image.network(
                               'https://www.bellandevans.com/wp-content/uploads/Apricot_Burger_web-750x560.jpg',
+                              width: 160,
                               height: 160,
                               fit: BoxFit.cover,
                             ),
@@ -243,7 +244,12 @@ class ExploreScreen extends StatelessWidget {
                           // Bottom Section
                           Container(
                             child: Padding(
-                              padding: const EdgeInsets.all(16.0),
+                              padding: const EdgeInsets.only(
+                                top: 12.0,
+                                left: 16.0,
+                                right: 16.0,
+                                bottom: 16.0,
+                              ),
                               child: Column(
                                 children: [
                                   // Dish Name
@@ -254,6 +260,8 @@ class ExploreScreen extends StatelessWidget {
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
+                                        color: neutral1Color,
+                                        fontFamily: 'OpenSans',
                                       ),
                                     ),
                                   ),
@@ -271,6 +279,10 @@ class ExploreScreen extends StatelessWidget {
                                         SizedBox(width: 4),
                                         Text(
                                           '5.0',
+                                          style: TextStyle(
+                                            color: neutral1Color,
+                                            fontFamily: 'OpenSans',
+                                          ),
                                         ),
                                         SizedBox(width: 8),
                                         Icon(
@@ -280,11 +292,15 @@ class ExploreScreen extends StatelessWidget {
                                         SizedBox(width: 4),
                                         Text(
                                           '4.9',
+                                          style: TextStyle(
+                                            color: neutral1Color,
+                                            fontFamily: 'OpenSans',
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  SizedBox(height: 32),
+                                  SizedBox(height: 27),
 
                                   // Price
                                   Container(
@@ -297,6 +313,7 @@ class ExploreScreen extends StatelessWidget {
                                             fontSize: 12,
                                             fontWeight: FontWeight.bold,
                                             color: neutral2Color,
+                                            fontFamily: 'OpenSans',
                                           ),
                                         ),
                                         SizedBox(width: 4),
@@ -308,6 +325,7 @@ class ExploreScreen extends StatelessWidget {
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: primaryColor,
+                                            fontFamily: 'OpenSans',
                                           ),
                                         ),
                                       ],
@@ -337,6 +355,7 @@ class ExploreScreen extends StatelessWidget {
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: neutral1Color,
+                        fontFamily: 'OpenSans',
                       ),
                     ),
                     Expanded(
@@ -348,6 +367,7 @@ class ExploreScreen extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: neutral3Color,
+                        fontFamily: 'OpenSans',
                       ),
                     ),
                   ],
@@ -373,9 +393,10 @@ class ExploreScreen extends StatelessWidget {
                   itemCount: dishes.length,
                   itemBuilder: (context, index) => ChangeNotifierProvider.value(
                     value: dishes[index],
-                    // Card
+                    // Trending Card
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      margin: EdgeInsets.only(
+                          top: 0, bottom: 16, left: 8, right: 8),
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -388,19 +409,135 @@ class ExploreScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      child: Row(
+                        children: [
+                          // Image Section
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              bottomLeft: Radius.circular(8.0),
+                            ),
+                            child: Image.network(
+                              'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
+                              height: 104,
+                              width: 104,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          SizedBox(width: 16),
+
+                          // Ranking Indicator
+                          Icon(
+                            Icons.circle,
+                            size: 8,
+                          ),
+                          SizedBox(width: 4),
+
+                          // Ranking Number
+                          Text(
+                            '1',
+                            style: TextStyle(
+                              color: neutral1Color,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'OpenSans',
+                            ),
+                          ),
+                          SizedBox(width: 12),
+
+                          // Dish Detail Section
+                          Expanded(
+                            child: Container(
+                              height: 200,
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 12),
+                                  // Dish Name
+                                  Text(
+                                    dishes[index].dishName!,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: neutral1Color,
+                                      fontFamily: 'OpenSans',
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+
+                                  // Rating
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        size: 16,
+                                      ),
+                                      Text(
+                                        '4.9',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: neutral3Color,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Icon(
+                                        Icons.star,
+                                        size: 16,
+                                      ),
+                                      Text(
+                                        '5.0',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: neutral3Color,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8),
+
+                                  // Price
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'RM',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: neutral2Color,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                      SizedBox(width: 4),
+                                      Text(
+                                        dishes[index]
+                                            .dishPrice!
+                                            .toStringAsFixed(2),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: primaryColor,
+                                          fontFamily: 'OpenSans',
+                                        ),
+                                      ),
+                                      SizedBox(width: 16),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
 
-              Container(
-                height: 120,
-                color: Colors.purple,
-              ),
-              Container(
-                height: 120,
-                color: Colors.red,
-              ),
+              SizedBox(height: 20),
             ],
           ),
         ),
