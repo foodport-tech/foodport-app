@@ -78,7 +78,90 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
       backgroundColor: mobileBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
-          children: [],
+          children: [
+            // Seller Photo
+            Container(
+              margin: const EdgeInsets.symmetric(
+                horizontal: 32.0,
+                vertical: 8.0,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: neutral5Color,
+                    spreadRadius: 0,
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                child: Image.network(
+                  "https://lh3.googleusercontent.com/p/AF1QipN63ym-_e3hlIhsueMG6m-G31_W_RXotd61RCZu=s680-w680-h510",
+                  width: 364,
+                  height: 243,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            // Seller's Basic Info
+            Container(
+              height: 160,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(
+                horizontal: 32,
+                vertical: 8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: neutral5Color,
+                    spreadRadius: 0,
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+            ),
+
+            // Seller's Contact Info
+            Container(
+              height: 240,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(
+                horizontal: 32,
+                vertical: 8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: neutral5Color,
+                    spreadRadius: 0,
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+            ),
+
+            // Seller's Menu Category
+          ],
         ),
       ),
     );

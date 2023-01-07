@@ -101,25 +101,55 @@ class DishDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             // SECTION 1: DISH IMAGES
-            Image.network(
-              loadedPost.postPhotoUrl,
+            Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
+              // '32' refer to margin's horizontal
+              height: MediaQuery.of(context).size.width - 32 - 32,
+              margin: const EdgeInsets.symmetric(
+                horizontal: 32.0,
+                vertical: 8.0,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: neutral5Color,
+                    spreadRadius: 0,
+                    blurRadius: 16,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                child: Image.network(
+                  loadedPost.postPhotoUrl,
+                  // width: MediaQuery.of(context).size.width,
+                  // height: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
 
             // SECTION 2: DISH BASIC INFO
             DishDetailBasicInfo(loadedDish: loadedDish),
-            SizedBox(height: 8),
+            SizedBox(height: 16),
 
             // SECTION 3: DISH REVIEWS & RATINGS
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin: EdgeInsets.symmetric(
+                horizontal: 32,
+              ),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 boxShadow: [
                   BoxShadow(
                     color: neutral5Color,
@@ -310,16 +340,18 @@ class DishDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 16),
 
             // SECTION 4: SELLER BASIC INFO
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin: EdgeInsets.symmetric(
+                horizontal: 32,
+              ),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(8.0),
+                  Radius.circular(16.0),
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -368,7 +400,7 @@ class DishDetailScreen extends StatelessWidget {
                               dishRatingEatAgain: 4.37,
                               dishRatingWorthIt: 4.68,
                               totalRating: 830,
-                              showTotalRating: true,
+                              showTotalRating: false,
                             ),
                             SizedBox(height: 4),
 
@@ -448,7 +480,7 @@ class DishDetailScreen extends StatelessWidget {
 
                     // Seller Operating Location
                     Text(
-                      "Technology Park Malaysia, Bukit Jalil",
+                      "Bukit Jalil, 57000 Kuala Lumpur",
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         color: neutral2Color,
@@ -493,7 +525,7 @@ class DishDetailScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Reviews",
+                              "Posts",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: "OpenSans",
@@ -580,15 +612,15 @@ class DishDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 16),
 
             // SECTION 5: INGREDIENTS & NUTRITIONS
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin: EdgeInsets.symmetric(horizontal: 32),
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 boxShadow: [
                   BoxShadow(
                     color: neutral5Color,
@@ -662,7 +694,7 @@ class DishDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 32),
           ],
         ),
       ),
@@ -681,11 +713,13 @@ class DishDetailBasicInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(
+        horizontal: 32,
+      ),
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
         boxShadow: [
           BoxShadow(
             color: neutral5Color,
