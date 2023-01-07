@@ -36,9 +36,8 @@ class DishRating extends StatelessWidget {
               // Users' Average Rating (double)
               : dishRatingDelicious.toString(),
           style: TextStyle(
-            fontSize: 16,
-            color: neutral3Color,
             fontFamily: 'OpenSans',
+            color: neutral3Color,
           ),
         ),
         SizedBox(width: 6),
@@ -55,9 +54,8 @@ class DishRating extends StatelessWidget {
               ? dishRatingEatAgain.toStringAsFixed(0)
               : dishRatingEatAgain.toString(),
           style: TextStyle(
-            fontSize: 16,
-            color: neutral3Color,
             fontFamily: 'OpenSans',
+            color: neutral3Color,
           ),
         ),
         SizedBox(width: 6),
@@ -74,20 +72,18 @@ class DishRating extends StatelessWidget {
               ? dishRatingWorthIt.toStringAsFixed(0)
               : dishRatingWorthIt.toString(),
           style: TextStyle(
-            fontSize: 16,
-            color: neutral3Color,
             fontFamily: 'OpenSans',
+            color: neutral3Color,
           ),
         ),
 
         // Amount of Rating
         showTotalRating == true
             ? Text(
-                totalRating == null ? "" : "  (${totalRating} Ratings)",
+                totalRating == null ? "" : "  (${totalRating} Posts)",
                 style: TextStyle(
-                  color: neutral3Color,
                   fontFamily: 'OpenSans',
-                  fontSize: 12,
+                  color: neutral3Color,
                 ),
               )
             : Text(""),

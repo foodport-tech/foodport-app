@@ -8,7 +8,7 @@ class Posts with ChangeNotifier {
     Post(
       postId: 'p1',
       postPhotoUrl:
-          'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
+          "https://ucarecdn.com/134fe764-10be-4ab5-ae45-40876bb63289/-/crop/2230x1254/0,1139/-/resize/1600x900/",
       postReview: 'This food is good.',
       postRatingEatAgain: 4.0,
       postRatingDelicious: 3.0, //postRatingStar: 3.0,
@@ -53,7 +53,7 @@ class Posts with ChangeNotifier {
     Post(
       postId: 'p2',
       postPhotoUrl:
-          'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
+          "https://ucarecdn.com/377af099-49ad-4032-b8d1-b4b831496bb8/-/crop/2528x1422/0,1005/-/resize/1600x900/",
       postReview: 'The cheese is delicious.',
       postRatingEatAgain: 3.0,
       postRatingDelicious: 4.0,

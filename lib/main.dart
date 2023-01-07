@@ -2,6 +2,7 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:foodport_app/screens/seller_profile_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user_provider_ig.dart';
@@ -85,6 +86,7 @@ class MyApp extends StatelessWidget {
           // Main 5: '/profile'
           // '/dish_detail'
           DishDetailScreen.routeName: (context) => DishDetailScreen(),
+          SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
           // Auth: '/login'
           // Auth: '/signup'
         },

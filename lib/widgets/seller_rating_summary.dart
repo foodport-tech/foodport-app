@@ -16,28 +16,29 @@ class SellerRatingSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // Rating: Worth It
-        Icon(
-          Icons.star,
-          size: 16,
+        // Rating: Environment
+        Image.asset(
+          'assets/images/icons/fire_filled.png',
+          width: 14,
+          height: 14,
         ),
 
         SizedBox(width: 4),
         Text(
           averageRatingEnvironment.toString(),
           style: TextStyle(
-            color: neutral3Color,
             fontFamily: 'OpenSans',
+            color: neutral3Color,
           ),
         ),
         SizedBox(width: 8),
 
         // Amount of Ratings
         Text(
-          '(${totalRating} Ratings)',
+          '(${totalRating} Posts)',
           style: TextStyle(
-            color: neutral3Color,
             fontFamily: 'OpenSans',
+            color: neutral3Color,
           ),
         ),
       ],

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:foodport_app/screens/5_profile_screen/profile_screen.dart';
+import 'package:foodport_app/screens/5_profile_screen/user_profile_screen.dart';
 
 import '../screens/2_explore_screen/explore_screen.dart';
 import '../screens/1_feed_post_screen/feed_post_screen.dart';
@@ -22,7 +22,7 @@ List<Widget> homeScreenItems = [
   //Center(child: Text('explore')),
   const CreatePostScreen(),
   const Center(child: Text('inbox')),
-  const ProfileScreen(),
+  const UserProfileScreen(),
   // ProfileScreenIG(
   //     uid: FirebaseAuth.instance.currentUser!.uid,
   //     ),

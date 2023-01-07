@@ -6,6 +6,7 @@ class Dish with ChangeNotifier {
   final double? dishPrice;
   final String? sellerId;
   final postId;
+  final dishMainIngredient;
   final dishIngredient;
   final dishNutrition;
   final dishInfoContributor;
@@ -15,6 +16,7 @@ class Dish with ChangeNotifier {
     this.dishPrice,
     this.sellerId,
     this.postId,
+    this.dishMainIngredient,
     this.dishIngredient,
     this.dishNutrition,
     this.dishInfoContributor,

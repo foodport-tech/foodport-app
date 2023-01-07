@@ -90,6 +90,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
             ),
             backgroundColor: primaryColor,
           ),
+          // User Profile
           BottomNavigationBarItem(
             icon: Container(
               height: 32,
@@ -101,11 +102,12 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
+              // User's Profile Picture
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14.0),
                 child: Container(
                   child: Image.network(
-                    'https://images.unsplash.com/photo-1606122017369-d782bbb78f32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXQlMjBwaG90b2dyYXBoeXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=100&q=60',
+                    'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/241461462_270079921407951_7468759206826799783_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=Y-O5tWwzPNgAX8Zkqjt&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfA8NGJlCJaRI-n3Jnng71R2Cn18LOeD_5mwHiX9RlSkHQ&oe=63BBF319&_nc_sid=1527a3',
                     height: 28,
                     width: 28,
                     fit: BoxFit.cover,

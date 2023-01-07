@@ -64,6 +64,7 @@ class NearbyDishCard extends StatelessWidget {
                 ),
                 // Bottom Section
                 Container(
+                  height: 122,
                   child: Padding(
                     padding: const EdgeInsets.only(
                       top: 12.0,
@@ -99,7 +100,8 @@ class NearbyDishCard extends StatelessWidget {
                             totalRating: 123,
                           ),
                         ),
-                        SizedBox(height: 28),
+                        Expanded(child: Container()),
+                        // SizedBox(height: 6),
 
                         // Price
                         Container(
