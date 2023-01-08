@@ -338,7 +338,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Trending",
                               style: TextStyle(
-                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),
@@ -361,7 +360,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Followers",
                               style: TextStyle(
-                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),
@@ -383,7 +381,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Posts",
                               style: TextStyle(
-                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),

@@ -81,6 +81,8 @@ class NearbyDishCard extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Text(
                             dishes[index].dishName!,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: neutral1Color,
