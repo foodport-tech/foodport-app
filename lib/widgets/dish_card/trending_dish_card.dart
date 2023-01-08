@@ -35,10 +35,17 @@ class TrendingDishCard extends StatelessWidget {
           value: dishes[index],
           // Trending Card
           child: Container(
-            margin: EdgeInsets.only(top: 0, bottom: 16, left: 8, right: 8),
+            margin: EdgeInsets.only(
+              top: 0,
+              bottom: 16,
+              left: 8,
+              right: 8,
+            ),
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: neutral5Color,

@@ -370,13 +370,24 @@ class DishDetailScreen extends StatelessWidget {
                     Row(
                       children: [
                         // Seller's Profile Picture
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(36.0),
-                          child: Image.network(
-                            'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/133585212_850140199117185_2772702535892613805_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=NaQ6yrwAZwQAX8QZA7-&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfDORAW0DHTBD-8J20DHCaRHId-h3Umw9KVZa1m9m0L6JQ&oe=63BB9DEA&_nc_sid=6136e7',
-                            height: 72,
-                            width: 72,
-                            fit: BoxFit.cover,
+                        Container(
+                          height: 72,
+                          width: 72,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: neutral6Color,
+                            ),
+                            borderRadius: BorderRadius.circular(36.0),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(36.0),
+                            child: Image.network(
+                              'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/133585212_850140199117185_2772702535892613805_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=NaQ6yrwAZwQAX8QZA7-&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfDORAW0DHTBD-8J20DHCaRHId-h3Umw9KVZa1m9m0L6JQ&oe=63BB9DEA&_nc_sid=6136e7',
+                              height: 72,
+                              width: 72,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         SizedBox(width: 16),
