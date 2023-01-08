@@ -45,7 +45,7 @@ class _PostCardState extends State<PostCard> {
             BoxShadow(
               color: neutral5Color,
               spreadRadius: 0,
-              blurRadius: 28,
+              blurRadius: 24,
               offset: Offset(0, 8),
             ),
           ],
@@ -63,8 +63,8 @@ class _PostCardState extends State<PostCard> {
                 alignment: Alignment.center,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    width: double.infinity,
+                    height: MediaQuery.of(context).size.width - 32 - 32,
+                    width: MediaQuery.of(context).size.width - 32 - 32,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(16.0),

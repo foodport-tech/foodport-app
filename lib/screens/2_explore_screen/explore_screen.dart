@@ -92,12 +92,14 @@ class ExploreScreen extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: neutral5Color,
                             spreadRadius: 0,
-                            blurRadius: 28,
+                            blurRadius: 16,
                             offset: Offset(0, 4),
                           ),
                         ],
@@ -119,7 +121,9 @@ class ExploreScreen extends StatelessWidget {
                       alignment: Alignment.bottomLeft,
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: neutral5Color,
@@ -142,11 +146,16 @@ class ExploreScreen extends StatelessWidget {
                     Container(
                       width: 104,
                       height: 80,
-                      padding: EdgeInsets.only(left: 14, bottom: 11),
+                      padding: EdgeInsets.only(
+                        left: 14,
+                        bottom: 11,
+                      ),
                       alignment: Alignment.bottomLeft,
                       decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(16),
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: neutral5Color,

@@ -55,8 +55,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'assets/images/icons/home.png',
-              width: 20,
-              height: 20,
+              width: 24,
+              height: 24,
               color: _page == 0 ? primaryColor : secondaryColor,
             ),
             // icon: Icon(
@@ -68,8 +68,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'assets/images/icons/explore.png',
-              width: 20,
-              height: 20,
+              width: 24,
+              height: 24,
               color: _page == 1 ? primaryColor : secondaryColor,
             ),
             backgroundColor: primaryColor,
@@ -84,8 +84,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'assets/images/icons/inbox.png',
-              width: 20,
-              height: 20,
+              width: 24,
+              height: 24,
               color: _page == 3 ? primaryColor : secondaryColor,
             ),
             backgroundColor: primaryColor,
@@ -93,8 +93,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
           // User Profile
           BottomNavigationBarItem(
             icon: Container(
-              height: 32,
-              width: 32,
+              height: 26,
+              width: 26,
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
@@ -108,8 +108,8 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
                 child: Container(
                   child: Image.network(
                     'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/241461462_270079921407951_7468759206826799783_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=Y-O5tWwzPNgAX8Zkqjt&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfA8NGJlCJaRI-n3Jnng71R2Cn18LOeD_5mwHiX9RlSkHQ&oe=63BBF319&_nc_sid=1527a3',
-                    height: 28,
-                    width: 28,
+                    height: 24,
+                    width: 24,
                     fit: BoxFit.cover,
                   ),
                 ),

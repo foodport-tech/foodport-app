@@ -520,6 +520,69 @@ class DishDetailScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
 
+                    // Tried by, Like, Save, Share
+                    Row(
+                      children: [
+                        Text(
+                          'Tried by ',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Text(
+                          'Jane',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Text(
+                          ', ',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Text(
+                          'Peter',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Text(
+                          ', and ',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Text(
+                          '13 others',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            color: neutral2Color,
+                          ),
+                        ),
+                        Expanded(child: SizedBox()),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+
+                    // Seller's Basic Info: Line
+                    Divider(height: 1),
+                    SizedBox(height: 8),
+
                     // Reviews, Followers, Sales
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -527,7 +590,7 @@ class DishDetailScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              "58.2k",
+                              "#105",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -536,9 +599,9 @@ class DishDetailScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Posts",
+                              "Trending",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral3Color,
                               ),
@@ -559,7 +622,7 @@ class DishDetailScreen extends StatelessWidget {
                             Text(
                               "Followers",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral3Color,
                               ),
@@ -569,7 +632,7 @@ class DishDetailScreen extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              "18.5k",
+                              "58.2k",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -578,9 +641,9 @@ class DishDetailScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Sales",
+                              "Posts",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral3Color,
                               ),
@@ -730,7 +793,9 @@ class DishDetailBasicInfo extends StatelessWidget {
       width: double.infinity,
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        borderRadius: BorderRadius.all(
+          Radius.circular(16.0),
+        ),
         boxShadow: [
           BoxShadow(
             color: neutral5Color,
@@ -758,34 +823,6 @@ class DishDetailBasicInfo extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                // Dish Price
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'RM',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: neutral2Color,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        loadedDish.dishPrice!.toStringAsFixed(2),
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                          fontFamily: 'OpenSans',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
             SizedBox(height: 4),
@@ -798,9 +835,9 @@ class DishDetailBasicInfo extends StatelessWidget {
               totalRating: 235,
               showTotalRating: true,
             ),
-
             SizedBox(height: 8),
 
+            // Tried by
             Row(
               children: [
                 Text(
@@ -848,31 +885,64 @@ class DishDetailBasicInfo extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ],
+            ),
+            SizedBox(height: 16),
+
+            Row(
+              children: [
+                // Dish Price
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'RM',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: neutral2Color,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Text(
+                        loadedDish.dishPrice!.toStringAsFixed(2),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Expanded(child: SizedBox()),
 
                 // Button: Like
                 Image.asset(
                   'assets/images/icons/love.png',
-                  width: 16,
-                  height: 16,
+                  width: 24,
+                  height: 24,
                   color: neutral1Color,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 16),
 
                 // Button: Save
                 Image.asset(
                   'assets/images/icons/bookmark.png',
-                  width: 16,
-                  height: 16,
+                  width: 24,
+                  height: 24,
                   color: neutral1Color,
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 16),
 
                 // Button: Share
                 Image.asset(
                   'assets/images/icons/share.png',
-                  width: 16,
-                  height: 16,
+                  width: 24,
+                  height: 24,
                   color: neutral1Color,
                 ),
               ],

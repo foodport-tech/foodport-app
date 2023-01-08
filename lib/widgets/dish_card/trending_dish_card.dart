@@ -17,17 +17,19 @@ class TrendingDishCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // Cannot remove height
-      height: 240,
+      height: 296,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.35,
+          childAspectRatio: 0.4,
           crossAxisSpacing: 0,
           mainAxisSpacing: 0,
         ),
         padding: EdgeInsets.only(
+          top: 8,
           left: 24,
           right: 24,
+          bottom: 8,
         ),
         scrollDirection: Axis.horizontal,
         itemCount: dishes.length,
@@ -36,21 +38,21 @@ class TrendingDishCard extends StatelessWidget {
           // Trending Card
           child: Container(
             margin: EdgeInsets.only(
-              top: 0,
-              bottom: 16,
+              top: 8,
+              bottom: 8,
               left: 8,
               right: 8,
             ),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(
-                Radius.circular(8.0),
+                Radius.circular(16.0),
               ),
               boxShadow: [
                 BoxShadow(
                   color: neutral5Color,
                   spreadRadius: 0,
-                  blurRadius: 16,
+                  blurRadius: 12,
                   offset: Offset(0, 4),
                 ),
               ],
@@ -60,22 +62,23 @@ class TrendingDishCard extends StatelessWidget {
                 // Image Section
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
+                    topLeft: Radius.circular(16.0),
+                    bottomLeft: Radius.circular(16.0),
                   ),
                   child: Image.network(
                     'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
-                    height: 104,
-                    width: 104,
+                    height: 124,
+                    width: 124,
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(width: 16),
+                SizedBox(width: 12),
 
                 // Ranking Indicator
-                Icon(
-                  Icons.circle,
-                  size: 8,
+                Image.asset(
+                  'assets/images/icons/triangle_up_filled.png',
+                  width: 8,
+                  height: 8,
                 ),
                 SizedBox(width: 4),
 
@@ -85,7 +88,7 @@ class TrendingDishCard extends StatelessWidget {
                   style: TextStyle(
                     color: neutral1Color,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontFamily: 'OpenSans',
                   ),
                 ),
@@ -95,22 +98,25 @@ class TrendingDishCard extends StatelessWidget {
                 Expanded(
                   child: Container(
                     height: 200,
+                    padding: EdgeInsets.only(
+                      top: 12,
+                      bottom: 12,
+                      right: 12,
+                    ),
                     alignment: Alignment.topLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 12),
                         // Dish Name
                         Text(
                           dishes[index].dishName!,
                           style: TextStyle(
-                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: neutral1Color,
                             fontFamily: 'OpenSans',
                           ),
                         ),
-                        SizedBox(height: 8),
+                        SizedBox(height: 4),
 
                         // Rating
                         DishRating(
@@ -120,7 +126,7 @@ class TrendingDishCard extends StatelessWidget {
                           showTotalRating: false,
                           totalRating: 123,
                         ),
-                        SizedBox(height: 8),
+                        Expanded(child: Container()),
 
                         // Price
                         Row(
@@ -139,13 +145,12 @@ class TrendingDishCard extends StatelessWidget {
                             Text(
                               dishes[index].dishPrice!.toStringAsFixed(2),
                               style: TextStyle(
-                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: primaryColor,
                                 fontFamily: 'OpenSans',
                               ),
                             ),
-                            SizedBox(width: 16),
+                            SizedBox(width: 4),
                           ],
                         ),
                       ],

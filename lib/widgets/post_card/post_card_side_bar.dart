@@ -54,8 +54,14 @@ class PostCardSideBar extends StatelessWidget {
               // );
             },
           ),
-          SizedBox(height: 8),
-          const Text("6793"),
+          SizedBox(height: 4),
+          const Text(
+            "6793",
+            style: TextStyle(
+              fontSize: 12,
+              color: neutral1Color,
+            ),
+          ),
           const SizedBox(height: 16),
 
           // Like Section
@@ -79,9 +85,15 @@ class PostCardSideBar extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 4),
           // Display amount of likes
-          Text('123'), // Temp
+          Text(
+            '123',
+            style: TextStyle(
+              fontSize: 12,
+              color: neutral1Color,
+            ),
+          ), // Temp
           // TOFIX: Firebase
           // Text("${widget.snap['likes'].length}"),
           const SizedBox(height: 16),
@@ -93,8 +105,14 @@ class PostCardSideBar extends StatelessWidget {
             height: 24,
             color: neutral1Color,
           ),
-          SizedBox(height: 8),
-          Text('12'), // Temp
+          SizedBox(height: 4),
+          Text(
+            '12',
+            style: TextStyle(
+              fontSize: 12,
+              color: neutral1Color,
+            ),
+          ), // Temp
           // TOFIX: Firebase
           // Text("$commentLen"),
           const SizedBox(height: 16),
@@ -106,8 +124,14 @@ class PostCardSideBar extends StatelessWidget {
             height: 24,
             color: neutral1Color,
           ),
-          SizedBox(height: 8),
-          const Text("7093"),
+          SizedBox(height: 4),
+          const Text(
+            "7093",
+            style: TextStyle(
+              fontSize: 12,
+              color: neutral1Color,
+            ),
+          ),
           const SizedBox(height: 16),
 
           // Share Post Section
@@ -117,8 +141,14 @@ class PostCardSideBar extends StatelessWidget {
             height: 24,
             color: neutral1Color,
           ),
-          SizedBox(height: 8),
-          const Text("5604"),
+          SizedBox(height: 4),
+          const Text(
+            "5604",
+            style: TextStyle(
+              fontSize: 12,
+              color: neutral1Color,
+            ),
+          ),
         ],
       ),
     );

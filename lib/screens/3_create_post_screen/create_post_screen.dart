@@ -167,7 +167,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: const Text(
                           "Delicious",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -179,11 +179,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           direction: Axis.horizontal,
                           allowHalfRating: false,
                           itemCount: 5,
-                          itemSize: 32,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                          itemSize: 24,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Image.asset(
+                            'assets/images/icons/star_filled.png',
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
@@ -199,7 +198,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: Text(
                           _ratingDescriptionDelicious,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -215,7 +214,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: const Text(
                           "Eat Again",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -227,11 +226,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           direction: Axis.horizontal,
                           allowHalfRating: false,
                           itemCount: 5,
-                          itemSize: 32,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.recommend,
-                            color: red1Color,
+                          itemSize: 24,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Image.asset(
+                            'assets/images/icons/fire_filled.png',
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
@@ -247,7 +245,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: Text(
                           _ratingDescriptionRecommend,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -263,7 +261,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: const Text(
                           "Worth It",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -275,11 +273,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           direction: Axis.horizontal,
                           allowHalfRating: false,
                           itemCount: 5,
-                          itemSize: 32,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.monetization_on,
-                            color: Color.fromRGBO(199, 178, 115, 1),
+                          itemSize: 24,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => Image.asset(
+                            'assets/images/icons/coin_filled.png',
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
@@ -295,7 +292,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         child: Text(
                           _ratingDescriptionWorthIt,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 14,
                             color: neutral1Color,
                           ),
                         ),
@@ -319,7 +316,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.menu_book),
+                      Image.asset(
+                        'assets/images/icons/cutlery.png',
+                        width: 20,
+                        height: 20,
+                      ),
                       SizedBox(width: 16),
                       Expanded(child: Text("What do you eat?")),
                       Icon(
@@ -340,7 +341,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.lock_open),
+                      Image.asset(
+                        'assets/images/icons/unlock.png',
+                        width: 20,
+                        height: 20,
+                      ),
                       SizedBox(width: 16),
                       Expanded(child: Text("Public · Everyone can view")),
                       Icon(
@@ -361,7 +366,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.settings),
+                      Image.asset(
+                        'assets/images/icons/setting.png',
+                        width: 20,
+                        height: 20,
+                      ),
                       SizedBox(width: 16),
                       Expanded(child: Text("Advance setting")),
                       Icon(

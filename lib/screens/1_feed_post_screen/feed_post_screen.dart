@@ -20,6 +20,7 @@ class FeedPostScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0, // Remove shadow
           backgroundColor: neutral6Color,
+          // toolbarHeight: 52,
 
           // Add Content Button
           leading: IconButton(

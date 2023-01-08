@@ -252,7 +252,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 8),
 
                   // Tried by, Like, Save, Share
                   Row(
@@ -309,32 +309,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                         ),
                       ),
                       Expanded(child: SizedBox()),
-
-                      // Button: Like
-                      Image.asset(
-                        'assets/images/icons/love.png',
-                        width: 16,
-                        height: 16,
-                        color: neutral2Color,
-                      ),
-                      SizedBox(width: 8),
-
-                      // Button: Save
-                      Image.asset(
-                        'assets/images/icons/bookmark.png',
-                        width: 16,
-                        height: 16,
-                        color: neutral2Color,
-                      ),
-                      SizedBox(width: 8),
-
-                      // Button: Share
-                      Image.asset(
-                        'assets/images/icons/share.png',
-                        width: 16,
-                        height: 16,
-                        color: neutral2Color,
-                      ),
                     ],
                   ),
                   SizedBox(height: 8),
@@ -364,6 +338,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Trending",
                               style: TextStyle(
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),
@@ -386,6 +361,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Followers",
                               style: TextStyle(
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),
@@ -407,6 +383,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                             Text(
                               "Posts",
                               style: TextStyle(
+                                fontSize: 14,
                                 fontFamily: "OpenSans",
                                 color: neutral2Color,
                               ),
@@ -478,6 +455,86 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 16),
+
+                  Divider(height: 1),
+                  SizedBox(height: 8),
+
+                  // Dish Price Range, Like, Save, Share
+                  Row(
+                    children: [
+                      // Dish Price
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'RM',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: neutral2Color,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              "13", //loadedDish.dishPrice!.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                            Text(
+                              " - ", //loadedDish.dishPrice!.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: neutral2Color,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                            Text(
+                              "67", //loadedDish.dishPrice!.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor,
+                                fontFamily: 'OpenSans',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(child: SizedBox()),
+                      // Button: Like
+                      Image.asset(
+                        'assets/images/icons/love.png',
+                        width: 24,
+                        height: 24,
+                        color: neutral2Color,
+                      ),
+                      SizedBox(width: 16),
+
+                      // Button: Save
+                      Image.asset(
+                        'assets/images/icons/bookmark.png',
+                        width: 24,
+                        height: 24,
+                        color: neutral2Color,
+                      ),
+                      SizedBox(width: 16),
+
+                      // Button: Share
+                      Image.asset(
+                        'assets/images/icons/share.png',
+                        width: 24,
+                        height: 24,
+                        color: neutral2Color,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -523,8 +580,8 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                         Image.asset(
                           'assets/images/icons/direction.png',
                           color: neutral2Color,
-                          width: 16,
-                          height: 16,
+                          width: 24,
+                          height: 24,
                         ),
                       ],
                     ),

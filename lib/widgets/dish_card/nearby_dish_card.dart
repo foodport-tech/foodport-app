@@ -37,7 +37,9 @@ class NearbyDishCard extends StatelessWidget {
             width: 160,
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(16.0),
+              ),
               boxShadow: [
                 BoxShadow(
                   color: neutral5Color,
@@ -52,8 +54,8 @@ class NearbyDishCard extends StatelessWidget {
                 // Image
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(8.0),
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
                   ),
                   child: Image.network(
                     'https://media.istockphoto.com/id/1309352410/photo/cheeseburger-with-tomato-and-lettuce-on-wooden-board.jpg?s=612x612&w=0&k=20&c=lfsA0dHDMQdam2M1yvva0_RXfjAyp4gyLtx4YUJmXgg=',
@@ -80,7 +82,6 @@ class NearbyDishCard extends StatelessWidget {
                           child: Text(
                             dishes[index].dishName!,
                             style: TextStyle(
-                              fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: neutral1Color,
                               fontFamily: 'OpenSans',
@@ -121,7 +122,6 @@ class NearbyDishCard extends StatelessWidget {
                               Text(
                                 dishes[index].dishPrice!.toStringAsFixed(2),
                                 style: TextStyle(
-                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: primaryColor,
                                   fontFamily: 'OpenSans',
