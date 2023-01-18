@@ -107,7 +107,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
                 borderRadius: BorderRadius.circular(14.0),
                 child: Container(
                   child: Image.network(
-                    'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/241461462_270079921407951_7468759206826799783_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=Y-O5tWwzPNgAX8Zkqjt&edm=ACWDqb8BAAAA&ccb=7-5&oh=00_AfA8NGJlCJaRI-n3Jnng71R2Cn18LOeD_5mwHiX9RlSkHQ&oe=63BBF319&_nc_sid=1527a3',
+                    'https://media.istockphoto.com/id/936928380/photo/portrait-of-a-mid-adult-male.jpg?s=612x612&w=0&k=20&c=U_nnHIwP61jYJvRhjCdOjrye4CPlcOCmKmHKXefoiPg=',
                     height: 24,
                     width: 24,
                     fit: BoxFit.cover,
