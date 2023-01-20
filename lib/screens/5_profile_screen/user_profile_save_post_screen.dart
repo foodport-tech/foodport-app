@@ -20,19 +20,13 @@ class UserProfileSavePostScreen extends StatelessWidget {
       ),
       // Individual Post
       itemBuilder: (context, index) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: neutral5Color,
-              spreadRadius: 0,
-              blurRadius: 16,
-              offset: Offset(0, 4),
-            ),
-          ],
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.width / 3,
+        child: Image.network(
+          "https://images.unsplash.com/photo-1432139509613-5c4255815697?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=685&q=80",
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3,
         ),
       ),
     );

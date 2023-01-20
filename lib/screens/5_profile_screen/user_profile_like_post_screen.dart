@@ -20,19 +20,13 @@ class UserProfileLikePostScreen extends StatelessWidget {
       ),
       // Individual Post
       itemBuilder: (context, index) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: neutral5Color,
-              spreadRadius: 0,
-              blurRadius: 16,
-              offset: Offset(0, 4),
-            ),
-          ],
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.width / 3,
+        child: Image.network(
+          "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MjB8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3,
         ),
       ),
     );

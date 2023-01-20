@@ -277,16 +277,16 @@ class DishDetailScreen extends StatelessWidget {
                             ),
                             // Rating
                             DishRating(
-                              dishRatingDelicious: 3,
+                              dishRatingDelicious: 5,
                               dishRatingEatAgain: 4,
-                              dishRatingWorthIt: 5,
+                              dishRatingWorthIt: 3,
                               showTotalRating: false,
                             ),
                           ],
                         ),
                         SizedBox(height: 4),
                         Text(
-                          "The burger patty alone is delicious and paired off with the creaminess and buttery taste of the sauce.",
+                          "I have to say, it was absolutely delicious. The dish was a perfect combination of flavors, textures and colors.",
                           style: TextStyle(
                             color: neutral3Color,
                           ),
@@ -303,7 +303,7 @@ class DishDetailScreen extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10.0),
                               child: Image.network(
-                                'https://images.unsplash.com/photo-1606122017369-d782bbb78f32?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXQlMjBwaG90b2dyYXBoeXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=50&q=60',
+                                'https://media.istockphoto.com/id/1262964459/photo/nothing-is-a-magnet-for-success-like-self-confidence.jpg?b=1&s=170667a&w=0&k=20&c=MGoEpHkz63VRhAPZ44dFAuAmRC0QAseAc6srOQKHDbw=',
                                 height: 20,
                                 width: 20,
                                 fit: BoxFit.cover,
@@ -312,7 +312,7 @@ class DishDetailScreen extends StatelessWidget {
                             SizedBox(width: 4),
                             Expanded(
                               child: Text(
-                                "Patricia",
+                                "Charles",
                                 style: TextStyle(
                                   color: neutral3Color,
                                 ),
@@ -320,9 +320,9 @@ class DishDetailScreen extends StatelessWidget {
                             ),
                             // Rating
                             DishRating(
-                              dishRatingDelicious: 3,
+                              dishRatingDelicious: 5,
                               dishRatingEatAgain: 4,
-                              dishRatingWorthIt: 5,
+                              dishRatingWorthIt: 4,
                               showTotalRating: false,
                             ),
                           ],
@@ -383,7 +383,7 @@ class DishDetailScreen extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(36.0),
                             child: Image.network(
-                              'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/133585212_850140199117185_2772702535892613805_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=NaQ6yrwAZwQAX8QZA7-&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfDORAW0DHTBD-8J20DHCaRHId-h3Umw9KVZa1m9m0L6JQ&oe=63BB9DEA&_nc_sid=6136e7',
+                              'https://img.freepik.com/premium-vector/restaurant-logo-restaurant-logo-design-vector-template-stock-vector_664675-352.jpg',
                               height: 72,
                               width: 72,
                               fit: BoxFit.cover,

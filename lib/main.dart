@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Foodport',
         theme: ThemeData(
+          useMaterial3: true,
           colorScheme: ColorScheme.fromSwatch(
             primaryColorDark: neutral1Color,
             accentColor: orange1Color,

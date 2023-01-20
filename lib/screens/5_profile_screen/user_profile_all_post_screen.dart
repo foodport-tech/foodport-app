@@ -11,7 +11,7 @@ class UserProfileAllPostScreen extends StatelessWidget {
       padding: EdgeInsets.all(0),
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 10,
+      itemCount: 11,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         childAspectRatio: 1,
@@ -20,19 +20,13 @@ class UserProfileAllPostScreen extends StatelessWidget {
       ),
       // Individual Post
       itemBuilder: (context, index) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(16.0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: neutral5Color,
-              spreadRadius: 0,
-              blurRadius: 16,
-              offset: Offset(0, 4),
-            ),
-          ],
+        width: MediaQuery.of(context).size.width / 3,
+        height: MediaQuery.of(context).size.width / 3,
+        child: Image.network(
+          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width / 3,
+          height: MediaQuery.of(context).size.width / 3,
         ),
       ),
     );

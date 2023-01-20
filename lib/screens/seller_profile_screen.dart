@@ -155,7 +155,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(36.0),
                           child: Image.network(
-                            'https://instagram.fkul10-1.fna.fbcdn.net/v/t51.2885-19/133585212_850140199117185_2772702535892613805_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.fkul10-1.fna.fbcdn.net&_nc_cat=109&_nc_ohc=NaQ6yrwAZwQAX8QZA7-&edm=ABmJApABAAAA&ccb=7-5&oh=00_AfDORAW0DHTBD-8J20DHCaRHId-h3Umw9KVZa1m9m0L6JQ&oe=63BB9DEA&_nc_sid=6136e7',
+                            'https://img.freepik.com/premium-vector/restaurant-logo-restaurant-logo-design-vector-template-stock-vector_664675-352.jpg',
                             height: 71,
                             width: 71,
                             fit: BoxFit.cover,
