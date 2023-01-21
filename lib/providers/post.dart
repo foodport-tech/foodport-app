@@ -18,14 +18,14 @@ class Post with ChangeNotifier {
   final postCommentView;
   // A Map of 'userId' & 'postCommentId' of the users that have commented this post
   final postComment;
-  // A Map of 'userId' & 'postSharedId' of the users that have shared this post
+  // A Map of 'userId' & 'postShareId' of the users that have shared this post
   final postShare;
-  // A Map of 'userId' & 'postSavedId' of the users that have saved this post
+  // A Map of 'userId' & 'postSaveId' of the users that have saved this post
   final postSave;
-  // A Map of 'userId' & 'postMenuViewedId' of the users that have viewed the menu of this post
-  final postMenuVisit;
-  // A Map of 'userId' & 'postMenuSellerVisitedId' of the users that have visited the seller profile of this post
-  final postMenuSellerVisit;
+  // A Map of 'userId' & 'postDishViewId' of the users that have viewed the dish of this post
+  final postDishVisit;
+  // A Map of 'userId' & 'postDishSellerVisitId' of the users that have visited the seller profile of this post
+  final postDishSellerVisit;
   String? dishId;
 
   Post({
@@ -44,10 +44,27 @@ class Post with ChangeNotifier {
     this.postComment,
     this.postShare,
     this.postSave,
-    this.postMenuVisit,
-    this.postMenuSellerVisit,
+    this.postDishVisit,
+    this.postDishSellerVisit,
     this.dishId,
   });
+
+  toggleDishVisitStatus(userId) {
+    // If 'postDishVisit' contain 'userId':
+    if (postLike.containsKey(userId)) {
+      // Add Value to Key 'userId'
+      // TODO: Code goes here
+    }
+    // Else ('postDishVisit' not contain 'userId'):
+    else {
+      // Add Key 'userId' to 'postDishVisit'
+      postDishVisit.putIfAbsent("$userId", () => []);
+      // Add Value to Key 'userId'
+      // TODO: Code goes here
+    }
+
+    notifyListeners();
+  }
 
   toggleLikeStatus(userId) {
     // If 'postLike' contain 'userId':
@@ -59,6 +76,25 @@ class Post with ChangeNotifier {
     else {
       // Add 'userId' to 'postLike'
       postLike.putIfAbsent("$userId", () => []);
+      // Add Value to Key 'userId'
+      // TODO: Code goes here
+    }
+
+    notifyListeners();
+  }
+
+  toggleSaveStatus(userId) {
+    // If 'postSave' contain 'userId':
+    if (postSave.containsKey(userId)) {
+      // Remove 'userId' from 'postLike'
+      postSave.remove(userId);
+    }
+    // Else ('postSave' not contain 'userId'):
+    else {
+      // Add 'userId' to 'postSave'
+      postSave.putIfAbsent("$userId", () => []);
+      // Add Value to Key 'userId'
+      // TODO: Code goes here
     }
 
     notifyListeners();

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:foodport_app/providers/dishes.dart';
 import 'package:foodport_app/widgets/dish_rating.dart';
+import 'package:intl/intl.dart';
 
+import '../../providers/dish.dart';
 import '../../providers/post.dart';
+import '../../providers/seller.dart';
+import '../../providers/sellers.dart';
+import '../../providers/user.dart';
+import '../../providers/users.dart';
 import '../../utils/colors.dart';
 import 'post_card_side_bar.dart';
 
@@ -15,6 +22,10 @@ class PostCardBottomContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User user = Users().findByUserId(post.userId);
+    Dish dish = Dishes().findByDishId(post.dishId!);
+    Seller seller = Sellers().findBySellerId(dish.sellerId!);
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(
@@ -51,7 +62,7 @@ class PostCardBottomContent extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        post.userId, // Find username from userId
+                        user.userUsername!, // Find username from userId
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -65,7 +76,9 @@ class PostCardBottomContent extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        post.postReview,
+                        "${dish.dishName} - ${post.postReview}",
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(
@@ -84,8 +97,13 @@ class PostCardBottomContent extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
-                          "bread, egg, ham, patty, cheese, mayonaise, blackpepper"),
+                      child: Text(
+                        // If got dishMainIngredient, show dishMainIngredient.
+                        // Else show dishIngredient
+                        dish.dishMainIngredient ?? dish.dishIngredient,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     const SizedBox(
                       height: 16,
@@ -103,8 +121,10 @@ class PostCardBottomContent extends StatelessWidget {
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
-                        "calories-266g, fat-10g, sodium-396mg, carbohydrates-30g, fiber-1g, sugars-5g, protein-13g",
+                      child: Text(
+                        dish.dishNutrition,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
 
@@ -112,7 +132,10 @@ class PostCardBottomContent extends StatelessWidget {
                       child: Container(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          'dd MMMM yyyy · hh:mm aa',
+                          // 'dd MMMM yyyy · hh:mm aa',
+                          DateFormat("dd MMM yyyy · hh:mm aa")
+                              .format(post.postPublishDateTime)
+                              .toString(),
                           style: const TextStyle(
                             fontSize: 12,
                             color: neutral3Color,

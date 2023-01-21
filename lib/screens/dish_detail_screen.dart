@@ -39,6 +39,7 @@ class DishDetailScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0, // Remove shadow
         backgroundColor: mobileBackgroundColor,
+        surfaceTintColor: mobileBackgroundColor,
         titleSpacing: 0,
         toolbarHeight: 64,
         automaticallyImplyLeading: false,

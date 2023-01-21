@@ -10,6 +10,7 @@ class Sellers with ChangeNotifier {
       sellerOperatingLocation: {
         "address":
             "CC by MEL, Residensi Park, 2-13, Persiaran Jalil Utama, Bukit Jalil, 57000 Kuala Lumpur, Federal Territory of Kuala Lumpur",
+        'city': "Bukit Jalil, Kuala Lumpur",
         "location": {
           "lat": 3.0530531,
           "lng": 101.669997,
@@ -52,4 +53,8 @@ class Sellers with ChangeNotifier {
       sellerHalal: false,
     ),
   ];
+
+  Seller findBySellerId(String sellerId) {
+    return _items.firstWhere((seller) => seller.sellerId == sellerId);
+  }
 }

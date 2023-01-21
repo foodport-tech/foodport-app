@@ -14,7 +14,7 @@ class Dishes with ChangeNotifier {
         'p1',
       ],
       dishMainIngredient:
-          "Chicken Katsu | Ebi Sambal | Truffled Eggs | Cucumber | Pandan Loaf",
+          "Chicken Katsu, Ebi Sambal, Truffled Eggs, Cucumber, Pandan Loaf",
       dishIngredient: "bread, egg, ham, patty, cheese, mayonaise, blackpepper",
       dishNutrition:
           "calories-266g, fat-10g, sodium-396mg, carbohydrates-30g, fiber-1g, sugars-5g, protein-13g",

@@ -9,7 +9,8 @@ class Posts with ChangeNotifier {
       postId: 'p1',
       postPhotoUrl:
           "https://ucarecdn.com/134fe764-10be-4ab5-ae45-40876bb63289/-/crop/2230x1254/0,1139/-/resize/1600x900/",
-      postReview: 'This food is good.',
+      postReview:
+          'It was absolutely delicious! The chicken katsu was crispy and juicy, and the ebi sambal added a nice spicy kick. The truffled eggs were a unique and decadent addition, and the cucumber provided a refreshing contrast. The pandan loaf was a great finishing touch, adding a subtle sweetness and a lovely aroma. Overall, it was a perfect combination of flavors and textures, and I would highly recommend it to anyone looking for a tasty and satisfying meal.',
       postRatingEatAgain: 4.0,
       postRatingDelicious: 3.0, //postRatingStar: 3.0,
       postRatingWorthIt: 5.0,
@@ -18,35 +19,35 @@ class Posts with ChangeNotifier {
       dishId: 'd1',
       postPublishIpAddress: '',
       postView: {
-        'u1': [],
+        'u1': ['pv1'], // post view ID
         'u2': [],
       },
       postLike: {
-        'u1': [],
+        'u1': ['pl1'], // post like ID
         'u2': [],
       },
       postCommentView: {
-        'u1': [],
+        'u1': ['pcv1'], // post comment view ID
         'u2': [],
       },
       postComment: {
-        'u1': [],
-        'u2': [],
-      },
-      postShare: {
-        'u1': [],
+        'u1': ['pc1'], // post comment ID
         'u2': [],
       },
       postSave: {
-        'u1': [],
+        'u1': ['psv1'], // post save ID
         'u2': [],
       },
-      postMenuVisit: {
-        'u1': [],
+      postShare: {
+        'u1': ['psh1'], // post share ID
         'u2': [],
       },
-      postMenuSellerVisit: {
-        'u1': [],
+      postDishVisit: {
+        'u1': ['pdv1'], // post menu visit ID
+        'u2': [],
+      },
+      postDishSellerVisit: {
+        'u1': ['pdsv1'], // post menu seller vist ID
         'u2': [],
       },
     ),
@@ -85,11 +86,11 @@ class Posts with ChangeNotifier {
         'u1': [],
         'u2': [],
       },
-      postMenuVisit: {
+      postDishVisit: {
         'u1': [],
         'u2': [],
       },
-      postMenuSellerVisit: {
+      postDishSellerVisit: {
         'u1': [],
         'u2': [],
       },
