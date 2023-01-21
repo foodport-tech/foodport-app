@@ -91,8 +91,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                 ),
               ),
 
-              // Flexible Space
-              expandedHeight: 584,
+              // User Basic Info
+              expandedHeight: 600,
+              // TODO: Advance Improvement https://stackoverflow.com/questions/50909791/flutter-change-text-when-flexiblespacebar-is-collapsed
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
                   color: mobileBackgroundColor, // Colors.amber,
@@ -448,35 +449,70 @@ class _UserProfileScreenState extends State<UserProfileScreen>
               // Tab Bar
               pinned: true,
               floating: true,
-              bottom: TabBar(
-                labelColor: primaryColor,
-                unselectedLabelColor: neutral1Color,
-                indicatorColor: primaryColor,
-                tabs: <Widget>[
-                  Tab(
-                    icon: Image.asset(
-                      "assets/images/icons/grid.png",
-                      height: 20,
-                      width: 20,
-                    ),
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(50.0),
+                child: Container(
+                  color: mobileBackgroundColor,
+                  child: TabBar(
+                    labelColor: primaryColor,
+                    unselectedLabelColor: neutral1Color,
+                    indicatorColor: primaryColor,
+                    tabs: <Widget>[
+                      Tab(
+                        icon: Image.asset(
+                          "assets/images/icons/grid.png",
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                      Tab(
+                        icon: Image.asset(
+                          "assets/images/icons/bookmark.png",
+                          height: 20,
+                          width: 20,
+                        ),
+                      ),
+                      Tab(
+                        icon: Image.asset(
+                          "assets/images/icons/love.png",
+                          height: 20,
+                          width: 20,
+                        ),
+                      )
+                    ],
+                    controller: _tabController,
                   ),
-                  Tab(
-                    icon: Image.asset(
-                      "assets/images/icons/bookmark.png",
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                  Tab(
-                    icon: Image.asset(
-                      "assets/images/icons/love.png",
-                      height: 20,
-                      width: 20,
-                    ),
-                  )
-                ],
-                controller: _tabController,
+                ),
               ),
+              // bottom: TabBar(
+              //   labelColor: primaryColor,
+              //   unselectedLabelColor: neutral1Color,
+              //   indicatorColor: primaryColor,
+              //   tabs: <Widget>[
+              //     Tab(
+              //       icon: Image.asset(
+              //         "assets/images/icons/grid.png",
+              //         height: 20,
+              //         width: 20,
+              //       ),
+              //     ),
+              //     Tab(
+              //       icon: Image.asset(
+              //         "assets/images/icons/bookmark.png",
+              //         height: 20,
+              //         width: 20,
+              //       ),
+              //     ),
+              //     Tab(
+              //       icon: Image.asset(
+              //         "assets/images/icons/love.png",
+              //         height: 20,
+              //         width: 20,
+              //       ),
+              //     )
+              //   ],
+              //   controller: _tabController,
+              // ),
             )
           ];
         },
