@@ -445,6 +445,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: "OpenSans",
+                                  color: neutral1Color,
                                 ),
                               ),
                             ),

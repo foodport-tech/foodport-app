@@ -350,6 +350,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                 width: double.infinity,
                                 child: Text(
                                   "I see food, I eat it. \n👦🏻 ENFJ-A \n🕵🏻 Cheese, Matcha, Ice Cream, Repeat ",
+                                  style: TextStyle(
+                                    color: neutral1Color,
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 4),
@@ -389,6 +392,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                               "21yr",
                                               style: TextStyle(
                                                 fontSize: 12,
+                                                color: neutral1Color,
                                               ),
                                             ),
                                           ),
@@ -417,6 +421,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                         maxLines: 1,
                                         style: TextStyle(
                                           fontSize: 12,
+                                          color: neutral1Color,
                                         ),
                                       ),
                                     )
@@ -447,6 +452,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
               ),
 
               // Tab Bar
+              elevation: 0,
               pinned: true,
               floating: true,
               bottom: PreferredSize(

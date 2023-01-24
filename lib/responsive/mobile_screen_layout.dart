@@ -59,10 +59,6 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               height: 24,
               color: _page == 0 ? primaryColor : secondaryColor,
             ),
-            // icon: Icon(
-            //   Icons.home_outlined,
-            //   color: _page == 0 ? primaryColor : secondaryColor,
-            // ),
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
@@ -115,10 +111,6 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
                 ),
               ),
             ),
-            // icon: Icon(
-            //   Icons.person_outline,
-            //   color: _page == 4 ? primaryColor : secondaryColor,
-            // ),
             backgroundColor: primaryColor,
           ),
         ],

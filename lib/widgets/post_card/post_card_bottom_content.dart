@@ -65,6 +65,7 @@ class PostCardBottomContent extends StatelessWidget {
                         user.userUsername!, // Find username from userId
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: neutral1Color,
                         ),
                       ),
                     ),
@@ -79,6 +80,9 @@ class PostCardBottomContent extends StatelessWidget {
                         "${dish.dishName} - ${post.postReview}",
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: neutral1Color,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -92,6 +96,7 @@ class PostCardBottomContent extends StatelessWidget {
                         "Ingredients",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
+                          color: neutral1Color,
                         ),
                       ),
                     ),
@@ -103,6 +108,9 @@ class PostCardBottomContent extends StatelessWidget {
                         dish.dishMainIngredient ?? dish.dishIngredient,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: neutral1Color,
+                        ),
                       ),
                     ),
                     const SizedBox(
@@ -116,6 +124,7 @@ class PostCardBottomContent extends StatelessWidget {
                         "Nutritions",
                         style: TextStyle(
                           decoration: TextDecoration.underline,
+                          color: neutral1Color,
                         ),
                       ),
                     ),
@@ -125,6 +134,9 @@ class PostCardBottomContent extends StatelessWidget {
                         dish.dishNutrition,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: neutral1Color,
+                        ),
                       ),
                     ),
 

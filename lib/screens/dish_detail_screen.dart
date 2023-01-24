@@ -175,6 +175,7 @@ class DishDetailScreen extends StatelessWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'OpenSans',
+                              color: neutral1Color,
                             ),
                           ),
                         ),
@@ -846,6 +847,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'OpenSans',
+                    color: neutral1Color,
                   ),
                 ),
                 Text(
@@ -854,6 +856,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                     fontSize: 12,
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
+                    color: neutral1Color,
                   ),
                 ),
                 Text(
@@ -861,6 +864,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'OpenSans',
+                    color: neutral1Color,
                   ),
                 ),
                 Text(
@@ -869,6 +873,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                     fontSize: 12,
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
+                    color: neutral1Color,
                   ),
                 ),
                 Text(
@@ -876,6 +881,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: 'OpenSans',
+                    color: neutral1Color,
                   ),
                 ),
                 Text(
@@ -884,6 +890,7 @@ class DishDetailBasicInfo extends StatelessWidget {
                     fontSize: 12,
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
+                    color: neutral1Color,
                   ),
                 ),
               ],
