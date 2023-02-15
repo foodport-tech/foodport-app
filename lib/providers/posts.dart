@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'post.dart';
 
@@ -128,7 +132,68 @@ class Posts with ChangeNotifier {
     return _items.firstWhere((post) => post.postId == postId);
   }
 
-  void createPost() {
-    notifyListeners();
+  // TODO: WORKING IN PROGRESS
+  void publishPost(
+    Uint8List file,
+    String review,
+    double ratingValueDelicious,
+    double ratingValueEatAgain,
+    double ratingValueWorthIt,
+    String newPostDishId,
+  ) {
+    final url = Uri.http('127.0.0.1:8000', '/api/post/posts/');
+    http
+        .post(
+      url,
+      body: json.encode({
+        // 'postId': null,
+        // 'postPhotoUrl': file,
+        'postReview': review,
+        'postRatingDelicious': ratingValueDelicious,
+        'postRatingEatAgain': ratingValueEatAgain,
+        'postRatingWorthIt': ratingValueWorthIt,
+        // 'postPublishDateTime': DateTime.now().toString(),
+        // 'userId': null, // Get user's ID
+        // 'postPublishIpAddress': null, // Get user's IP Address
+        // 'postView': null,
+        // 'postLike': null,
+        // 'postCommentView': null,
+        // 'postComment': null,
+        // 'postShare': null,
+        // 'postSave': null,
+        // 'postDishVisit': null,
+        // 'postDishSellerVisit': null,
+        // 'dishId': newPostDishId,
+      }),
+    )
+        .then(
+      (response) {
+        // final newPost = Post(
+        // postId: json.decode(response.body)['postId'],
+        // postPhotoUrl: json.decode(response.body)['postPhotoUrl'],
+        // postReview: json.decode(response.body)['postReview'],
+        // postRatingDelicious: ratingValueDelicious,
+        // postRatingEatAgain: ratingValueEatAgain,
+        // postRatingWorthIt: ratingValueWorthIt,
+        // postPublishDateTime:
+        //     json.decode(response.body)['postPublishDateTime'],
+        // userId: json.decode(response.body)['userId'], // Get user's ID
+        // postPublishIpAddress: null, // Get user's IP Address
+        // postView: null,
+        // postLike: null,
+        // postCommentView: null,
+        // postComment: null,
+        // postShare: null,
+        // postSave: null,
+        // postDishVisit: null,
+        // postDishSellerVisit: null,
+        // dishId: newPostDishId,
+        // );
+
+        // _items.add(newPost);
+
+        notifyListeners();
+      },
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../providers/posts.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
 
@@ -20,11 +21,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
   double _ratingValueDelicious = 3;
-  double _ratingValueRecommend = 3;
+  double _ratingValueEatAgain = 3;
   double _ratingValueWorthIt = 3;
   String _ratingDescriptionDelicious = 'Moderately';
-  String _ratingDescriptionRecommend = 'Moderately';
+  String _ratingDescriptionEatAgain = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
+  late String _newPostDishId;
+  // Form
+  final _form = GlobalKey<FormState>();
+  // For publishPost()
+  Posts posts = Posts();
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -87,19 +93,36 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
   }
 
+  // TODO: WORKING IN PROGRESS
+  void _publishPost() {
+    if (_file != null && _reviewController != null) {
+      // Call function createPost
+      posts.publishPost(
+        _file!,
+        "This is a static review",
+        _ratingValueDelicious,
+        _ratingValueEatAgain,
+        _ratingValueWorthIt,
+        _newPostDishId,
+      );
+      print("_publishPost");
+      print(_file!);
+      print(_reviewController);
+      print(_ratingValueDelicious);
+      print(_ratingValueEatAgain);
+      print(_ratingValueWorthIt);
+      print(_newPostDishId);
+    } else {
+      print("Condition not met");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
         elevation: 0, // Remove shadow
-        // leading: IconButton(
-        //   icon: const Icon(
-        //     Icons.arrow_back_ios_new,
-        //     color: neutral1Color,
-        //   ),
-        //   onPressed: () {},
-        // ),
         title: const Text(
           "Create Post",
           style: TextStyle(
@@ -115,47 +138,53 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
-                  Row(children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _reviewController,
-                        decoration: const InputDecoration(
-                          hintText: "Write your thoughts..",
-                          border: InputBorder.none,
+                  Row(
+                    children: [
+                      // WRITE REVIEW: For user to write review
+                      Expanded(
+                        child: TextField(
+                          controller: _reviewController,
+                          decoration: const InputDecoration(
+                            hintText: "Write your thoughts..",
+                            border: InputBorder.none,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: neutral3Color,
+                          ),
+                          maxLines: 5,
                         ),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: neutral3Color,
-                        ),
-                        maxLines: 5,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Container(
-                      color: Colors.white,
-                      width: 100,
-                      height: 100,
-                      child: _file == null
-                          ? IconButton(
-                              icon: const Icon(
-                                  Icons.add_photo_alternate_outlined),
-                              // Direct user to take a photo or select a file
-                              onPressed: () => _selectImage(context),
-                            )
-                          : Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  // '!' in '_fill!' means variable will never be null
-                                  image: MemoryImage(_file!),
-                                  fit: BoxFit.fill,
-                                  alignment: FractionalOffset.topCenter,
+                      const SizedBox(
+                        width: 8,
+                      ),
+
+                      // UPLOAD PHOTO: For user to upload a dish photo
+                      Container(
+                        color: Colors.white,
+                        width: 100,
+                        height: 100,
+                        child: _file == null
+                            ? IconButton(
+                                icon: const Icon(
+                                  Icons.add_photo_alternate_outlined,
+                                ),
+                                // Direct user to take a photo or select a file
+                                onPressed: () => _selectImage(context),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    // '!' in '_fill!' means variable will never be null
+                                    image: MemoryImage(_file!),
+                                    fit: BoxFit.fill,
+                                    alignment: FractionalOffset.topCenter,
+                                  ),
                                 ),
                               ),
-                            ),
-                    ),
-                  ]),
+                      ),
+                    ],
+                  ),
                   const Divider(thickness: 1.5),
                   const SizedBox(height: 12),
 
@@ -233,8 +262,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
-                              _ratingValueRecommend = rating;
-                              _ratingDescriptionRecommend =
+                              _ratingValueEatAgain = rating;
+                              _ratingDescriptionEatAgain =
                                   _getRatingDescription(rating);
                             });
                           },
@@ -243,7 +272,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
                         child: Text(
-                          _ratingDescriptionRecommend,
+                          _ratingDescriptionEatAgain,
                           style: const TextStyle(
                             fontSize: 14,
                             color: neutral1Color,
@@ -308,7 +337,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               children: [
                 // Link Food
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // TODO: Change to selected DishID
+                    _newPostDishId = 'd2';
+                  },
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(neutral1Color),
                     padding:
@@ -428,11 +460,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
-                        // onPressed: () => publishPost(
-                        //   userProvider.getUser.uid,
-                        //   userProvider.getUser.username,
-                        // ),
+                        onPressed: _publishPost,
                         style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(primaryColor),

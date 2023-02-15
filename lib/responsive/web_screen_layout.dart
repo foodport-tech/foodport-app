@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foodport_app/left_drawer.dart';
 import 'package:foodport_app/utils/colors.dart';
 
+import '../screens/6_analytics_screen/analytics_overview_screen.dart';
+
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({super.key});
 
@@ -151,7 +153,10 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                   ),
                   Container(
                     width: double.infinity,
-                    color: orange3Color,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: orange3Color,
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 32,
@@ -238,15 +243,10 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           ),
           Expanded(
             flex: 10,
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height,
-              color: Colors.amber,
-            ),
+            child: AnalyticsOverview(),
           ),
         ],
       ),
-      drawer: LeftDrawer(),
     );
   }
 }
