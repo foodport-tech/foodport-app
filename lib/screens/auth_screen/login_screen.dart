@@ -85,10 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 2,
               ),
               // App Logo .svg Image
-              SvgPicture.asset(
-                'assets/images/foodport_text_logo.svg',
-                color: orange1Color,
-                height: 48,
+              Container(
+                alignment: Alignment.center,
+                child: SvgPicture.asset(
+                  'assets/images/logos/foodport_text_logo.svg',
+                  color: orange1Color,
+                  height: 48,
+                ),
               ),
               const SizedBox(height: 32),
 

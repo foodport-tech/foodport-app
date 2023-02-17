@@ -95,25 +95,23 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   // TODO: WORKING IN PROGRESS
   void _publishPost() {
-    if (_file != null && _reviewController != null) {
+    // If there is an image
+    if (_file != null) {
       // Call function createPost
       posts.publishPost(
         _file!,
-        "This is a static review",
+        _reviewController.text,
         _ratingValueDelicious,
         _ratingValueEatAgain,
         _ratingValueWorthIt,
         _newPostDishId,
       );
-      print("_publishPost");
-      print(_file!);
-      print(_reviewController);
-      print(_ratingValueDelicious);
-      print(_ratingValueEatAgain);
-      print(_ratingValueWorthIt);
-      print(_newPostDishId);
+
+      // Reset Review, Photo, Rating, Dish ID
+
+      print("FUNCTION CALLED: posts.publishPost");
     } else {
-      print("Condition not met");
+      print("FUNCTION NOT CALLED: posts.publishPost");
     }
   }
 

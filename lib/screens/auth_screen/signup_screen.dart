@@ -93,7 +93,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               // App Logo .svg Image
               SvgPicture.asset(
-                'assets/images/foodport_text_logo.svg',
+                'assets/images/logos/foodport_text_logo.svg',
                 color: orange1Color,
                 height: 48,
               ),
@@ -166,7 +166,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: Text("Don't have an account? "),
+                    child: Text("Already have an account? "),
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
                     ),

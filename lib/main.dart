@@ -2,19 +2,21 @@
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:foodport_app/screens/auth_screen/auth_screen.dart';
 import 'package:foodport_app/screens/seller_profile_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/user_provider_ig.dart';
-import 'screens/1_feed_post_screen/feed_post_screen.dart';
-import '../screens/dish_detail_screen.dart';
-import '../utils/colors.dart';
+import 'providers/auth.dart';
 import 'providers/dishes.dart';
 import 'providers/posts.dart';
+import 'screens/1_feed_post_screen/feed_post_screen.dart';
+import 'screens/auth_screen/login_screen.dart';
+import 'screens/dish_detail_screen.dart';
 import 'responsive/mobile_screen_layout.dart';
 import 'responsive/responsive_layout_screen.dart';
 import 'responsive/tablet_screen_layout.dart';
 import 'responsive/web_screen_layout.dart';
+import 'utils/colors.dart';
 
 void main() async {
   // Initialise Firebase
@@ -45,6 +47,9 @@ class MyApp extends StatelessWidget {
     // ChangeNotifierProvider: To register a class which can then listen in the child widget
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider(
           // Provide instance of Posts() class to all child widgets
           create: (BuildContext context) => Posts(),
@@ -57,26 +62,85 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Foodport',
+
+        // THEME
         theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSwatch(
-            primaryColorDark: neutral1Color,
-            accentColor: orange1Color,
-            backgroundColor: neutral6Color,
+          scaffoldBackgroundColor: Colors.white,
+          // fontFamily: 'Roboto',
+          textTheme: const TextTheme(
+            headline1: TextStyle(
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            headline2: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            headline3: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 16.0,
+              color: Colors.black,
+            ),
+            bodyText2: TextStyle(
+              fontSize: 14.0,
+              color: Colors.black,
+            ),
           ),
-          //fontFamily: 'OpenSans',
-          // Fetch from Google Fonts
-          // textTheme: GoogleFonts.openSansTextTheme(
-          //   Theme.of(context).textTheme,
-          // ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: primaryColor,
+            textTheme: ButtonTextTheme.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: primaryColor,
+            secondary: secondaryColor,
+          ),
         ),
-        darkTheme: ThemeData.dark(),
-        // home: FeedPostScreen(),
+        darkTheme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Color(0xFF202020),
+          textTheme: const TextTheme(
+            headline1: TextStyle(
+                fontSize: 28.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+            headline2: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+            headline3: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+            bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
+            bodyText2: TextStyle(fontSize: 14.0, color: Colors.white),
+          ),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Color(0xFF4E4E4E),
+            textTheme: ButtonTextTheme.primary,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+          ),
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: primaryColor,
+            secondary: secondaryColor,
+          ),
+        ),
+        themeMode: ThemeMode.system,
+
+        // ROUTES
         initialRoute: '/', // default is '/'
         routes: {
-          // Home:
           '/': (context) => ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
+                mobileScreenLayout:
+                    AuthScreen(), // MobileScreenLayout(), // If statement to check auth or not
                 tabletScreenLayout: TabletScreenLayout(),
                 webScreenLayout: WebScreenLayout(),
               ),
@@ -86,6 +150,7 @@ class MyApp extends StatelessWidget {
           // Main 4: '/inbox'
           // Main 5: '/profile'
           // '/dish_detail'
+
           DishDetailScreen.routeName: (context) => DishDetailScreen(),
           SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
           // Auth: '/login'
@@ -108,30 +173,30 @@ class MyApp extends StatelessWidget {
 // class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
-    // return MultiProvider(
-    //   providers: [
-    //     ChangeNotifierProvider.value(
-    //       value: Auth(),
-    //     ),
-    //     ChangeNotifierProxyProvider<Auth, Products>(
-    //       builder: (ctx, auth, previousProducts) => Products(
-    //             auth.token,
-    //             auth.userId,
-    //             previousProducts == null ? [] : previousProducts.items,
-    //           ),
-    //     ),
-    //     ChangeNotifierProvider.value(
-    //       value: Cart(),
-    //     ),
-    //     ChangeNotifierProxyProvider<Auth, Orders>(
-    //       builder: (ctx, auth, previousOrders) => Orders(
-    //             auth.token,
-    //             auth.userId,
-    //             previousOrders == null ? [] : previousOrders.orders,
-    //           ),
-    //     ),
-    //   ],
-    //   child: Consumer<Auth>(
+// return MultiProvider(
+//   providers: [
+//     ChangeNotifierProvider.value(
+//       value: Auth(),
+//     ),
+//     ChangeNotifierProxyProvider<Auth, Products>(
+//       builder: (ctx, auth, previousProducts) => Products(
+//             auth.token,
+//             auth.userId,
+//             previousProducts == null ? [] : previousProducts.items,
+//           ),
+//     ),
+//     ChangeNotifierProvider.value(
+//       value: Cart(),
+//     ),
+//     ChangeNotifierProxyProvider<Auth, Orders>(
+//       builder: (ctx, auth, previousOrders) => Orders(
+//             auth.token,
+//             auth.userId,
+//             previousOrders == null ? [] : previousOrders.orders,
+//           ),
+//     ),
+//   ],
+//   child: Consumer<Auth>(
 //         builder: (ctx, auth, _) => MaterialApp(
 //               title: 'MyShop',
 //               theme: ThemeData(

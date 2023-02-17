@@ -28,4 +28,4 @@ const neutral5Color = Color.fromRGBO(223, 225, 229, 1);
 const neutral6Color = Color.fromRGBO(242, 244, 249, 1); // Background Color
 
 const primaryColor = Color.fromRGBO(255, 88, 0, 1);
-const secondaryColor = Color.fromRGBO(182, 184, 187, 1);
+const secondaryColor = Color.fromRGBO(242, 244, 249, 1);
