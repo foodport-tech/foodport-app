@@ -20,56 +20,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isLoading = false;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
-
-  void loginUser() async {
-    // Refresh screen to show 'loading' in 'Log in button'
-    setState(() {
-      _isLoading = true;
-    });
-
-    // Authenticate user's login credential
-    String res = await AuthMethods().loginUser(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    // Refresh screen to stop showing 'loading' in 'Log in button'
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (res == 'success') {
-      // Switch to Home Screen
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const ResponsiveLayout(
-            webScreenLayout: WebScreenLayout(),
-            tabletScreenLayout: TabletScreenLayout(),
-            mobileScreenLayout: MobileScreenLayout(),
-          ),
-        ),
-      );
-    } else {
-      // Show pop message to user
-      showSnackBar(res, context);
-    }
-  }
-
-  void navigateToSignupScreen() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

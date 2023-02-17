@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:foodport_app/widgets/text_field_input.dart';
 import 'package:provider/provider.dart';
 
+import '../models/http_exception.dart';
 import '../providers/auth.dart';
-import '../utils/colors.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -13,45 +10,91 @@ class AuthCard extends StatefulWidget {
   const AuthCard({super.key});
 
   @override
-  State<AuthCard> createState() => _AuthCarStated();
+  State<AuthCard> createState() => _AuthCardState();
 }
 
-class _AuthCarStated extends State<AuthCard> {
+class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
-  Map<String, String> _authData = {
-    'email': '',
-    'password': '',
+  final Map<String, String> _authData = {
+    'email': '_',
+    'password': '_',
   };
-
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('An Error Occurred!'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Okay'),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   // Submit SignIn / SignUp Form Function
   Future<void> _submit() async {
+    print("_authData['email'] 1: ${_authData['email']}");
+    print("_authData['password'] 1: ${_authData['password']}");
+
     if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
 
+    print("_authData['email'] 2: ${_authData['email']}");
+    print("_authData['password'] 2: ${_authData['password']}");
+
     _formKey.currentState!.save();
+
+    print("_authData['email'] 3: ${_authData['email']}");
+    print("_authData['password'] 3: ${_authData['password']}");
 
     setState(() {
       _isLoading = true;
     });
 
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false).login(
-        _authData['email']!,
-        _authData['password']!,
-      );
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).signup(
-        _authData['email']!,
-        _authData['password']!,
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false).login(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      }
+    } on HttpException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'This email address is already in use.';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'This is not a valid email address';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'This password is too weak.';
+      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
+        errorMessage = 'Could not find a user with that email.';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'Invalid password.';
+      }
+      _showErrorDialog(errorMessage);
+    } catch (error) {
+      const errorMessage =
+          'Could not authenticate you. Please try again later.';
+      _showErrorDialog(errorMessage);
     }
 
     setState(() {
@@ -75,88 +118,91 @@ class _AuthCarStated extends State<AuthCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        children: [
-          // SignIn/SignUp: Email Text Field Input
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'email',
-            ),
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty || !value.contains('@')) {
-                return 'Invalid email!';
-              }
-              return null;
-            },
-            onSaved: (value) {
-              _authData['email'] = value!;
-            },
-          ),
-          const SizedBox(height: 12),
-
-          // SignIn/SignUp: Password Text Field Input
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Password'),
-            obscureText: true,
-            controller: _passwordController,
-            validator: (value) {
-              if (value!.isEmpty || value.length < 5) {
-                return 'Password is too short!';
-              }
-            },
-            onSaved: (value) {
-              _authData['password'] = value!;
-            },
-          ),
-          const SizedBox(height: 12),
-
-          // SignUp: Confirm Password Text Field Input
-          if (_authMode == AuthMode.Signup)
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            // SignIn/SignUp: Email Text Field Input
             TextFormField(
-              enabled: _authMode == AuthMode.Signup,
-              decoration: InputDecoration(labelText: 'Confirm Password'),
-              obscureText: true,
-              validator: _authMode == AuthMode.Signup
-                  ? (value) {
-                      if (value != _passwordController.text) {
-                        return 'Passwords do not match!';
-                      }
-                    }
-                  : null,
+              decoration: InputDecoration(
+                labelText: 'email',
+              ),
+              keyboardType: TextInputType.emailAddress,
+              validator: (value) {
+                if (value!.isEmpty || !value.contains('@')) {
+                  return 'Invalid email!';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                _authData['email'] = value!;
+              },
             ),
+            const SizedBox(height: 12),
 
-          // Login Button
-          _isLoading
-              ? CircularProgressIndicator()
-              : ElevatedButton(
-                  child: Text(
-                    _authMode == AuthMode.Login ? 'Login' : 'Sign Up',
-                  ),
-                  onPressed: _submit,
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+            // SignIn/SignUp: Password Text Field Input
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+              controller: _passwordController,
+              validator: (value) {
+                if (value!.isEmpty || value.length < 5) {
+                  return 'Password is too short!';
+                }
+              },
+              onSaved: (value) {
+                _authData['password'] = value!;
+              },
+            ),
+            const SizedBox(height: 12),
+
+            // SignUp: Confirm Password Text Field Input
+            if (_authMode == AuthMode.Signup)
+              TextFormField(
+                enabled: _authMode == AuthMode.Signup,
+                decoration: InputDecoration(labelText: 'Confirm Password'),
+                obscureText: true,
+                validator: _authMode == AuthMode.Signup
+                    ? (value) {
+                        if (value != _passwordController.text) {
+                          return 'Passwords do not match!';
+                        }
+                      }
+                    : null,
+              ),
+
+            // Login Button
+            _isLoading
+                ? CircularProgressIndicator()
+                : ElevatedButton(
+                    child: Text(
+                      _authMode == AuthMode.Login ? 'Login' : 'Sign Up',
+                    ),
+                    onPressed: _submit,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                     ),
+                    clipBehavior: Clip.none,
                   ),
-                  clipBehavior: Clip.none,
-                ),
 
-          TextButton(
-            child: Text(
-              '${_authMode == AuthMode.Login ? "Don't have an account? Sign Up" : 'Already have an account? Login'}',
-            ),
-            onPressed: _switchAuthMode,
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(
-                EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+            TextButton(
+              child: Text(
+                '${_authMode == AuthMode.Login ? "Don't have an account? Sign Up" : 'Already have an account? Login'}',
               ),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              onPressed: _switchAuthMode,
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
+                ),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
