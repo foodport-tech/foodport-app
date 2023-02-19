@@ -197,10 +197,29 @@ class Posts with ChangeNotifier {
       );
 
       // TODO: WORKING IN PROGRESS
-      // final newPost = Post(
-      // id: json.decode(response.body)['name'],
-      // );
-      // _items.add(newPost);
+      final newPost = Post(
+        postId: json.decode(response.body)['postId'],
+        postPhotoUrl: post.postPhotoUrl,
+        postReview: post.postReview,
+        postRatingEatAgain: post.postRatingEatAgain,
+        postRatingDelicious: post.postRatingDelicious,
+        postRatingWorthIt: post.postRatingWorthIt,
+        postPublishDateTime: post.postPublishDateTime,
+        userId: post.userId,
+        dishId: post.dishId,
+        postPublishIpAddress: post.postPublishIpAddress,
+        postView: post.postView,
+        postLike: post.postLike,
+        postCommentView: post.postCommentView,
+        postComment: post.postComment,
+        postSave: post.postSave,
+        postShare: post.postShare,
+        postDishVisit: post.postDishVisit,
+        postDishSellerVisit: post.postDishSellerVisit,
+      );
+
+      // Insert new post at the start of the list
+      _items.insert(0, newPost);
 
       notifyListeners();
     } catch (error) {
