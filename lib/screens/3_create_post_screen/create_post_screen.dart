@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../providers/post.dart';
 import '../../providers/posts.dart';
 import '../../utils/colors.dart';
 import '../../utils/utils.dart';
@@ -18,19 +19,36 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   // Post's Image file
   Uint8List? _file;
+  late String postPhotoUrl;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
-  double _ratingValueDelicious = 3;
-  double _ratingValueEatAgain = 3;
-  double _ratingValueWorthIt = 3;
   String _ratingDescriptionDelicious = 'Moderately';
   String _ratingDescriptionEatAgain = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
-  late String _newPostDishId;
+  var _newPost = Post(
+    postId: '',
+    postPhotoUrl: '',
+    postReview: '',
+    postRatingDelicious: 3,
+    postRatingEatAgain: 3,
+    postRatingWorthIt: 3,
+    postPublishDateTime: DateTime.now(),
+    userId: '',
+    postPublishIpAddress: '',
+    postView: '',
+    postLike: '',
+    postCommentView: '',
+    postComment: '',
+    postShare: '',
+    postSave: '',
+    postDishVisit: '',
+    postDishSellerVisit: '',
+    dishId: '',
+  );
   // Form
   final _form = GlobalKey<FormState>();
   // For publishPost()
-  Posts posts = Posts();
+  Posts posts = Posts(null, []);
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -47,8 +65,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 Navigator.of(context).pop();
                 Uint8List file = await pickImage(ImageSource.camera);
 
+                postPhotoUrl = getPhotoUrl(file);
+
                 setState(() {
-                  _file = file;
+                  _newPost.postPhotoUrl = postPhotoUrl;
                 });
               },
             ),
@@ -79,6 +99,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     );
   }
 
+  getPhotoUrl(Uint8List file) {
+    String photoUrl;
+    photoUrl = "";
+
+    return photoUrl;
+  }
+
   _getRatingDescription(double ratingValue) {
     if (ratingValue == 1.0) {
       return 'Not at all';
@@ -97,15 +124,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   void _publishPost() {
     // If there is an image
     if (_file != null) {
+      _newPost.postReview = _reviewController.text;
+
       // Call function createPost
-      posts.publishPost(
-        _file!,
-        _reviewController.text,
-        _ratingValueDelicious,
-        _ratingValueEatAgain,
-        _ratingValueWorthIt,
-        _newPostDishId,
-      );
+      posts.publishPostToBackend(_newPost);
 
       // Reset Review, Photo, Rating, Dish ID
 
@@ -213,7 +235,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
-                              _ratingValueDelicious = rating;
+                              _newPost.postRatingDelicious = rating;
                               _ratingDescriptionDelicious =
                                   _getRatingDescription(rating);
                             });
@@ -260,7 +282,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
-                              _ratingValueEatAgain = rating;
+                              _newPost.postRatingEatAgain = rating;
                               _ratingDescriptionEatAgain =
                                   _getRatingDescription(rating);
                             });
@@ -307,7 +329,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                           ),
                           onRatingUpdate: (rating) {
                             setState(() {
-                              _ratingValueWorthIt = rating;
+                              _newPost.postRatingWorthIt = rating;
                               _ratingDescriptionWorthIt =
                                   _getRatingDescription(rating);
                             });
@@ -337,7 +359,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 TextButton(
                   onPressed: () {
                     // TODO: Change to selected DishID
-                    _newPostDishId = 'd2';
+                    _newPost.dishId = 'd2';
                   },
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(neutral1Color),

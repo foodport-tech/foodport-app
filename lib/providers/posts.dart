@@ -7,6 +7,9 @@ import 'package:http/http.dart' as http;
 import 'post.dart';
 
 class Posts with ChangeNotifier {
+  final String? authToken;
+  Posts(this.authToken, this._items);
+
   // Data Source - Post Content
   List<Post> _items = [
     Post(
@@ -101,12 +104,120 @@ class Posts with ChangeNotifier {
     ),
   ];
 
+  // BACKEND INTERACTION
+  // Fetch postItems from Backend
+  Future<void> fetchPostsFromBackend() async {
+    final url = Uri.http('127.0.0.1:8000', '/api/post/posts/');
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token $authToken",
+        },
+      );
+
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData == null) {
+        return;
+      }
+
+      final List<Post> loadedPosts = [];
+
+      extractedData.forEach(
+        (postId, postData) {
+          loadedPosts.add(
+            Post(
+              postId: postId,
+              postPhotoUrl: postData['postPhotoUrl'],
+              postReview: postData['postReview'],
+              postRatingEatAgain: postData['postRatingEatAgain'],
+              postRatingDelicious: postData['postRatingDelicious'],
+              postRatingWorthIt: postData['postRatingWorthIt'],
+              postPublishDateTime: postData['postPublishDateTime'],
+              userId: postData['userId'],
+              dishId: postData['dishId'],
+              postPublishIpAddress: postData['postPublishIpAddress'],
+              postView: postData['postView'],
+              postLike: postData['postLike'],
+              postCommentView: postData['postCommentView'],
+              postComment: postData['postComment'],
+              postSave: postData['postSave'],
+              postShare: postData['postShare'],
+              postDishVisit: postData['postDishVisit'],
+              postDishSellerVisit: postData['postDishSellerVisit'],
+            ),
+          );
+        },
+      );
+
+      _items = loadedPosts;
+
+      notifyListeners();
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  // BACKEND INTERACTION
+  // TODO: WORKING IN PROGRESS
+  Future<void> publishPostToBackend(Post post) async {
+    final url = Uri.http('127.0.0.1:8000', '/api/post/posts/');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token $authToken",
+        },
+        body: json.encode({
+          'postId': post.postId,
+          'postPhotoUrl': post.postPhotoUrl,
+          'postReview': post.postReview,
+          'postRatingDelicious': post.postRatingDelicious,
+          'postRatingEatAgain': post.postRatingEatAgain,
+          'postRatingWorthIt': post.postRatingWorthIt,
+          'postPublishDateTime': post.postPublishDateTime,
+          'userId': post.userId,
+          'dishId': post.dishId,
+          'postPublishIpAddress': post.postPublishIpAddress,
+          'postView': post.postView,
+          'postLike': post.postLike,
+          'postCommentView': post.postCommentView,
+          'postComment': post.postComment,
+          'postShare': post.postShare,
+          'postSave': post.postSave,
+          'postDishVisit': post.postDishVisit,
+          'postDishSellerVisit': post.postDishSellerVisit,
+        }),
+      );
+
+      // TODO: WORKING IN PROGRESS
+      // final newPost = Post(
+      // id: json.decode(response.body)['name'],
+      // );
+      // _items.add(newPost);
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      throw error;
+    }
+  }
+
+  // FRONTEND INTERACTION
+  // For Screen widget: To Get postItems from _items
   List<Post> get postItems {
     // Return a copy by using '[...]'
     // Reference: https://www.udemy.com/course/learn-flutter-dart-to-build-ios-android-apps/learn/lecture/15100258#overview
     return [..._items];
   }
 
+  // For Screen widget: To Get postItems from _items
   // Provide posts that the author are followed by the user
   List<Post> get followingPostItems {
     // Return a copy by using '[...]'
@@ -114,6 +225,7 @@ class Posts with ChangeNotifier {
     return [..._items];
   }
 
+// For Screen widget: To Get postItems from _items
   // Provide posts that are posted nearby to the user's location
   List<Post> get nearbyPostItems {
     // Return a copy by using '[...]'
@@ -121,6 +233,7 @@ class Posts with ChangeNotifier {
     return [..._items];
   }
 
+// For Screen widget: To Get postItems from _items
   // Provide posts that are recommended from algorithm
   List<Post> get forYouPostItems {
     // Return a copy by using '[...]'
@@ -130,34 +243,5 @@ class Posts with ChangeNotifier {
 
   Post findByPostId(String postId) {
     return _items.firstWhere((post) => post.postId == postId);
-  }
-
-  // TODO: WORKING IN PROGRESS
-  void publishPost(
-    Uint8List file,
-    String review,
-    double ratingValueDelicious,
-    double ratingValueEatAgain,
-    double ratingValueWorthIt,
-    String newPostDishId,
-  ) {
-    final url = Uri.https(
-        'https://foodport-app-183e3-default-rtdb.asia-southeast1.firebasedatabase.app',
-        '/posts.json');
-    http
-        .post(
-      url,
-      body: json.encode({
-        'postReview': review,
-        'postRatingDelicious': ratingValueDelicious,
-        'postRatingEatAgain': ratingValueEatAgain,
-        'postRatingWorthIt': ratingValueWorthIt,
-      }),
-    )
-        .then(
-      (response) {
-        notifyListeners();
-      },
-    );
   }
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 
 class Post with ChangeNotifier {
-  final String postId;
-  final String postPhotoUrl;
-  final String postReview;
-  final double postRatingDelicious;
-  final double postRatingEatAgain;
-  final double postRatingWorthIt;
-  final DateTime postPublishDateTime;
-  final String userId;
+  String postId;
+  String postPhotoUrl;
+  String postReview;
+  double postRatingDelicious;
+  double postRatingEatAgain;
+  double postRatingWorthIt;
+  DateTime postPublishDateTime;
+  String userId;
+  String? dishId;
   final postPublishIpAddress;
   // 'Impression': A Nested Map of 'userId' and "number of times" of the users that have viewed this post
   final postView;
@@ -26,7 +27,6 @@ class Post with ChangeNotifier {
   final postDishVisit;
   // A Map of 'userId' & 'postDishSellerVisitId' of the users that have visited the seller profile of this post
   final postDishSellerVisit;
-  String? dishId;
 
   Post({
     required this.postId,

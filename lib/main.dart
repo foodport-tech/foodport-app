@@ -50,121 +50,127 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<Auth, Posts>(
           // Provide instance of Posts() class to all child widgets
-          create: (BuildContext context) => Posts(),
+          create: (BuildContext context) => Posts(null, []),
+          update: (_, auth, previousPosts) => Posts(
+            auth.token,
+            previousPosts == null ? [] : previousPosts.postItems,
+          ),
         ),
         ChangeNotifierProvider(
           // Provide instance of Dishes() class to all child widgets
           create: (BuildContext context) => Dishes(),
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Foodport',
+      child: Consumer<Auth>(
+        builder: (context, authData, _) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Foodport',
 
-        // THEME
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          // fontFamily: 'Roboto',
-          textTheme: const TextTheme(
-            headline1: TextStyle(
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            headline2: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            headline3: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-            bodyText1: TextStyle(
-              fontSize: 16.0,
-              color: Colors.black,
-            ),
-            bodyText2: TextStyle(
-              fontSize: 14.0,
-              color: Colors.black,
-            ),
-          ),
-          buttonTheme: ButtonThemeData(
-            buttonColor: primaryColor,
-            textTheme: ButtonTextTheme.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: primaryColor,
-            secondary: secondaryColor,
-          ),
-        ),
-        darkTheme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Color(0xFF202020),
-          textTheme: const TextTheme(
-            headline1: TextStyle(
+          // THEME
+          theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            // fontFamily: 'Roboto',
+            textTheme: const TextTheme(
+              headline1: TextStyle(
                 fontSize: 28.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
-            headline2: TextStyle(
+                color: Colors.black,
+              ),
+              headline2: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
-            headline3: TextStyle(
+                color: Colors.black,
+              ),
+              headline3: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white),
-            bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
-            bodyText2: TextStyle(fontSize: 14.0, color: Colors.white),
-          ),
-          buttonTheme: ButtonThemeData(
-            buttonColor: Color(0xFF4E4E4E),
-            textTheme: ButtonTextTheme.primary,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-          ),
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: primaryColor,
-            secondary: secondaryColor,
-          ),
-        ),
-        themeMode: ThemeMode.system,
-
-        // ROUTES
-        initialRoute: '/', // default is '/'
-        routes: {
-          '/': (context) => ResponsiveLayout(
-                mobileScreenLayout:
-                    AuthScreen(), // MobileScreenLayout(), // If statement to check auth or not
-                tabletScreenLayout: TabletScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
+                color: Colors.black,
               ),
-          // Main 1: '/feed_post'
-          // Main 2: '/explore'
-          // Main 3: '/create_post'
-          // Main 4: '/inbox'
-          // Main 5: '/profile'
-          // '/dish_detail'
+              bodyText1: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+              bodyText2: TextStyle(
+                fontSize: 14.0,
+                color: Colors.black,
+              ),
+            ),
+            buttonTheme: ButtonThemeData(
+              buttonColor: primaryColor,
+              textTheme: ButtonTextTheme.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: primaryColor,
+              secondary: secondaryColor,
+            ),
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            scaffoldBackgroundColor: Color(0xFF202020),
+            textTheme: const TextTheme(
+              headline1: TextStyle(
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              headline2: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              headline3: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+              bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
+              bodyText2: TextStyle(fontSize: 14.0, color: Colors.white),
+            ),
+            buttonTheme: ButtonThemeData(
+              buttonColor: Color(0xFF4E4E4E),
+              textTheme: ButtonTextTheme.primary,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+            ),
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: primaryColor,
+              secondary: secondaryColor,
+            ),
+          ),
+          themeMode: ThemeMode.system,
 
-          DishDetailScreen.routeName: (context) => DishDetailScreen(),
-          SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
-          // Auth: '/login'
-          // Auth: '/signup'
-        },
-        // When route does not work correctly
-        // onGenerateRoute: (settings) {},
-        // Fallback Screen - E.g. 404 Screen
-        onUnknownRoute: (settings) {
-          return MaterialPageRoute(
-            // TODO: Replace with 404 screen
-            builder: (context) => FeedPostScreen(),
-          );
-        },
+          // ROUTES
+          initialRoute: '/', // default is '/'
+          routes: {
+            '/': (context) => ResponsiveLayout(
+                  mobileScreenLayout: AuthScreen(),
+                  // auth.isAuth ? MobileScreenLayout() : AuthScreen(),
+                  tabletScreenLayout: TabletScreenLayout(),
+                  webScreenLayout: WebScreenLayout(),
+                ),
+            // Main 1: '/feed_post'
+            // Main 2: '/explore'
+            // Main 3: '/create_post'
+            // Main 4: '/inbox'
+            // Main 5: '/profile'
+            // '/dish_detail'
+
+            DishDetailScreen.routeName: (context) => DishDetailScreen(),
+            SellerProfileScreen.routeName: (context) => SellerProfileScreen(),
+            // Auth: '/login'
+            // Auth: '/signup'
+          },
+          // When route does not work correctly
+          // onGenerateRoute: (settings) {},
+          // Fallback Screen - E.g. 404 Screen
+          onUnknownRoute: (settings) {
+            return MaterialPageRoute(
+              // TODO: Replace with 404 screen
+              builder: (context) => FeedPostScreen(),
+            );
+          },
+        ),
       ),
     );
   }

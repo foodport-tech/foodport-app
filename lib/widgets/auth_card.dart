@@ -17,8 +17,8 @@ class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   final Map<String, String> _authData = {
-    'email': '_',
-    'password': '_',
+    'email': '',
+    'password': '',
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
@@ -43,21 +43,12 @@ class _AuthCardState extends State<AuthCard> {
 
   // Submit SignIn / SignUp Form Function
   Future<void> _submit() async {
-    print("_authData['email'] 1: ${_authData['email']}");
-    print("_authData['password'] 1: ${_authData['password']}");
-
     if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
 
-    print("_authData['email'] 2: ${_authData['email']}");
-    print("_authData['password'] 2: ${_authData['password']}");
-
     _formKey.currentState!.save();
-
-    print("_authData['email'] 3: ${_authData['email']}");
-    print("_authData['password'] 3: ${_authData['password']}");
 
     setState(() {
       _isLoading = true;
@@ -129,9 +120,17 @@ class _AuthCardState extends State<AuthCard> {
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                if (value!.isEmpty || !value.contains('@')) {
-                  return 'Invalid email!';
+                if (value!.isEmpty) {
+                  return 'Please enter an email address';
                 }
+
+                String pattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                RegExp regExp = RegExp(pattern);
+
+                if (!regExp.hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+
                 return null;
               },
               onSaved: (value) {
@@ -146,9 +145,25 @@ class _AuthCardState extends State<AuthCard> {
               obscureText: true,
               controller: _passwordController,
               validator: (value) {
-                if (value!.isEmpty || value.length < 5) {
-                  return 'Password is too short!';
+                if (value!.isEmpty) {
+                  return 'Please enter a password';
                 }
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters';
+                }
+                if (!value.contains(RegExp(r'[a-z]'))) {
+                  return 'Password must contain at least one lowercase letter';
+                }
+                if (!value.contains(RegExp(r'[A-Z]'))) {
+                  return 'Password must contain at least one uppercase letter';
+                }
+                if (!value.contains(RegExp(r'[0-9]'))) {
+                  return 'Password must contain at least one number';
+                }
+                if (!value.contains(RegExp(r'[!@#\$%^&*(),.?":{}|<>]'))) {
+                  return 'Password must contain at least one symbol character';
+                }
+                return null;
               },
               onSaved: (value) {
                 _authData['password'] = value!;
