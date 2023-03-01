@@ -162,9 +162,10 @@ class Posts with ChangeNotifier {
   }
 
   // BACKEND INTERACTION
-  // TODO: WORKING IN PROGRESS
   Future<void> publishPostToBackend(Post post) async {
-    final url = Uri.http('127.0.0.1:8000', '/api/post/posts/');
+    final url = Uri.http(
+        'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com/',
+        '/api/post/posts/');
 
     try {
       final response = await http.post(

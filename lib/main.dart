@@ -144,8 +144,8 @@ class MyApp extends StatelessWidget {
           initialRoute: '/', // default is '/'
           routes: {
             '/': (context) => ResponsiveLayout(
-                  mobileScreenLayout: AuthScreen(),
-                  // auth.isAuth ? MobileScreenLayout() : AuthScreen(),
+                  mobileScreenLayout:
+                      authData.isAuth ? MobileScreenLayout() : AuthScreen(),
                   tabletScreenLayout: TabletScreenLayout(),
                   webScreenLayout: WebScreenLayout(),
                 ),
