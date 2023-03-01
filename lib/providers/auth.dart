@@ -4,11 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/http_exception.dart';
+import '../utils/api_links.dart';
 
 class Auth with ChangeNotifier {
-  final String apiUrl =
-      'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com';
-
   String? _token;
   int? _userId;
   DateTime? _expiryDate;
@@ -36,7 +34,7 @@ class Auth with ChangeNotifier {
     String password,
     String urlSegment,
   ) async {
-    final url = Uri.http(apiUrl, urlSegment);
+    final url = Uri.http(ApiLinks.baseUrl, urlSegment);
 
     try {
       final response = await http.post(
@@ -79,11 +77,11 @@ class Auth with ChangeNotifier {
     print("RESPONSE DATA _expiryDate: ${_expiryDate}");
   }
 
-  Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, '/api/user/create/');
+  Future<void> signUp(String email, String password) async {
+    return _authenticate(email, password, ApiLinks.signUp);
   }
 
   Future<void> login(String email, String password) async {
-    return _authenticate(email, password, '/api/user/token/');
+    return _authenticate(email, password, ApiLinks.login);
   }
 }
