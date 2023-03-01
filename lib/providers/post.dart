@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Post with ChangeNotifier {
-  String postId;
+  String? postId;
   String postPhotoUrl;
   String postReview;
   double postRatingDelicious;

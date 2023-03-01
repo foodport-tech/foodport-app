@@ -19,7 +19,7 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   // Post's Image file
   Uint8List? _file;
-  late String postPhotoUrl;
+  String? _postPhotoUrl;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
   String _ratingDescriptionDelicious = 'Moderately';
@@ -33,6 +33,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     postRatingEatAgain: 3,
     postRatingWorthIt: 3,
     postPublishDateTime: DateTime.now(),
+    // TODO: Get appropriate UserId
     userId: '',
     postPublishIpAddress: '',
     postView: '',
@@ -63,12 +64,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Take a photo"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                Uint8List file = await pickImage(ImageSource.camera);
+                _file = await pickImage(ImageSource.camera);
 
-                postPhotoUrl = getPhotoUrl(file);
+                _postPhotoUrl = getPhotoUrl(_file!);
+                print("_selectImage _postPhotoUrl: $_postPhotoUrl");
 
                 setState(() {
-                  _newPost.postPhotoUrl = postPhotoUrl;
+                  _newPost.postPhotoUrl = _postPhotoUrl!;
                 });
               },
             ),
@@ -78,10 +80,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Choose from gallery"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                Uint8List file = await pickImage(ImageSource.gallery);
+                _file = await pickImage(ImageSource.gallery);
+
+                _postPhotoUrl = getPhotoUrl(_file!);
+                print("_selectImage _postPhotoUrl: $_postPhotoUrl");
 
                 setState(() {
-                  _file = file;
+                  _newPost.postPhotoUrl = _postPhotoUrl!;
                 });
               },
             ),
@@ -100,8 +105,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   }
 
   getPhotoUrl(Uint8List file) {
-    String photoUrl;
-    photoUrl = "";
+    String? photoUrl;
+    photoUrl =
+        "https://www.adobe.com/content/dam/cc/us/en/creative-cloud/photography/discover/food-photography/CODERED_B1_food-photography_p4b_690x455.jpg.img.jpg";
 
     return photoUrl;
   }
@@ -123,17 +129,65 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   // TODO: WORKING IN PROGRESS
   void _publishPost() {
     // If there is an image
-    if (_file != null) {
+    if (_newPost.postPhotoUrl != null) {
       _newPost.postReview = _reviewController.text;
 
       // Call function createPost
       posts.publishPostToBackend(_newPost);
 
-      // Reset Review, Photo, Rating, Dish ID
-
       print("FUNCTION CALLED: posts.publishPost");
+      print("_newPost.postId: ${_newPost.postId}");
+      print("_newPost.postPhotoUrl: ${_newPost.postPhotoUrl}");
+      print("_newPost.postReview: ${_newPost.postReview}");
+      print("_newPost.postRatingDelicious: ${_newPost.postRatingDelicious}");
+      print("_newPost.postRatingEatAgain: ${_newPost.postRatingEatAgain}");
+      print("_newPost.postRatingWorthIt: ${_newPost.postRatingWorthIt}");
+      print(
+          "_newPost.postPublishDateTime: ${_newPost.postPublishDateTime.toIso8601String()}");
+      print("_newPost.userId: ${_newPost.userId}");
+      print("_newPost.dishId: ${_newPost.dishId}");
+      print("_newPost.postPublishIpAddress: ${_newPost.postPublishIpAddress}");
+      print("_newPost.postView: ${_newPost.postView}");
+      print("_newPost.postLike: ${_newPost.postLike}");
+      print("_newPost.postCommentView: ${_newPost.postCommentView}");
+      print("_newPost.postComment: ${_newPost.postComment}");
+      print("_newPost.postShare: ${_newPost.postShare}");
+      print("_newPost.postSave: ${_newPost.postSave}");
+      print("_newPost.postDishVisit: ${_newPost.postDishVisit}");
+      print("_newPost.postDishSellerVisit: ${_newPost.postDishSellerVisit}");
+
+      setState(() {
+        // Reset Review, Photo, Rating, Dish ID
+        _file = null;
+        _newPost.postPhotoUrl = '';
+        _reviewController.text = '';
+        _newPost.postReview = '';
+        _newPost.postRatingDelicious = 3;
+        _newPost.postRatingEatAgain = 3;
+        _newPost.postRatingWorthIt = 3;
+        _newPost.dishId = '';
+      });
     } else {
       print("FUNCTION NOT CALLED: posts.publishPost");
+      print("_newPost.postId: ${_newPost.postId}");
+      print("_newPost.postPhotoUrl: ${_newPost.postPhotoUrl}");
+      print("_newPost.postReview: ${_newPost.postReview}");
+      print("_newPost.postRatingDelicious: ${_newPost.postRatingDelicious}");
+      print("_newPost.postRatingEatAgain: ${_newPost.postRatingEatAgain}");
+      print("_newPost.postRatingWorthIt: ${_newPost.postRatingWorthIt}");
+      print(
+          "_newPost.postPublishDateTime: ${_newPost.postPublishDateTime.toIso8601String()}");
+      print("_newPost.userId: ${_newPost.userId}");
+      print("_newPost.dishId: ${_newPost.dishId}");
+      print("_newPost.postPublishIpAddress: ${_newPost.postPublishIpAddress}");
+      print("_newPost.postView: ${_newPost.postView}");
+      print("_newPost.postLike: ${_newPost.postLike}");
+      print("_newPost.postCommentView: ${_newPost.postCommentView}");
+      print("_newPost.postComment: ${_newPost.postComment}");
+      print("_newPost.postShare: ${_newPost.postShare}");
+      print("_newPost.postSave: ${_newPost.postSave}");
+      print("_newPost.postDishVisit: ${_newPost.postDishVisit}");
+      print("_newPost.postDishSellerVisit: ${_newPost.postDishSellerVisit}");
     }
   }
 

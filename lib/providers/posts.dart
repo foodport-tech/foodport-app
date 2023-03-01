@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../utils/api_links.dart';
 import 'post.dart';
 
 class Posts with ChangeNotifier {
@@ -107,7 +108,7 @@ class Posts with ChangeNotifier {
   // BACKEND INTERACTION
   // Fetch postItems from Backend
   Future<void> fetchPostsFromBackend() async {
-    final url = Uri.http('127.0.0.1:8000', '/api/post/posts/');
+    final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
     try {
       final response = await http.get(
         url,
@@ -163,9 +164,7 @@ class Posts with ChangeNotifier {
 
   // BACKEND INTERACTION
   Future<void> publishPostToBackend(Post post) async {
-    final url = Uri.http(
-        'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com/',
-        '/api/post/posts/');
+    final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
 
     try {
       final response = await http.post(
@@ -182,7 +181,7 @@ class Posts with ChangeNotifier {
           'postRatingDelicious': post.postRatingDelicious,
           'postRatingEatAgain': post.postRatingEatAgain,
           'postRatingWorthIt': post.postRatingWorthIt,
-          'postPublishDateTime': post.postPublishDateTime,
+          'postPublishDateTime': post.postPublishDateTime.toIso8601String(),
           'userId': post.userId,
           'dishId': post.dishId,
           'postPublishIpAddress': post.postPublishIpAddress,
@@ -196,6 +195,8 @@ class Posts with ChangeNotifier {
           'postDishSellerVisit': post.postDishSellerVisit,
         }),
       );
+
+      print("PUBLISH POST TO BACKEND: ${json.decode(response.body)}");
 
       // TODO: WORKING IN PROGRESS
       final newPost = Post(

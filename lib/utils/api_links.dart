@@ -3,12 +3,16 @@ class ApiLinks {
       'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com';
 
   // User sign up endpoint
-  static const String signUp =
-      '/api/user/create/'; // UPDATE TO: /api/v1/user/signup/
+  // TO UPDATE: /api/v1/user/signup/
+  static const String signUp = '/api/user/create/';
   // User login endpoint
-  static const String login =
-      '/api/user/token/'; // UPDATE TO: /api/v1/user/login/
+  // TO UPDATE: /api/v1/user/login/
+  static const String login = '/api/user/token/';
   // User logout endpoint
-  static const String logout =
-      '/api/user/logout/'; // UPDATE TO: /api/v1/user/logout/
+  // TO UPDATE: /api/v1/user/logout/
+  static const String logout = '/api/user/logout/';
+
+  // User content post endpoint
+  // TO UPDATE: /api/v1/posts/
+  static const String posts = '/api/post/posts/';
 }
