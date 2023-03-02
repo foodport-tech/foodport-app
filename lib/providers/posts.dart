@@ -8,9 +8,7 @@ import '../utils/api_links.dart';
 import 'post.dart';
 
 class Posts with ChangeNotifier {
-  final String? authToken;
-  Posts(this.authToken, this._items);
-
+  String? _authToken;
   // Data Source - Post Content
   List<Post> _items = [
     Post(
@@ -105,6 +103,13 @@ class Posts with ChangeNotifier {
     ),
   ];
 
+  // Constructor
+  Posts(this._authToken, this._items);
+
+  String returnAuthToken() {
+    return _authToken!;
+  }
+
   // BACKEND INTERACTION
   // Fetch postItems from Backend
   Future<void> fetchPostsFromBackend() async {
@@ -115,7 +120,7 @@ class Posts with ChangeNotifier {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": "Token $authToken",
+          "Authorization": "Token $_authToken",
         },
       );
 
@@ -164,6 +169,8 @@ class Posts with ChangeNotifier {
 
   // BACKEND INTERACTION
   Future<void> publishPostToBackend(Post post) async {
+    print("PUBLISH POST TO BACKEND - authToken: $_authToken");
+
     final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
 
     try {
@@ -172,7 +179,7 @@ class Posts with ChangeNotifier {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": "Token $authToken",
+          "Authorization": "Token $_authToken",
         },
         body: json.encode({
           'postId': post.postId,
@@ -196,7 +203,9 @@ class Posts with ChangeNotifier {
         }),
       );
 
-      print("PUBLISH POST TO BACKEND: ${json.decode(response.body)}");
+      print("PUBLISH POST TO BACKEND - authToken: $_authToken");
+      print(
+          "PUBLISH POST TO BACKEND - response: ${json.decode(response.body)}");
 
       // TODO: WORKING IN PROGRESS
       final newPost = Post(

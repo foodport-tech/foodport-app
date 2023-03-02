@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import '../../providers/post.dart';
 import '../../providers/posts.dart';
@@ -48,8 +49,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   );
   // Form
   final _form = GlobalKey<FormState>();
-  // For publishPost()
-  Posts posts = Posts(null, []);
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -133,7 +132,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       _newPost.postReview = _reviewController.text;
 
       // Call function createPost
-      posts.publishPostToBackend(_newPost);
+      Provider.of<Posts>(context, listen: false).publishPostToBackend(_newPost);
 
       print("FUNCTION CALLED: posts.publishPost");
       print("_newPost.postId: ${_newPost.postId}");

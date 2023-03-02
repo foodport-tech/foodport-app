@@ -16,9 +16,15 @@ class Auth with ChangeNotifier {
   }
 
   String? get token {
+    print("RUN METHOD GET TOKEN _expiryDate: $_expiryDate");
+    print(
+        "RUN METHOD GET TOKEN _expiryDate!.isAfter(DateTime.now()): ${DateTime.now()}");
+    print("RUN METHOD GET TOKEN _expiryDate: $_token");
+
     if (_expiryDate != null &&
         _expiryDate!.isAfter(DateTime.now()) &&
         _token != null) {
+      print("RUN METHOD GET TOKEN: If Statement PASS");
       return _token;
     }
 

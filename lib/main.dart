@@ -51,13 +51,18 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Posts>(
-          // Provide instance of Posts() class to all child widgets
-          create: (BuildContext context) => Posts(null, []),
-          update: (_, auth, previousPosts) => Posts(
-            auth.token,
-            previousPosts == null ? [] : previousPosts.postItems,
-          ),
-        ),
+            // Provide instance of Posts() class to all child widgets
+            create: (BuildContext context) => Posts(null, []),
+            update: (_, authData, previousPosts) {
+              print(
+                  'MAIN.DART - ChangeNotifierProxyProvider<Auth, Posts> - Update Function called .token: ${authData.token}');
+              print(
+                  'MAIN.DART - ChangeNotifierProxyProvider<Auth, Posts> - Update Function called .isAuth: ${authData.isAuth}');
+              return Posts(
+                authData.token,
+                previousPosts == null ? [] : previousPosts.postItems,
+              );
+            }),
         ChangeNotifierProvider(
           // Provide instance of Dishes() class to all child widgets
           create: (BuildContext context) => Dishes(),

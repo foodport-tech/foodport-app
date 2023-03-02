@@ -57,7 +57,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               'assets/images/icons/home.png',
               width: 24,
               height: 24,
-              color: _page == 0 ? primaryColor : secondaryColor,
+              color: _page == 0 ? primaryColor : neutral4Color,
             ),
             backgroundColor: primaryColor,
           ),
@@ -66,14 +66,14 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               'assets/images/icons/explore.png',
               width: 24,
               height: 24,
-              color: _page == 1 ? primaryColor : secondaryColor,
+              color: _page == 1 ? primaryColor : neutral4Color,
             ),
             backgroundColor: primaryColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.add,
-              color: _page == 2 ? primaryColor : secondaryColor,
+              color: _page == 2 ? primaryColor : neutral4Color,
             ),
             backgroundColor: primaryColor,
           ),
@@ -82,7 +82,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               'assets/images/icons/inbox.png',
               width: 24,
               height: 24,
-              color: _page == 3 ? primaryColor : secondaryColor,
+              color: _page == 3 ? primaryColor : neutral4Color,
             ),
             backgroundColor: primaryColor,
           ),
@@ -94,7 +94,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 2,
-                  color: _page == 4 ? primaryColor : secondaryColor,
+                  color: _page == 4 ? primaryColor : neutral4Color,
                 ),
                 borderRadius: BorderRadius.circular(16),
               ),
