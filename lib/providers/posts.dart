@@ -171,7 +171,7 @@ class Posts with ChangeNotifier {
     }
   }
 
-  Future<String?> uploadImage(String postId, Uint8List imageData) async {
+  Future<String> uploadImage(String postId, Uint8List imageData) async {
     final url = Uri.http(ApiLinks.baseUrl, ApiLinks.uploadImage);
 
     // Create multipart request
@@ -196,9 +196,9 @@ class Posts with ChangeNotifier {
         print('Error uploading image: ${response.reasonPhrase}');
         return responseJson;
       }
-    } catch (e) {
-      print('Error uploading image: $e');
-      return null;
+    } catch (error) {
+      print('Error uploading image: $error');
+      throw error;
     }
   }
 
