@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 class Post with ChangeNotifier {
   String? postId;
-  String postPhotoUrl;
+  String? postPhotoUrl;
   String postReview;
   double postRatingDelicious;
   double postRatingEatAgain;
@@ -30,7 +31,8 @@ class Post with ChangeNotifier {
 
   Post({
     required this.postId,
-    required this.postPhotoUrl,
+    required this.postPhoto,
+    // this.postPhotoUrl = '',
     required this.postReview,
     required this.postRatingDelicious,
     required this.postRatingEatAgain,

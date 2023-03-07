@@ -2,17 +2,18 @@ class ApiLinks {
   static const String baseUrl =
       'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com';
 
+  // User upload image
+  static const String uploadImage = '/api/v1/user/upload_image/';
+
   // User sign up endpoint
-  // TO UPDATE: /api/v1/user/signup/
-  static const String signUp = '/api/user/create/';
+  static const String signUp = '/api/v1/user/signup/';
   // User login endpoint
-  // TO UPDATE: /api/v1/user/login/
-  static const String login = '/api/user/token/';
+  static const String login = '/api/v1/user/login/';
   // User logout endpoint
-  // TO UPDATE: /api/v1/user/logout/
-  static const String logout = '/api/user/logout/';
+  static const String logout = '/api/v1/user/logout/';
+  // User profile endpoint
+  static const String user = '/api/v1/user/profile/';
 
   // User content post endpoint
-  // TO UPDATE: /api/v1/posts/
-  static const String posts = '/api/post/posts/';
+  static const String posts = '/api/v1/posts/';
 }

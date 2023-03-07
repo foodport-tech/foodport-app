@@ -19,7 +19,7 @@ class CreatePostScreen extends StatefulWidget {
 
 class _CreatePostScreenState extends State<CreatePostScreen> {
   // Post's Image file
-  Uint8List? _file;
+  Uint8List? _imageFile;
   String? _postPhotoUrl;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
@@ -28,7 +28,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   String _ratingDescriptionWorthIt = 'Moderately';
   var _newPost = Post(
     postId: '',
-    postPhotoUrl: '',
+    postPhotoUrl: null,
     postReview: '',
     postRatingDelicious: 3,
     postRatingEatAgain: 3,
@@ -63,14 +63,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Take a photo"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                _file = await pickImage(ImageSource.camera);
-
-                _postPhotoUrl = getPhotoUrl(_file!);
-                print("_selectImage _postPhotoUrl: $_postPhotoUrl");
-
-                setState(() {
-                  _newPost.postPhotoUrl = _postPhotoUrl!;
-                });
+                _imageFile = await pickImage(ImageSource.camera);
               },
             ),
             // Option 2: Choose from device gallery
@@ -79,14 +72,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Choose from gallery"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                _file = await pickImage(ImageSource.gallery);
-
-                _postPhotoUrl = getPhotoUrl(_file!);
-                print("_selectImage _postPhotoUrl: $_postPhotoUrl");
-
-                setState(() {
-                  _newPost.postPhotoUrl = _postPhotoUrl!;
-                });
+                _imageFile = await pickImage(ImageSource.gallery);
               },
             ),
             // Option 3: Cancel
@@ -101,14 +87,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         );
       },
     );
-  }
-
-  getPhotoUrl(Uint8List file) {
-    String? photoUrl;
-    photoUrl =
-        "https://www.adobe.com/content/dam/cc/us/en/creative-cloud/photography/discover/food-photography/CODERED_B1_food-photography_p4b_690x455.jpg.img.jpg";
-
-    return photoUrl;
   }
 
   _getRatingDescription(double ratingValue) {
@@ -128,15 +106,16 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   // TODO: WORKING IN PROGRESS
   void _publishPost() {
     // If there is an image
-    if (_newPost.postPhotoUrl != null) {
+    if (_imageFile != null) {
       _newPost.postReview = _reviewController.text;
 
       // Call function createPost
-      Provider.of<Posts>(context, listen: false).publishPostToBackend(_newPost);
+      Provider.of<Posts>(context, listen: false)
+          .publishPostToBackend(_newPost, _imageFile!);
 
       print("FUNCTION CALLED: posts.publishPost");
       print("_newPost.postId: ${_newPost.postId}");
-      print("_newPost.postPhotoUrl: ${_newPost.postPhotoUrl}");
+      print("_newPost.postPhoto: ${_newPost.postPhotoUrl}");
       print("_newPost.postReview: ${_newPost.postReview}");
       print("_newPost.postRatingDelicious: ${_newPost.postRatingDelicious}");
       print("_newPost.postRatingEatAgain: ${_newPost.postRatingEatAgain}");
@@ -155,10 +134,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       print("_newPost.postDishVisit: ${_newPost.postDishVisit}");
       print("_newPost.postDishSellerVisit: ${_newPost.postDishSellerVisit}");
 
+      // Call function upload Image
+
       setState(() {
         // Reset Review, Photo, Rating, Dish ID
-        _file = null;
-        _newPost.postPhotoUrl = '';
+        _imageFile = null;
+        _newPost.postPhotoUrl = null;
         _reviewController.text = '';
         _newPost.postReview = '';
         _newPost.postRatingDelicious = 3;
@@ -237,7 +218,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         color: Colors.white,
                         width: 100,
                         height: 100,
-                        child: _file == null
+                        child: _imageFile == null
                             ? IconButton(
                                 icon: const Icon(
                                   Icons.add_photo_alternate_outlined,
@@ -249,7 +230,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     // '!' in '_fill!' means variable will never be null
-                                    image: MemoryImage(_file!),
+                                    image: MemoryImage(_imageFile!),
                                     fit: BoxFit.fill,
                                     alignment: FractionalOffset.topCenter,
                                   ),

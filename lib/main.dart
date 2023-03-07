@@ -10,7 +10,6 @@ import 'providers/auth.dart';
 import 'providers/dishes.dart';
 import 'providers/posts.dart';
 import 'screens/1_feed_post_screen/feed_post_screen.dart';
-import 'screens/auth_screen/login_screen.dart';
 import 'screens/dish_detail_screen.dart';
 import 'responsive/mobile_screen_layout.dart';
 import 'responsive/responsive_layout_screen.dart';

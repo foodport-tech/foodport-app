@@ -1,8 +1,12 @@
+import 'dart:io';
 import 'dart:convert';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 import '../utils/api_links.dart';
 import 'post.dart';
@@ -11,96 +15,96 @@ class Posts with ChangeNotifier {
   String? _authToken;
   // Data Source - Post Content
   List<Post> _items = [
-    Post(
-      postId: 'p1',
-      postPhotoUrl:
-          "https://ucarecdn.com/134fe764-10be-4ab5-ae45-40876bb63289/-/crop/2230x1254/0,1139/-/resize/1600x900/",
-      postReview:
-          'It was absolutely delicious! The chicken katsu was crispy and juicy, and the ebi sambal added a nice spicy kick. The truffled eggs were a unique and decadent addition, and the cucumber provided a refreshing contrast. The pandan loaf was a great finishing touch, adding a subtle sweetness and a lovely aroma. Overall, it was a perfect combination of flavors and textures, and I would highly recommend it to anyone looking for a tasty and satisfying meal.',
-      postRatingEatAgain: 4.0,
-      postRatingDelicious: 3.0, //postRatingStar: 3.0,
-      postRatingWorthIt: 5.0,
-      postPublishDateTime: DateTime(2022, 12, 25),
-      userId: 'u3',
-      dishId: 'd1',
-      postPublishIpAddress: '',
-      postView: {
-        'u1': ['pv1'], // post view ID
-        'u2': [],
-      },
-      postLike: {
-        'u1': ['pl1'], // post like ID
-        'u2': [],
-      },
-      postCommentView: {
-        'u1': ['pcv1'], // post comment view ID
-        'u2': [],
-      },
-      postComment: {
-        'u1': ['pc1'], // post comment ID
-        'u2': [],
-      },
-      postSave: {
-        'u1': ['psv1'], // post save ID
-        'u2': [],
-      },
-      postShare: {
-        'u1': ['psh1'], // post share ID
-        'u2': [],
-      },
-      postDishVisit: {
-        'u1': ['pdv1'], // post menu visit ID
-        'u2': [],
-      },
-      postDishSellerVisit: {
-        'u1': ['pdsv1'], // post menu seller vist ID
-        'u2': [],
-      },
-    ),
-    Post(
-      postId: 'p2',
-      postPhotoUrl:
-          "https://ucarecdn.com/377af099-49ad-4032-b8d1-b4b831496bb8/-/crop/2528x1422/0,1005/-/resize/1600x900/",
-      postReview: 'The cheese is delicious.',
-      postRatingEatAgain: 3.0,
-      postRatingDelicious: 4.0,
-      postRatingWorthIt: 4.0,
-      postPublishDateTime: DateTime(2022, 11, 30),
-      userId: 'u4',
-      dishId: 'd2',
-      postPublishIpAddress: '',
-      postView: {
-        'u1': [],
-        'u2': [],
-      },
-      postLike: {
-        'u2': [],
-      },
-      postCommentView: {
-        'u1': [],
-        'u2': [],
-      },
-      postComment: {
-        'u1': [],
-        'u2': [],
-      },
-      postShare: {
-        'u1': [],
-        'u2': [],
-      },
-      postSave: {
-        'u1': [],
-        'u2': [],
-      },
-      postDishVisit: {
-        'u1': [],
-        'u2': [],
-      },
-      postDishSellerVisit: {
-        'u1': [],
-        'u2': [],
-      },
-    ),
+    // Post(
+    //   postId: 'p1',
+    //   postPhoto:
+    //       "https://ucarecdn.com/134fe764-10be-4ab5-ae45-40876bb63289/-/crop/2230x1254/0,1139/-/resize/1600x900/",
+    //   postReview:
+    //       'It was absolutely delicious! The chicken katsu was crispy and juicy, and the ebi sambal added a nice spicy kick. The truffled eggs were a unique and decadent addition, and the cucumber provided a refreshing contrast. The pandan loaf was a great finishing touch, adding a subtle sweetness and a lovely aroma. Overall, it was a perfect combination of flavors and textures, and I would highly recommend it to anyone looking for a tasty and satisfying meal.',
+    //   postRatingEatAgain: 4.0,
+    //   postRatingDelicious: 3.0, //postRatingStar: 3.0,
+    //   postRatingWorthIt: 5.0,
+    //   postPublishDateTime: DateTime(2022, 12, 25),
+    //   userId: 'u3',
+    //   dishId: 'd1',
+    //   postPublishIpAddress: '',
+    //   postView: {
+    //     'u1': ['pv1'], // post view ID
+    //     'u2': [],
+    //   },
+    //   postLike: {
+    //     'u1': ['pl1'], // post like ID
+    //     'u2': [],
+    //   },
+    //   postCommentView: {
+    //     'u1': ['pcv1'], // post comment view ID
+    //     'u2': [],
+    //   },
+    //   postComment: {
+    //     'u1': ['pc1'], // post comment ID
+    //     'u2': [],
+    //   },
+    //   postSave: {
+    //     'u1': ['psv1'], // post save ID
+    //     'u2': [],
+    //   },
+    //   postShare: {
+    //     'u1': ['psh1'], // post share ID
+    //     'u2': [],
+    //   },
+    //   postDishVisit: {
+    //     'u1': ['pdv1'], // post menu visit ID
+    //     'u2': [],
+    //   },
+    //   postDishSellerVisit: {
+    //     'u1': ['pdsv1'], // post menu seller vist ID
+    //     'u2': [],
+    //   },
+    // ),
+    // Post(
+    //   postId: 'p2',
+    //   postPhotoUrl:
+    //       "https://ucarecdn.com/377af099-49ad-4032-b8d1-b4b831496bb8/-/crop/2528x1422/0,1005/-/resize/1600x900/",
+    //   postReview: 'The cheese is delicious.',
+    //   postRatingEatAgain: 3.0,
+    //   postRatingDelicious: 4.0,
+    //   postRatingWorthIt: 4.0,
+    //   postPublishDateTime: DateTime(2022, 11, 30),
+    //   userId: 'u4',
+    //   dishId: 'd2',
+    //   postPublishIpAddress: '',
+    //   postView: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postLike: {
+    //     'u2': [],
+    //   },
+    //   postCommentView: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postComment: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postShare: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postSave: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postDishVisit: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    //   postDishSellerVisit: {
+    //     'u1': [],
+    //     'u2': [],
+    //   },
+    // ),
   ];
 
   // Constructor
@@ -167,13 +171,45 @@ class Posts with ChangeNotifier {
     }
   }
 
+  Future<String?> uploadImage(String postId, Uint8List imageData) async {
+    final url = Uri.http(ApiLinks.baseUrl, ApiLinks.uploadImage);
+
+    // Create multipart request
+    var request = http.MultipartRequest('POST', url);
+
+    // Add post ID field to request body
+    request.fields['postId'] = postId;
+
+    // Add image file to request
+    var imageFile = http.MultipartFile.fromBytes('image', imageData);
+    request.files.add(imageFile);
+
+    try {
+      // Send request and handle response
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseJson = await response.stream.bytesToString();
+        print('Image uploaded successfully!');
+        return responseJson;
+      } else {
+        var responseJson = response.reasonPhrase;
+        print('Error uploading image: ${response.reasonPhrase}');
+        return responseJson;
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+      return null;
+    }
+  }
+
   // BACKEND INTERACTION
-  Future<void> publishPostToBackend(Post post) async {
+  Future<void> publishPostToBackend(Post post, Uint8List imageFile) async {
     print("PUBLISH POST TO BACKEND - authToken: $_authToken");
 
     final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
 
     try {
+      // POST class Post
       final response = await http.post(
         url,
         headers: {
@@ -207,32 +243,39 @@ class Posts with ChangeNotifier {
       print(
           "PUBLISH POST TO BACKEND - response: ${json.decode(response.body)}");
 
-      // TODO: WORKING IN PROGRESS
-      final newPost = Post(
-        postId: json.decode(response.body)['postId'],
-        postPhotoUrl: post.postPhotoUrl,
-        postReview: post.postReview,
-        postRatingEatAgain: post.postRatingEatAgain,
-        postRatingDelicious: post.postRatingDelicious,
-        postRatingWorthIt: post.postRatingWorthIt,
-        postPublishDateTime: post.postPublishDateTime,
-        userId: post.userId,
-        dishId: post.dishId,
-        postPublishIpAddress: post.postPublishIpAddress,
-        postView: post.postView,
-        postLike: post.postLike,
-        postCommentView: post.postCommentView,
-        postComment: post.postComment,
-        postSave: post.postSave,
-        postShare: post.postShare,
-        postDishVisit: post.postDishVisit,
-        postDishSellerVisit: post.postDishSellerVisit,
-      );
+      String postId = json.decode(response.body)['postId'];
 
-      // Insert new post at the start of the list
-      _items.insert(0, newPost);
+      // Upload Image to server
+      final uploadImageResponse = await uploadImage(postId, imageFile);
 
-      notifyListeners();
+      if (uploadImageResponse != null) {
+        // Create new class Post from response
+        final newPost = Post(
+          postId: json.decode(response.body)['postId'],
+          postPhotoUrl: json.decode(uploadImageResponse)['postPhotoUrl'],
+          postReview: post.postReview,
+          postRatingEatAgain: post.postRatingEatAgain,
+          postRatingDelicious: post.postRatingDelicious,
+          postRatingWorthIt: post.postRatingWorthIt,
+          postPublishDateTime: post.postPublishDateTime,
+          userId: post.userId,
+          dishId: post.dishId,
+          postPublishIpAddress: post.postPublishIpAddress,
+          postView: post.postView,
+          postLike: post.postLike,
+          postCommentView: post.postCommentView,
+          postComment: post.postComment,
+          postSave: post.postSave,
+          postShare: post.postShare,
+          postDishVisit: post.postDishVisit,
+          postDishSellerVisit: post.postDishSellerVisit,
+        );
+
+        // Insert new post at the start of the list
+        _items.insert(0, newPost);
+
+        notifyListeners();
+      }
     } catch (error) {
       print(error);
       throw error;

@@ -129,7 +129,8 @@ class DishDetailScreen extends StatelessWidget {
                   Radius.circular(16.0),
                 ),
                 child: Image.network(
-                  loadedPost.postPhotoUrl,
+                  "https://animalcrossingworld.com/wp-content/uploads/2021/11/animal-crossing-new-horizons-guide-recipe-item-aji-fry-craft-icon.png",
+                  // loadedPost.postPhotoUrl,
                   // width: MediaQuery.of(context).size.width,
                   // height: MediaQuery.of(context).size.width,
                   fit: BoxFit.cover,
