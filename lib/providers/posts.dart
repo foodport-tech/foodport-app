@@ -171,7 +171,7 @@ class Posts with ChangeNotifier {
     }
   }
 
-  Future<String> uploadImage(String postId, Uint8List imageData) async {
+  Future<String?> uploadImage(String postId, Uint8List imageData) async {
     final url = Uri.http(ApiLinks.baseUrl, ApiLinks.uploadImage);
 
     // Create multipart request

@@ -3,7 +3,7 @@ class ApiLinks {
       'ec2-54-95-225-229.ap-northeast-1.compute.amazonaws.com';
 
   // User upload image
-  static const String uploadImage = '/api/v1/user/upload_image/';
+  static const String uploadImage = 'api/v1/posts/{id}/upload-image/';
 
   // User sign up endpoint
   static const String signUp = '/api/v1/user/signup/';
