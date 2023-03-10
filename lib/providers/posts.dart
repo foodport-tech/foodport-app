@@ -67,9 +67,6 @@ class Posts with ChangeNotifier {
               postPublishDateTime: DateTime.parse(
                 postData['postPublishDateTime'],
               ).toLocal(),
-              // postPublishDateTime: DateTime.parse(
-              //   "2023-03-09T11:53:27.130977+00:00",
-              // ).toLocal(),
               userId: postData['userId'],
               dishId: postData['dishId'],
               postPublishIpAddress: postData['postPublishIpAddress'],
