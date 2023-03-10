@@ -72,7 +72,7 @@ class Dishes with ChangeNotifier {
     return [..._items];
   }
 
-  Dish findByDishId(String dishId) {
+  Dish findByDishId(int dishId) {
     return _items.firstWhere((dish) => dish.dishId == dishId);
   }
 }

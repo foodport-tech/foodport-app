@@ -23,19 +23,59 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+
   int commentLen = 0;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final post = Provider.of<Post>(context, listen: false);
-    User user = Users().findByUserId(post.userId);
-    Dish dish = Dishes().findByDishId(post.dishId!);
-    Seller seller = Sellers().findBySellerId(dish.sellerId!);
+    Post post = Provider.of<Post>(context, listen: false);
+    // TODO: Update backend of class Users
+    // User user = Users().findByUserId(post.userId);
+    // TODO: Update backend of class Dishes
+    // Dish dish = Dishes().findByDishId(post.dishId!);
+    // TODO: Update backend of class Sellers
+    // Seller seller = Sellers().findBySellerId(dish.sellerId!);
+
+    // return Padding(
+    //   padding: const EdgeInsets.only(
+    //     top: 16.0,
+    //     bottom: 32.0,
+    //     left: 32.0,
+    //     right: 32.0,
+    //   ),
+    //   // White Background
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       color: Theme.of(context).scaffoldBackgroundColor,
+    //       borderRadius: BorderRadius.all(Radius.circular(16)),
+    //       boxShadow: [
+    //         BoxShadow(
+    //           color: neutral5Color,
+    //           spreadRadius: 0,
+    //           blurRadius: 24,
+    //           offset: Offset(0, 8),
+    //         ),
+    //       ],
+    //     ),
+    //     child: Column(
+    //       children: [
+    //         Text(post.postId.toString()),
+    //         Text(post.postPublishDateTime.toString()),
+    //         Text(post.postPhotoUrl!),
+    //         Text(post.postReview),
+    //         Text(post.postRatingDelicious.toString()),
+    //         Text(post.postRatingEatAgain.toString()),
+    //         Text(post.postRatingWorthIt.toString()),
+    //         Text(post.userId.toString()),
+    //         Text(post.dishId.toString()),
+    //         Text(post.postView),
+    //         Image.network(post.postPhotoUrl!),
+    //         Image.network(
+    //             "https://animalcrossingworld.com/wp-content/uploads/2021/11/animal-crossing-new-horizons-guide-recipe-item-aji-fry-craft-icon.png"),
+    //       ],
+    //     ),
+    //   ),
+    // );
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -80,8 +120,8 @@ class _PostCardState extends State<PostCard> {
                         topRight: Radius.circular(16.0),
                       ),
                       child: Image.network(
-                        "https://animalcrossingworld.com/wp-content/uploads/2021/11/animal-crossing-new-horizons-guide-recipe-item-aji-fry-craft-icon.png",
-                        // post.postPhotoUrl,
+                        // "https://animalcrossingworld.com/wp-content/uploads/2021/11/animal-crossing-new-horizons-guide-recipe-item-aji-fry-craft-icon.png",
+                        post.postPhotoUrl!,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -120,7 +160,7 @@ class _PostCardState extends State<PostCard> {
 
                               // Location Name
                               Text(
-                                seller.sellerOperatingLocation['city'],
+                                "city", //seller.sellerOperatingLocation['city'],
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.white,
@@ -152,7 +192,7 @@ class _PostCardState extends State<PostCard> {
                             borderRadius: BorderRadius.circular(14.0),
                             child: Container(
                               child: Image.network(
-                                user.userProfilePictureURL,
+                                "https://privacysymposium.org/wp-content/uploads/2023/02/9abb2ff1274b030d9cd9d5e73c2e4dda.jpg", // user.userProfilePictureURL,
                                 height: 24,
                                 width: 24,
                                 fit: BoxFit.cover,

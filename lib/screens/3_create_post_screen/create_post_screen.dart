@@ -2,8 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodport_app/providers/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:path/path.dart' as path;
 
 import '../../providers/post.dart';
 import '../../providers/posts.dart';
@@ -20,6 +22,7 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   // Post's Image file
   Uint8List? _imageFile;
+  String? _imageFileName;
   String? _postPhotoUrl;
   // Controller for Review Field
   final TextEditingController _reviewController = TextEditingController();
@@ -27,7 +30,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   String _ratingDescriptionEatAgain = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
   var _newPost = Post(
-    postId: '',
+    postId: 0,
     postPhotoUrl: null,
     postReview: '',
     postRatingDelicious: 3,
@@ -35,7 +38,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     postRatingWorthIt: 3,
     postPublishDateTime: DateTime.now(),
     // TODO: Get appropriate UserId
-    userId: '',
+    userId: 0,
     postPublishIpAddress: '',
     postView: '',
     postLike: '',
@@ -45,7 +48,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     postSave: '',
     postDishVisit: '',
     postDishSellerVisit: '',
-    dishId: '',
+    dishId: null,
   );
   // Form
   final _form = GlobalKey<FormState>();
@@ -63,7 +66,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Take a photo"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                _imageFile = await pickImage(ImageSource.camera);
+                Map<String, dynamic> imageData =
+                    await pickImage(ImageSource.camera);
+                _imageFile = imageData['imageBytes'];
+                _imageFileName = imageData['fileName'];
               },
             ),
             // Option 2: Choose from device gallery
@@ -72,7 +78,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               child: const Text("Choose from gallery"),
               onPressed: () async {
                 Navigator.of(context).pop();
-                _imageFile = await pickImage(ImageSource.gallery);
+                Map<String, dynamic> imageData =
+                    await pickImage(ImageSource.camera);
+                _imageFile = imageData['imageBytes'];
+                _imageFileName = imageData['fileName'];
               },
             ),
             // Option 3: Cancel
@@ -108,10 +117,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     // If there is an image
     if (_imageFile != null) {
       _newPost.postReview = _reviewController.text;
+      _newPost.postPublishDateTime = DateTime.now();
+      _newPost.userId = Provider.of<Auth>(context, listen: false).userId!;
 
       // Call function createPost
       Provider.of<Posts>(context, listen: false)
-          .publishPostToBackend(_newPost, _imageFile!);
+          .publishPostToBackend(_newPost, _imageFile!, _imageFileName!);
 
       print("FUNCTION CALLED: posts.publishPost");
       print("_newPost.postId: ${_newPost.postId}");
@@ -139,13 +150,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       setState(() {
         // Reset Review, Photo, Rating, Dish ID
         _imageFile = null;
-        _newPost.postPhotoUrl = null;
+        _newPost.postPhotoUrl = '';
         _reviewController.text = '';
         _newPost.postReview = '';
         _newPost.postRatingDelicious = 3;
         _newPost.postRatingEatAgain = 3;
         _newPost.postRatingWorthIt = 3;
-        _newPost.dishId = '';
+        _newPost.dishId = null;
       });
     } else {
       print("FUNCTION NOT CALLED: posts.publishPost");
@@ -393,7 +404,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 TextButton(
                   onPressed: () {
                     // TODO: Change to selected DishID
-                    _newPost.dishId = 'd2';
+                    _newPost.dishId = 0;
                   },
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(neutral1Color),

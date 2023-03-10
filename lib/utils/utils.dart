@@ -8,7 +8,10 @@ pickImage(ImageSource source) async {
 
   // If there is something in the _file
   if (_file != null) {
-    return await _file.readAsBytes(); // await because it return Future
+    List<int> imageBytes =
+        await _file.readAsBytes(); // await because it returns Future
+    String fileName = _file.name;
+    return {'imageBytes': imageBytes, 'fileName': fileName};
   }
 
   print("No image selected");

@@ -50,18 +50,23 @@ class MyApp extends StatelessWidget {
           value: Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Posts>(
-            // Provide instance of Posts() class to all child widgets
-            create: (BuildContext context) => Posts(null, []),
-            update: (_, authData, previousPosts) {
-              print(
-                  'MAIN.DART - ChangeNotifierProxyProvider<Auth, Posts> - Update Function called .token: ${authData.token}');
-              print(
-                  'MAIN.DART - ChangeNotifierProxyProvider<Auth, Posts> - Update Function called .isAuth: ${authData.isAuth}');
-              return Posts(
-                authData.token,
-                previousPosts == null ? [] : previousPosts.postItems,
-              );
-            }),
+          // Provide instance of Posts() class to all child widgets
+          create: (_) => Posts(null, []),
+          update: (_, authData, previousPosts) {
+            print(
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) .token: ${authData.token}');
+            print(
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) .isAuth: ${authData.isAuth}');
+            print(
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 1: ${previousPosts}');
+            print(
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 2: ${previousPosts?.postItems}');
+            return Posts(
+              authData.token,
+              previousPosts == null ? [] : previousPosts.postItems,
+            );
+          },
+        ),
         ChangeNotifierProvider(
           // Provide instance of Dishes() class to all child widgets
           create: (BuildContext context) => Dishes(),

@@ -18,13 +18,19 @@ class PostCardSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Replace Provider with Stateful widget for the toggleLikeStatus()
-    final post = Provider.of<Post>(context, listen: false);
-    User user = Users().findByUserId(post.userId);
+    // TODO:
+    // Replace Provider with Stateful widget for the toggleLikeStatus()
+    // TODO:
+    // final post = Provider.of<Post>(context, listen: false);
+    // TODO: Update backend of class Users
+    // User user = Users().findByUserId(post.userId);
 
-    bool _dishVisitStatus = post.postDishVisit.containsKey(user.userId);
-    bool _likeStatus = post.postLike.containsKey(user.userId);
-    bool _saveStatus = post.postSave.containsKey(user.userId);
+    // TODO:
+    bool _dishVisitStatus = true; //post.postDishVisit.containsKey(user.userId);
+    // TODO:
+    bool _likeStatus = true; //post.postLike.containsKey(user.userId);
+    // TODO:
+    bool _saveStatus = true; //post.postSave.containsKey(user.userId);
 
     return Container(
       alignment: Alignment.topCenter,
@@ -53,8 +59,10 @@ class PostCardSideBar extends StatelessWidget {
               // );
 
               // Store data in database
-              post.toggleDishVisitStatus(user.userId);
-              _dishVisitStatus = post.postDishVisit.containsKey(user.userId);
+              // TODO: Fix Backend
+              // post.toggleDishVisitStatus(user.userId);
+              // TODO: Fix Backend
+              // _dishVisitStatus = post.postDishVisit.containsKey(user.userId);
             },
             child: Column(
               children: [
@@ -83,8 +91,10 @@ class PostCardSideBar extends StatelessWidget {
           // Like Section
           GestureDetector(
             onTap: () {
-              post.toggleLikeStatus(user.userId);
-              _likeStatus = post.postLike.containsKey(user.userId);
+              //TODO
+              //post.toggleLikeStatus(user.userId);
+              //TODO
+              //_likeStatus = post.postLike.containsKey(user.userId);
             },
             child: Column(
               children: [
@@ -151,8 +161,10 @@ class PostCardSideBar extends StatelessWidget {
           // Save Post Section
           GestureDetector(
             onTap: () {
-              post.toggleSaveStatus(user.userId);
-              _saveStatus = post.postSave.containsKey(user.userId);
+              //TODO
+              // post.toggleSaveStatus(user.userId);
+              //TODO
+              //_saveStatus = post.postSave.containsKey(user.userId);
             },
             child: Column(
               children: [

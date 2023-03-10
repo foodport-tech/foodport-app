@@ -117,7 +117,7 @@ class Users with ChangeNotifier {
     return [..._items];
   }
 
-  User findByUserId(String userId) {
+  User findByUserId(int userId) {
     return _items.firstWhere((user) => user.userId == userId);
   }
 }

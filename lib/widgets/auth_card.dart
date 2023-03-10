@@ -115,8 +115,9 @@ class _AuthCardState extends State<AuthCard> {
           children: [
             // SignIn/SignUp: Email Text Field Input
             TextFormField(
-              decoration: InputDecoration(
-                labelText: 'email',
+              style: Theme.of(context).textTheme.bodyText2,
+              decoration: const InputDecoration(
+                labelText: 'Email',
               ),
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
@@ -141,7 +142,8 @@ class _AuthCardState extends State<AuthCard> {
 
             // SignIn/SignUp: Password Text Field Input
             TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
+              style: Theme.of(context).textTheme.bodyText2,
+              decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
               controller: _passwordController,
               validator: (value) {

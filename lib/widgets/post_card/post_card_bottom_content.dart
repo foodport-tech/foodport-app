@@ -22,9 +22,12 @@ class PostCardBottomContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    User user = Users().findByUserId(post.userId);
-    Dish dish = Dishes().findByDishId(post.dishId!);
-    Seller seller = Sellers().findBySellerId(dish.sellerId!);
+    // TODO: Update backend of class Users
+    // User user = Users().findByUserId(post.userId);
+    // TODO: Update backend of class Dishes
+    // Dish dish = Dishes().findByDishId(post.dishId!);
+    // TODO: Update backend of class Sellers
+    // Seller seller = Sellers().findBySellerId(dish.sellerId!);
 
     return Expanded(
       child: Container(
@@ -62,7 +65,7 @@ class PostCardBottomContent extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        user.userUsername!, // Find username from userId
+                        "user.userUsername!", //user.userUsername!, // Find username from userId
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: neutral1Color,
@@ -77,7 +80,7 @@ class PostCardBottomContent extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "${dish.dishName} - ${post.postReview}",
+                        "dish.dishName - post.postReview", //"${dish.dishName} - ${post.postReview}",
                         maxLines: 4,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -105,7 +108,7 @@ class PostCardBottomContent extends StatelessWidget {
                       child: Text(
                         // If got dishMainIngredient, show dishMainIngredient.
                         // Else show dishIngredient
-                        dish.dishMainIngredient ?? dish.dishIngredient,
+                        "dish.dishMainIngredient ?? dish.dishIngredient", //dish.dishMainIngredient ?? dish.dishIngredient,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -131,7 +134,7 @@ class PostCardBottomContent extends StatelessWidget {
                     Container(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        dish.dishNutrition,
+                        "dish.dishNutrition", // dish.dishNutrition,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

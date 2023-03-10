@@ -11,15 +11,55 @@ class FeedPostForYouScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Listener
-    final postsData = Provider.of<Posts>(context);
+    final postsData = Provider.of<Posts>(context, listen: false);
     // IMPROVEMENT: postsData.forYouItems
     // to only get posts from the accounts followed
+
     final posts = postsData.postItems;
+    print("//feed_post_for_you_screen.dart - postsData 1: $postsData");
+    print(
+        "//feed_post_for_you_screen.dart - postsData.postItems 1: ${postsData.postItems}");
 
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
-      body: PostCardPageView(posts: posts),
+      body: FutureBuilder(
+        future: postsData.fetchPostsFromBackend(),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            print("//feed_post_for_you_screen.dart - postsData 2: $postsData");
+            print(
+                "//feed_post_for_you_screen.dart - postsData.postItems 2: ${postsData.postItems}");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+            // } else if (snapshot.hasError) {
+            //   return const Center(
+            //     child: Text('An error occurred!'),
+            //   );
+          } else {
+            final posts = postsData.postItems;
+            print("//feed_post_for_you_screen.dart - postsData: $postsData");
+            print("//feed_post_for_you_screen.dart - posts: $posts");
+            return PostCardPageView(posts: posts);
+            // return Container(
+            //   child: Text("postsData: $postsData \n posts: $posts"),
+            // );
+          }
+        },
+      ),
     );
+
+    // return Scaffold(
+    //   backgroundColor: mobileBackgroundColor,
+    //   body: Consumer<Posts>(
+    //     builder: (context, postsData, _) {
+    //       final posts = postsData.postItems;
+    //       print("feed_post_for_you_screen.dart - posts: $posts");
+
+    //       return PostCardPageView(posts: posts);
+    //     },
+    //   ),
+    // );
   }
 }
 
