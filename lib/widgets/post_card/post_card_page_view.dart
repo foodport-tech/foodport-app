@@ -13,7 +13,7 @@ class PostCardPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     print("//post_card_page_view.dart - posts: $posts");
     print("//post_card_page_view.dart - posts.length: ${posts.length}");
-    print("//post_card_page_view.dart - posts[1]: ${posts[1]}");
+    print("//post_card_page_view.dart - posts[0].dishId: ${posts[0].dishId}");
 
     return PageView.builder(
       // onPageChanged: (pageIndex) {} // To track the current page

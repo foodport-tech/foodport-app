@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 class Post with ChangeNotifier {
-  int postId;
+  final int postId;
   String? postPhotoUrl;
   String postReview;
   double postRatingDelicious;
@@ -11,23 +11,23 @@ class Post with ChangeNotifier {
   DateTime postPublishDateTime;
   int userId;
   int? dishId;
-  String postPublishIpAddress;
+  String? postPublishIpAddress;
   // 'Impression': A Nested Map of 'userId' and "number of times" of the users that have viewed this post
-  final postView;
+  Map? postView;
   // A Nested Map of 'userId' of the users that have liked this post
-  final postLike;
+  Map? postLike;
   // A Nested Map of 'userId' & "number of times" of the users that have viewed the comments of this post
-  final postCommentView;
+  Map? postCommentView;
   // A Map of 'userId' & 'postCommentId' of the users that have commented this post
-  final postComment;
+  Map? postComment;
   // A Map of 'userId' & 'postShareId' of the users that have shared this post
-  final postShare;
+  Map? postShare;
   // A Map of 'userId' & 'postSaveId' of the users that have saved this post
-  final postSave;
+  Map? postSave;
   // A Map of 'userId' & 'postDishViewId' of the users that have viewed the dish of this post
-  final postDishVisit;
+  Map? postDishVisit;
   // A Map of 'userId' & 'postDishSellerVisitId' of the users that have visited the seller profile of this post
-  final postDishSellerVisit;
+  Map? postDishSellerVisit;
 
   Post({
     required this.postId,
@@ -50,54 +50,54 @@ class Post with ChangeNotifier {
     this.dishId,
   });
 
-  toggleDishVisitStatus(userId) {
-    // If 'postDishVisit' contain 'userId':
-    if (postLike.containsKey(userId)) {
-      // Add Value to Key 'userId'
-      // TODO: Code goes here
-    }
-    // Else ('postDishVisit' not contain 'userId'):
-    else {
-      // Add Key 'userId' to 'postDishVisit'
-      postDishVisit.putIfAbsent("$userId", () => []);
-      // Add Value to Key 'userId'
-      // TODO: Code goes here
-    }
+  // toggleDishVisitStatus(userId) {
+  //   // If 'postDishVisit' contain 'userId':
+  //   if (postLike.containsKey(userId)) {
+  //     // Add Value to Key 'userId'
+  //     // TODO: Code goes here
+  //   }
+  //   // Else ('postDishVisit' not contain 'userId'):
+  //   else {
+  //     // Add Key 'userId' to 'postDishVisit'
+  //     postDishVisit.putIfAbsent("$userId", () => []);
+  //     // Add Value to Key 'userId'
+  //     // TODO: Code goes here
+  //   }
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
-  toggleLikeStatus(userId) {
-    // If 'postLike' contain 'userId':
-    if (postLike.containsKey(userId)) {
-      // Remove 'userId' from 'postLike'
-      postLike.remove(userId);
-    }
-    // Else ('postLike' not contain 'userId'):
-    else {
-      // Add 'userId' to 'postLike'
-      postLike.putIfAbsent("$userId", () => []);
-      // Add Value to Key 'userId'
-      // TODO: Code goes here
-    }
+  // toggleLikeStatus(userId) {
+  //   // If 'postLike' contain 'userId':
+  //   if (postLike.containsKey(userId)) {
+  //     // Remove 'userId' from 'postLike'
+  //     postLike.remove(userId);
+  //   }
+  //   // Else ('postLike' not contain 'userId'):
+  //   else {
+  //     // Add 'userId' to 'postLike'
+  //     postLike.putIfAbsent("$userId", () => []);
+  //     // Add Value to Key 'userId'
+  //     // TODO: Code goes here
+  //   }
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 
-  toggleSaveStatus(userId) {
-    // If 'postSave' contain 'userId':
-    if (postSave.containsKey(userId)) {
-      // Remove 'userId' from 'postLike'
-      postSave.remove(userId);
-    }
-    // Else ('postSave' not contain 'userId'):
-    else {
-      // Add 'userId' to 'postSave'
-      postSave.putIfAbsent("$userId", () => []);
-      // Add Value to Key 'userId'
-      // TODO: Code goes here
-    }
+  // toggleSaveStatus(userId) {
+  //   // If 'postSave' contain 'userId':
+  //   if (postSave.containsKey(userId)) {
+  //     // Remove 'userId' from 'postLike'
+  //     postSave.remove(userId);
+  //   }
+  //   // Else ('postSave' not contain 'userId'):
+  //   else {
+  //     // Add 'userId' to 'postSave'
+  //     postSave.putIfAbsent("$userId", () => []);
+  //     // Add Value to Key 'userId'
+  //     // TODO: Code goes here
+  //   }
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 }

@@ -28,11 +28,21 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    print("//post_card.dart - Widget build");
+
     Post post = Provider.of<Post>(context, listen: false);
+    print("//post_card.dart - post.userId: ${post.userId}");
+
     // TODO: Update backend of class Users
-    // User user = Users().findByUserId(post.userId);
+    Users usersData = Provider.of<Users>(context, listen: false);
+    Future<User> user =
+        usersData.fetchSingleUserFromBackend(userId: post.userId);
+
+    print("//post_card.dart - user: $user");
+
     // TODO: Update backend of class Dishes
     // Dish dish = Dishes().findByDishId(post.dishId!);
+
     // TODO: Update backend of class Sellers
     // Seller seller = Sellers().findBySellerId(dish.sellerId!);
 

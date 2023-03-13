@@ -29,7 +29,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   String _ratingDescriptionDelicious = 'Moderately';
   String _ratingDescriptionEatAgain = 'Moderately';
   String _ratingDescriptionWorthIt = 'Moderately';
-  var _newPost = Post(
+  final _newPost = Post(
     postId: 0,
     postPhotoUrl: null,
     postReview: '',
@@ -40,14 +40,14 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     // TODO: Get appropriate UserId
     userId: 0,
     postPublishIpAddress: '',
-    postView: '',
-    postLike: '',
-    postCommentView: '',
-    postComment: '',
-    postShare: '',
-    postSave: '',
-    postDishVisit: '',
-    postDishSellerVisit: '',
+    postView: {},
+    postLike: {},
+    postCommentView: {},
+    postComment: {},
+    postShare: {},
+    postSave: {},
+    postDishVisit: {},
+    postDishSellerVisit: {},
     dishId: null,
   );
   // Form
@@ -68,8 +68,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 Navigator.of(context).pop();
                 Map<String, dynamic> imageData =
                     await pickImage(ImageSource.camera);
-                _imageFile = imageData['imageBytes'];
-                _imageFileName = imageData['fileName'];
+                setState(() {
+                  _imageFile = imageData['imageBytes'];
+                  _imageFileName = imageData['fileName'];
+                });
               },
             ),
             // Option 2: Choose from device gallery
@@ -79,9 +81,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               onPressed: () async {
                 Navigator.of(context).pop();
                 Map<String, dynamic> imageData =
-                    await pickImage(ImageSource.camera);
-                _imageFile = imageData['imageBytes'];
-                _imageFileName = imageData['fileName'];
+                    await pickImage(ImageSource.gallery);
+                setState(() {
+                  _imageFile = imageData['imageBytes'];
+                  _imageFileName = imageData['fileName'];
+                });
               },
             ),
             // Option 3: Cancel
@@ -114,8 +118,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   // TODO: WORKING IN PROGRESS
   void _publishPost() {
+    print("create_post_screen.dart - _publishPost");
     // If there is an image
     if (_imageFile != null) {
+      print("create_post_screen.dart - if statement");
       _newPost.postReview = _reviewController.text;
       _newPost.postPublishDateTime = DateTime.now();
       _newPost.userId = Provider.of<Auth>(context, listen: false).userId!;
@@ -124,7 +130,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       Provider.of<Posts>(context, listen: false)
           .publishPostToBackend(_newPost, _imageFile!, _imageFileName!);
 
-      print("FUNCTION CALLED: posts.publishPost");
+      print("FUNCTION CALLED: _publishPost");
       print("_newPost.postId: ${_newPost.postId}");
       print("_newPost.postPhoto: ${_newPost.postPhotoUrl}");
       print("_newPost.postReview: ${_newPost.postReview}");
@@ -151,11 +157,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         // Reset Review, Photo, Rating, Dish ID
         _imageFile = null;
         _newPost.postPhotoUrl = '';
-        _reviewController.text = '';
+        // Clear keyboard
+        _reviewController.clear();
         _newPost.postReview = '';
         _newPost.postRatingDelicious = 3;
         _newPost.postRatingEatAgain = 3;
         _newPost.postRatingWorthIt = 3;
+        _ratingDescriptionDelicious = _getRatingDescription(3);
+        _ratingDescriptionEatAgain = _getRatingDescription(3);
+        _ratingDescriptionWorthIt = _getRatingDescription(3);
         _newPost.dishId = null;
       });
     } else {
@@ -184,375 +194,415 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        elevation: 0, // Remove shadow
-        title: const Text(
-          "Create Post",
-          style: TextStyle(
-            color: neutral1Color,
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        // Close the keyboard when the user taps outside of the input field
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: mobileBackgroundColor,
+          elevation: 0, // Remove shadow
+          title: const Text(
+            "Create Post",
+            style: TextStyle(
+              color: neutral1Color,
+            ),
           ),
         ),
-      ),
-      backgroundColor: mobileBackgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      // WRITE REVIEW: For user to write review
-                      Expanded(
-                        child: TextField(
-                          controller: _reviewController,
-                          decoration: const InputDecoration(
-                            hintText: "Write your thoughts..",
-                            border: InputBorder.none,
+        backgroundColor: mobileBackgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        // WRITE REVIEW: For user to write review
+                        Expanded(
+                          child: TextField(
+                            controller: _reviewController,
+                            decoration: const InputDecoration(
+                              hintText: "Write your thoughts..",
+                              border: InputBorder.none,
+                            ),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: neutral3Color,
+                            ),
+                            maxLines: 5,
                           ),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: neutral3Color,
-                          ),
-                          maxLines: 5,
                         ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                        const SizedBox(
+                          width: 8,
+                        ),
 
-                      // UPLOAD PHOTO: For user to upload a dish photo
-                      Container(
-                        color: Colors.white,
-                        width: 100,
-                        height: 100,
-                        child: _imageFile == null
-                            ? IconButton(
-                                icon: const Icon(
-                                  Icons.add_photo_alternate_outlined,
-                                ),
-                                // Direct user to take a photo or select a file
-                                onPressed: () => _selectImage(context),
-                              )
-                            : Container(
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    // '!' in '_fill!' means variable will never be null
-                                    image: MemoryImage(_imageFile!),
-                                    fit: BoxFit.fill,
-                                    alignment: FractionalOffset.topCenter,
+                        // UPLOAD PHOTO: For user to upload a dish photo
+                        Container(
+                          color: Colors.white,
+                          width: 100,
+                          height: 100,
+                          child: _imageFile == null
+                              ? IconButton(
+                                  icon: const Icon(
+                                    Icons.add_photo_alternate_outlined,
+                                  ),
+                                  // Direct user to take a photo or select a file
+                                  onPressed: () {
+                                    // Close the keyboard when the user taps outside of the input field
+                                    FocusScope.of(context).unfocus();
+
+                                    _selectImage(context);
+                                  },
+                                )
+                              : Container(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      // '!' in '_fill!' means variable will never be null
+                                      image: MemoryImage(_imageFile!),
+                                      fit: BoxFit.fill,
+                                      alignment: FractionalOffset.topCenter,
+                                    ),
                                   ),
                                 ),
-                              ),
-                      ),
-                    ],
-                  ),
-                  const Divider(thickness: 1.5),
-                  const SizedBox(height: 12),
+                        ),
+                      ],
+                    ),
+                    const Divider(thickness: 1.5),
+                    const SizedBox(height: 12),
 
-                  // Rating: Delicious
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: const Text(
-                          "Delicious",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: RatingBar.builder(
-                          initialRating: 3,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          itemSize: 24,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Image.asset(
-                            'assets/images/icons/star_filled.png',
-                          ),
-                          onRatingUpdate: (rating) {
-                            setState(() {
-                              _newPost.postRatingDelicious = rating;
-                              _ratingDescriptionDelicious =
-                                  _getRatingDescription(rating);
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        child: Text(
-                          _ratingDescriptionDelicious,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Rating: Eat Again
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: const Text(
-                          "Eat Again",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: RatingBar.builder(
-                          initialRating: 3,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          itemSize: 24,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Image.asset(
-                            'assets/images/icons/fire_filled.png',
-                          ),
-                          onRatingUpdate: (rating) {
-                            setState(() {
-                              _newPost.postRatingEatAgain = rating;
-                              _ratingDescriptionEatAgain =
-                                  _getRatingDescription(rating);
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        child: Text(
-                          _ratingDescriptionEatAgain,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  // Rating: Worth It
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.25,
-                        child: const Text(
-                          "Worth It",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: RatingBar.builder(
-                          initialRating: 3,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          itemSize: 24,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Image.asset(
-                            'assets/images/icons/coin_filled.png',
-                          ),
-                          onRatingUpdate: (rating) {
-                            setState(() {
-                              _newPost.postRatingWorthIt = rating;
-                              _ratingDescriptionWorthIt =
-                                  _getRatingDescription(rating);
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        child: Text(
-                          _ratingDescriptionWorthIt,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  const Divider(thickness: 1.5),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                // Link Food
-                TextButton(
-                  onPressed: () {
-                    // TODO: Change to selected DishID
-                    _newPost.dishId = 0;
-                  },
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(neutral1Color),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(16)),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/icons/cutlery.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(child: Text("What do you eat?")),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: neutral3Color,
-                      ),
-                    ],
-                  ),
-                ),
-                // Setting: Posting Privacy
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(neutral1Color),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(16)),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/icons/unlock.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(child: Text("Public · Everyone can view")),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: neutral3Color,
-                      ),
-                    ],
-                  ),
-                ),
-                // Advance Setting
-                TextButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(neutral1Color),
-                    padding:
-                        MaterialStateProperty.all(const EdgeInsets.all(16)),
-                  ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/icons/setting.png',
-                        width: 20,
-                        height: 20,
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(child: Text("Advance setting")),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: neutral3Color,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const Divider(thickness: 1.5),
-            ),
-            const SizedBox(height: 16),
-            // Bottom Buttons
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(neutral5Color),
-                          elevation: MaterialStateProperty.all<double>(0),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                    // Rating: Delicious
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: const Text(
+                            "Delicious",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
                             ),
                           ),
-                          padding: MaterialStateProperty.all(
-                            const EdgeInsets.all(14),
+                        ),
+                        Expanded(
+                          child: RatingBar.builder(
+                            initialRating: _newPost.postRatingDelicious,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            itemSize: 24,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Image.asset(
+                              'assets/images/icons/star_filled.png',
+                            ),
+                            onRatingUpdate: (rating) {
+                              // Close the keyboard when the user taps outside of the input field
+                              FocusScope.of(context).unfocus();
+
+                              setState(() {
+                                _newPost.postRatingDelicious = rating;
+                                _ratingDescriptionDelicious =
+                                    _getRatingDescription(rating);
+                              });
+                            },
                           ),
                         ),
-                        child: const Text(
-                          'Save as draft',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: neutral1Color,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: _publishPost,
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(primaryColor),
-                          elevation: MaterialStateProperty.all<double>(0),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text(
+                            _ratingDescriptionDelicious,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
                             ),
                           ),
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.all(14)),
                         ),
-                        child: const Text(
-                          'Publish',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    // Rating: Eat Again
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: const Text(
+                            "Eat Again",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
+                            ),
                           ),
                         ),
-                      ),
+                        Expanded(
+                          child: RatingBar.builder(
+                            initialRating: _newPost.postRatingEatAgain,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            itemSize: 24,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Image.asset(
+                              'assets/images/icons/fire_filled.png',
+                            ),
+                            onRatingUpdate: (rating) {
+                              setState(() {
+                                // Close the keyboard when the user taps outside of the input field
+                                FocusScope.of(context).unfocus();
+
+                                _newPost.postRatingEatAgain = rating;
+                                _ratingDescriptionEatAgain =
+                                    _getRatingDescription(rating);
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text(
+                            _ratingDescriptionEatAgain,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 12),
+                    // Rating: Worth It
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          child: const Text(
+                            "Worth It",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: RatingBar.builder(
+                            initialRating: _newPost.postRatingWorthIt,
+                            minRating: 1,
+                            direction: Axis.horizontal,
+                            allowHalfRating: false,
+                            itemCount: 5,
+                            itemSize: 24,
+                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                            itemBuilder: (context, _) => Image.asset(
+                              'assets/images/icons/coin_filled.png',
+                            ),
+                            onRatingUpdate: (rating) {
+                              // Close the keyboard when the user taps outside of the input field
+                              FocusScope.of(context).unfocus();
+
+                              setState(() {
+                                _newPost.postRatingWorthIt = rating;
+                                _ratingDescriptionWorthIt =
+                                    _getRatingDescription(rating);
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          child: Text(
+                            _ratingDescriptionWorthIt,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              color: neutral1Color,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    const Divider(thickness: 1.5),
                   ],
                 ),
               ),
-            ),
-          ],
+              Column(
+                children: [
+                  // Link Food
+                  TextButton(
+                    onPressed: () {
+                      // Close the keyboard when the user taps outside of the input field
+                      FocusScope.of(context).unfocus();
+
+                      // TODO: Change to selected DishID
+                      _newPost.dishId = 0;
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(neutral1Color),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(16)),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/icons/cutlery.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(child: Text("What do you eat?")),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: neutral3Color,
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Setting: Posting Privacy
+                  TextButton(
+                    onPressed: () {
+                      // Close the keyboard when the user taps outside of the input field
+                      FocusScope.of(context).unfocus();
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(neutral1Color),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(16)),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/icons/unlock.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(child: Text("Public · Everyone can view")),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: neutral3Color,
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Advance Setting
+                  TextButton(
+                    onPressed: () {
+                      // Close the keyboard when the user taps outside of the input field
+                      FocusScope.of(context).unfocus();
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(neutral1Color),
+                      padding:
+                          MaterialStateProperty.all(const EdgeInsets.all(16)),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/icons/setting.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(child: Text("Advance setting")),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: neutral3Color,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const Divider(thickness: 1.5),
+              ),
+              const SizedBox(height: 16),
+              // Bottom Buttons
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Close the keyboard when the user taps outside of the input field
+                            FocusScope.of(context).unfocus();
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(neutral5Color),
+                            elevation: MaterialStateProperty.all<double>(0),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            padding: MaterialStateProperty.all(
+                              const EdgeInsets.all(14),
+                            ),
+                          ),
+                          child: const Text(
+                            'Save as draft',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: neutral1Color,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Close the keyboard when the user taps outside of the input field
+                            FocusScope.of(context).unfocus();
+
+                            _publishPost();
+                            print(
+                                "//create_post_screen.dart - onPressed _publishPost");
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(primaryColor),
+                            elevation: MaterialStateProperty.all<double>(0),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                            padding: MaterialStateProperty.all(
+                                const EdgeInsets.all(14)),
+                          ),
+                          child: const Text(
+                            'Publish',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

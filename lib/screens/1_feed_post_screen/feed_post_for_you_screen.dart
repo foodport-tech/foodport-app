@@ -15,7 +15,6 @@ class FeedPostForYouScreen extends StatelessWidget {
     // IMPROVEMENT: postsData.forYouItems
     // to only get posts from the accounts followed
 
-    final posts = postsData.postItems;
     print("//feed_post_for_you_screen.dart - postsData 1: $postsData");
     print(
         "//feed_post_for_you_screen.dart - postsData.postItems 1: ${postsData.postItems}");
@@ -23,7 +22,7 @@ class FeedPostForYouScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
       body: FutureBuilder(
-        future: postsData.fetchPostsFromBackend(),
+        future: postsData.fetchAllPostsFromBackend(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             print("//feed_post_for_you_screen.dart - postsData 2: $postsData");

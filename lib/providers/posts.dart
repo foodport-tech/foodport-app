@@ -1,12 +1,6 @@
-import 'dart:io';
 import 'dart:convert';
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 
 import '../utils/api_links.dart';
 import 'post.dart';
@@ -27,9 +21,12 @@ class Posts with ChangeNotifier {
   }
 
   // BACKEND INTERACTION
-  // Fetch postItems from Backend
-  Future<void> fetchPostsFromBackend() async {
-    final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
+  // Fetch postItem(s) from Backend
+  Future<Post> fetchSinglePostFromBackend({required int postId}) async {
+    print("//posts.dart - fetchPostsFromBackend() - _authToken: ${_authToken}");
+
+    final url = Uri.http(ApiLinks.baseUrl, '${ApiLinks.posts}/$postId');
+
     try {
       final response = await http.get(
         url,
@@ -41,54 +38,84 @@ class Posts with ChangeNotifier {
       );
 
       print(
-          "//posts.dart - fetchPostsFromBackend() - _authToken: ${_authToken}");
+          "//posts.dart - fetchPostsFromBackend() - response.body: ${response.body}");
+
+      final extractedData = json.decode(response.body) as dynamic;
+
+      print(
+          "//posts.dart - fetchPostsFromBackend() - extractedData: ${extractedData}");
+
+      return _parsePost(extractedData);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  Future<void> fetchAllPostsFromBackend() async {
+    print("//posts.dart - fetchPostsFromBackend() - _authToken: ${_authToken}");
+
+    final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token $_authToken",
+        },
+      );
 
       print(
           "//posts.dart - fetchPostsFromBackend() - response.body: ${response.body}");
 
-      final extractedData = json.decode(response.body) as List<dynamic>;
+      final extractedData = json.decode(response.body) as dynamic;
+
+      print(
+          "//posts.dart - fetchPostsFromBackend() - extractedData: ${extractedData}");
 
       if (extractedData == null) {
         return;
       }
 
-      final List<Post> loadedPosts = [];
-
       extractedData.forEach(
         (postData) {
-          loadedPosts.add(
-            Post(
-              postId: postData['postId'],
-              postPhotoUrl: postData['postPhotoUrl'],
-              postReview: postData['postReview'],
-              postRatingEatAgain: postData['postRatingEatAgain'],
-              postRatingDelicious: postData['postRatingDelicious'],
-              postRatingWorthIt: postData['postRatingWorthIt'],
-              postPublishDateTime: DateTime.parse(
-                postData['postPublishDateTime'],
-              ).toLocal(),
-              userId: postData['userId'],
-              dishId: postData['dishId'],
-              postPublishIpAddress: postData['postPublishIpAddress'],
-              postView: postData['postView'],
-              postLike: postData['postLike'],
-              postCommentView: postData['postCommentView'],
-              postComment: postData['postComment'],
-              postSave: postData['postSave'],
-              postShare: postData['postShare'],
-              postDishVisit: postData['postDishVisit'],
-              postDishSellerVisit: postData['postDishSellerVisit'],
-            ),
-          );
+          final Post post = _parsePost(postData);
+          _items.add(post);
         },
       );
 
-      _items = loadedPosts;
+      print("//posts.dart - fetchPostsFromBackend() - _items: ${_items}");
 
       notifyListeners();
     } catch (error) {
       throw (error);
     }
+  }
+
+  Post _parsePost(dynamic postData) {
+    return Post(
+      postId: postData['postId'],
+      postPhotoUrl: postData['postPhotoUrl'],
+      postReview: postData['postReview'],
+      postRatingEatAgain: postData['postRatingEatAgain'],
+      postRatingDelicious: postData['postRatingDelicious'],
+      postRatingWorthIt: postData['postRatingWorthIt'],
+      postPublishDateTime: DateTime.parse(
+        postData['postPublishDateTime'],
+      ).toLocal(),
+      userId: postData['userId'],
+      dishId: postData['dishId'],
+      postPublishIpAddress: postData['postPublishIpAddress'],
+      postView: postData['postView'],
+      postLike: postData['postLike'],
+      postCommentView: postData['postCommentView'],
+      postComment: postData['postComment'],
+      postSave: postData['postSave'],
+      postShare: postData['postShare'],
+      postDishVisit: postData['postDishVisit'],
+      postDishSellerVisit: postData['postDishSellerVisit'],
+    );
   }
 
   Future<String?> uploadImage(
@@ -98,7 +125,7 @@ class Posts with ChangeNotifier {
       ApiLinks.uploadImage.replaceAll('{id}', postId.toString()),
     );
 
-    print("FUNCTION uploadImage - postId: $postId");
+    print("//posts.dart - uploadImage - postId: $postId");
 
     // Create multipart request
     var request = http.MultipartRequest('POST', url);
@@ -138,7 +165,7 @@ class Posts with ChangeNotifier {
     Uint8List imageFile,
     String imageFileName,
   ) async {
-    print("PUBLISH POST TO BACKEND - authToken: $_authToken");
+    print("//posts.dart - publishPostToBackend - authToken: $_authToken");
 
     final url = Uri.http(ApiLinks.baseUrl, ApiLinks.posts);
 
@@ -173,9 +200,9 @@ class Posts with ChangeNotifier {
         }),
       );
 
-      print("PUBLISH POST TO BACKEND - authToken: $_authToken");
+      print("//posts.dart - publishPostToBackend - authToken: $_authToken");
       print(
-          "PUBLISH POST TO BACKEND - response: ${json.decode(response.body)}");
+          "//posts.dart - publishPostToBackend - response: ${json.decode(response.body)}");
 
       int postId = json.decode(response.body)['postId'];
 

@@ -16,15 +16,15 @@ class Auth with ChangeNotifier {
   }
 
   String? get token {
-    print("RUN METHOD GET TOKEN _expiryDate: $_expiryDate");
+    print("//auth.dart - function get token - _expiryDate: $_expiryDate");
     print(
-        "RUN METHOD GET TOKEN _expiryDate!.isAfter(DateTime.now()): ${DateTime.now()}");
-    print("RUN METHOD GET TOKEN _expiryDate: $_token");
+        "//auth.dart - function get token - DateTime.now(): ${DateTime.now()}");
+    print("//auth.dart - function get token - _token: $_token");
 
     if (_expiryDate != null &&
         _expiryDate!.isAfter(DateTime.now()) &&
         _token != null) {
-      print("RUN METHOD GET TOKEN: If Statement PASS");
+      print("//auth.dart - function get token: If Statement PASS");
       return _token;
     }
 
@@ -40,6 +40,7 @@ class Auth with ChangeNotifier {
     String password,
     String urlSegment,
   ) async {
+    print("//auth.dart - function _authenticate called");
     final url = Uri.http(ApiLinks.baseUrl, urlSegment);
 
     try {
@@ -61,7 +62,7 @@ class Auth with ChangeNotifier {
       final responseData = json.decode(response.body);
 
       // TODO: Remove print();
-      print("RESPONSE DATA: $responseData");
+      print("//auth.dart - _authenticate - responseData: $responseData");
 
       if (responseData['error'] != null) {
         throw HttpException(responseData['error']['message']);
@@ -78,9 +79,9 @@ class Auth with ChangeNotifier {
       throw error;
     }
     // TODO: Remove print();
-    print("RESPONSE DATA _token: ${_token}");
-    print("RESPONSE DATA _userId: ${_userId}");
-    print("RESPONSE DATA _expiryDate: ${_expiryDate}");
+    print("//auth.dart - function _authenticate - _token: ${_token}");
+    print("//auth.dart - function _authenticate - _userId: ${_userId}");
+    print("//auth.dart - function _authenticate - _expiryDate: ${_expiryDate}");
   }
 
   Future<void> signUp(String email, String password) async {
@@ -88,6 +89,7 @@ class Auth with ChangeNotifier {
   }
 
   Future<void> login(String email, String password) async {
+    print("//auth.dart - function login called");
     return _authenticate(email, password, ApiLinks.login);
   }
 }

@@ -1,115 +1,142 @@
-import 'package:flutter/material.dart';
-
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import '../utils/api_links.dart';
 import 'user.dart';
 
 class Users with ChangeNotifier {
-  // Data Source - Dish Content
-  List<User> _items = [
-    User(
-      userId: 'u1',
-      userUsername: 'jeremychong',
-      userPhoneNumber: '+60127588511',
-      userEmailAddress: 'h09083.cys@gmail.com',
-      userPassword: 'Jeremy1234',
-      userName: 'Jeremy Chong',
-      userBio: 'Macha & Cheese lover',
-      userProfilePictureURL:
-          'https://media.istockphoto.com/id/936928380/photo/portrait-of-a-mid-adult-male.jpg?s=612x612&w=0&k=20&c=U_nnHIwP61jYJvRhjCdOjrye4CPlcOCmKmHKXefoiPg=',
-      userBirthDate: DateTime.utc(2002, 2, 20),
-      userAccountRegisterDate: DateTime.utc(2002, 2, 20, 12, 51),
-      userIPAddress: '14.192.213.110',
-      postId: ['p1', 'p3'],
-      userPostView: ['pv2', 'pv4'],
-      userPostLike: ['pl2', 'pl4'],
-      userPostCommentView: ['pcv1'],
-      userPostComment: {
-        'p2': ['pc1', 'pc2'], // comment ID
-        'p4': ['pc3'],
-      },
-      userPostSave: ['psv2', 'psv4'],
-      userPostShare: ['psh2', 'psh4'],
-      userPostDishVisit: ['pdv1', 'pdv2'],
-      userPostDishSellerVisit: ['pdsv1', 'pdsv2'],
-    ),
-    User(
-      userId: 'u2',
-      userUsername: 'benjaminlim',
-      userPhoneNumber: '+60127588511',
-      userEmailAddress: 'h09083.cys@gmail.com',
-      userPassword: 'Benjamin1234',
-      userName: 'Benjamin Lim',
-      userBio: 'Desserts lover',
-      userProfilePictureURL:
-          'https://media.istockphoto.com/id/936928380/photo/portrait-of-a-mid-adult-male.jpg?s=612x612&w=0&k=20&c=U_nnHIwP61jYJvRhjCdOjrye4CPlcOCmKmHKXefoiPg=',
-      userBirthDate: DateTime.utc(2002, 2, 20),
-      userAccountRegisterDate: DateTime.utc(2002, 2, 20, 12, 51),
-      userIPAddress: '14.192.213.110',
-      postId: ['p1', 'p3'],
-      userPostView: ['pv2', 'pv4'],
-      userPostLike: ['pl2', 'pl4'],
-      userPostCommentView: ['pcv1'],
-      userPostComment: {
-        'p2': ['pc1', 'pc2'], // comment ID
-        'p4': ['pc3'],
-      },
-      userPostSave: ['psv2', 'psv4'],
-      userPostShare: ['psh2', 'psh4'],
-      userPostDishVisit: ['pdv1', 'pdv2'],
-      userPostDishSellerVisit: ['pdsv1', 'pdsv2'],
-    ),
-    User(
-      userId: 'u3',
-      userUsername: 'calvinteo',
-      userPhoneNumber: '+60127588511',
-      userEmailAddress: 'h09083.cys@gmail.com',
-      userPassword: 'Calvin1234',
-      userName: 'Calvin Teo',
-      userBio: 'Macha & Cheese lover',
-      userProfilePictureURL:
-          'https://media.istockphoto.com/id/936928380/photo/portrait-of-a-mid-adult-male.jpg?s=612x612&w=0&k=20&c=U_nnHIwP61jYJvRhjCdOjrye4CPlcOCmKmHKXefoiPg=',
-      userBirthDate: DateTime.utc(2002, 2, 20),
-      userAccountRegisterDate: DateTime.utc(2002, 2, 20, 12, 51),
-      userIPAddress: '14.192.213.110',
-      postId: ['p1', 'p3'],
-      userPostView: ['pv2', 'pv4'],
-      userPostLike: ['pl2', 'pl4'],
-      userPostCommentView: ['pcv1'],
-      userPostComment: {
-        'p2': ['pc1', 'pc2'], // comment ID
-        'p4': ['pc3'],
-      },
-      userPostSave: ['psv2', 'psv4'],
-      userPostShare: ['psh2', 'psh4'],
-      userPostDishVisit: ['pdv1', 'pdv2'],
-      userPostDishSellerVisit: ['pdsv1', 'pdsv2'],
-    ),
-    User(
-      userId: 'u4',
-      userUsername: 'derektan',
-      userPhoneNumber: '+60127588511',
-      userEmailAddress: 'h09083.cys@gmail.com',
-      userPassword: 'Calvin1234',
-      userName: 'Derek Tan',
-      userBio: 'Macha & Cheese lover',
-      userProfilePictureURL:
-          'https://media.istockphoto.com/id/936928380/photo/portrait-of-a-mid-adult-male.jpg?s=612x612&w=0&k=20&c=U_nnHIwP61jYJvRhjCdOjrye4CPlcOCmKmHKXefoiPg=',
-      userBirthDate: DateTime.utc(2002, 2, 20),
-      userAccountRegisterDate: DateTime.utc(2002, 2, 20, 12, 51),
-      userIPAddress: '14.192.213.110',
-      postId: ['p1', 'p3'],
-      userPostView: ['pv2', 'pv4'],
-      userPostLike: ['pl2', 'pl4'],
-      userPostCommentView: ['pcv1'],
-      userPostComment: {
-        'p2': ['pc1', 'pc2'], // comment ID
-        'p4': ['pc3'],
-      },
-      userPostSave: ['psv2', 'psv4'],
-      userPostShare: ['psh2', 'psh4'],
-      userPostDishVisit: ['pdv1', 'pdv2'],
-      userPostDishSellerVisit: ['pdsv1', 'pdsv2'],
-    ),
-  ];
+  String? _authToken;
+  List<User> _items = [];
+
+  // Constructor
+  Users(this._authToken, this._items);
+
+  // Allow a user to access a user's data
+  Future<User> fetchSingleUserFromBackend({required int userId}) async {
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - _authToken: ${_authToken}");
+    print("//users.dart - fetchSingleUserFromBackend() - userId: ${userId}");
+
+    final url = Uri.http(ApiLinks.baseUrl, '${ApiLinks.users}/$userId');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token $_authToken",
+        },
+      );
+
+      print(
+          "//users.dart - fetchSingleUserFromBackend() - response.body: ${response.body}");
+
+      final extractedData = json.decode(response.body) as dynamic;
+
+      print(
+          "//users.dart - fetchSingleUserFromBackend() - extractedData: ${extractedData}");
+
+      return _parseUser(extractedData);
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  User _parseUser(dynamic userData) {
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userId: ${userData['userId']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userUsername: ${userData['username']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPhoneNumber: ${userData['userPhoneNumber']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userEmailAddress: ${userData['email']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userName: ${userData['name']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userBio: ${userData['userBio']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userProfilePictureUrl: ${userData['userProfilePictureUrl']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userBirthDate: ${DateTime.parse(
+      userData['userBirthDate'],
+    ).toLocal()}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userAccountRegisterDate: ${DateTime.parse(
+      userData['userAccountRegisterDate'],
+    ).toLocal()}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userIPAddress: ${userData['userIPAddress']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostId: ${userData['userPostId']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostLike: ${userData['userPostLike']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostComment: ${userData['userPostComment']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostSave: ${userData['userPostSave']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostShare: ${userData['userPostShare']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostView: ${userData['userPostView']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostCommentView: ${userData['userPostCommentView']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostDishVisit: ${userData['userPostDishVisit']}");
+    print(
+        "//users.dart - fetchSingleUserFromBackend() - userPostDishSellerVisit: ${userData['userPostDishSellerVisit']}");
+    return User(
+      userId: userData['userId'],
+      userUsername: userData['username'],
+      userPhoneNumber: userData['userPhoneNumber'],
+      userEmailAddress: userData['email'],
+      userName: userData['name'],
+      userBio: userData['userBio'],
+      userProfilePictureUrl: userData['userProfilePictureUrl'],
+      userBirthDate: DateTime.parse(
+        userData['userBirthDate'],
+      ).toLocal(),
+      userAccountRegisterDate: DateTime.parse(
+        userData['userAccountRegisterDate'],
+      ).toLocal(),
+      userIPAddress: userData['userIPAddress'],
+      userPostId: userData['userPostId'],
+      userPostLike: userData['userPostLike'],
+      userPostComment: userData['userPostComment'],
+      userPostSave: userData['userPostSave'],
+      userPostShare: userData['userPostShare'],
+      userPostView: userData['userPostView'],
+      userPostCommentView: userData['userPostCommentView'],
+      userPostDishVisit: userData['userPostDishVisit'],
+      userPostDishSellerVisit: userData['userPostDishSellerVisit'],
+    );
+    // return User(
+    //   userId: userData['userId'],
+    //   userUsername: userData['userUsername'],
+    //   userPhoneNumber: userData['userPhoneNumber'],
+    //   userEmailAddress: userData['userEmailAddress'],
+    //   userName: userData['userName'],
+    //   userBio: userData['userBio'],
+    //   userProfilePictureUrl: userData['userProfilePictureUrl'],
+    //   userBirthDate: DateTime.parse(
+    //     userData['userBirthDate'],
+    //   ).toLocal(),
+    //   userAccountRegisterDate: DateTime.parse(
+    //     userData['userAccountRegisterDate'],
+    //   ).toLocal(),
+    //   userIPAddress: userData['userIPAddress'],
+    //   userPostId: userData['userPostId'],
+    //   userPostLike: userData['userPostLike'],
+    //   userPostComment: userData['userPostComment'],
+    //   userPostSave: userData['userPostSave'],
+    //   userPostShare: userData['userPostShare'],
+    //   userPostView: userData['userPostView'],
+    //   userPostCommentView: userData['userPostCommentView'],
+    //   userPostDishVisit: userData['userPostDishVisit'],
+    //   userPostDishSellerVisit: userData['userPostDishSellerVisit'],
+    // );
+  }
 
   List<User> get userItems {
     // Return a copy by using '[...]'

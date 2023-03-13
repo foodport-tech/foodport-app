@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'providers/auth.dart';
 import 'providers/dishes.dart';
 import 'providers/posts.dart';
+import 'providers/user.dart';
+import 'providers/users.dart';
 import 'screens/1_feed_post_screen/feed_post_screen.dart';
 import 'screens/dish_detail_screen.dart';
 import 'responsive/mobile_screen_layout.dart';
@@ -52,18 +54,28 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Posts>(
           // Provide instance of Posts() class to all child widgets
           create: (_) => Posts(null, []),
-          update: (_, authData, previousPosts) {
+          update: (_, authData, previousPostsData) {
             print(
                 '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) .token: ${authData.token}');
             print(
                 '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) .isAuth: ${authData.isAuth}');
             print(
-                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 1: ${previousPosts}');
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 1: ${previousPostsData}');
             print(
-                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 2: ${previousPosts?.postItems}');
+                '//main.dart - ChangeNotifierProxyProvider<Auth, Posts> - update: (_, authData, previousPosts) previousPosts 2: ${previousPostsData?.postItems}');
             return Posts(
               authData.token,
-              previousPosts == null ? [] : previousPosts.postItems,
+              previousPostsData == null ? [] : previousPostsData.postItems,
+            );
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, Users>(
+          // Provide instance of User() class to all child widgets
+          create: (_) => Users(null, []),
+          update: (_, authData, previousUserData) {
+            return Users(
+              authData.token,
+              previousUserData == null ? [] : previousUserData.userItems,
             );
           },
         ),

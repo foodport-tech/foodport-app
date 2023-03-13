@@ -76,7 +76,7 @@ class PostCardSideBar extends StatelessWidget {
                 // Display amount of Dish Visit
                 Consumer<Post>(
                   builder: (context, value, child) => Text(
-                    post.postDishVisit.length.toString(), // count like
+                    "0", //post.postDishVisit.length.toString(), // count like
                     style: TextStyle(
                       fontSize: 12,
                       color: neutral1Color,
@@ -113,7 +113,7 @@ class PostCardSideBar extends StatelessWidget {
                 // Display amount of likes
                 Consumer<Post>(
                   builder: (context, value, child) => Text(
-                    post.postLike.length.toString(), // count like
+                    "0", //post.postLike.length.toString(), // count like
                     style: TextStyle(
                       fontSize: 12,
                       color: neutral1Color,
@@ -143,7 +143,7 @@ class PostCardSideBar extends StatelessWidget {
                 // Display amount of Comment
                 Consumer<Post>(
                   builder: (context, value, child) => Text(
-                    post.postComment.length.toString(), // count like
+                    "0", //post.postComment.length.toString(), // count like
                     style: TextStyle(
                       fontSize: 12,
                       color: neutral1Color,
@@ -182,7 +182,7 @@ class PostCardSideBar extends StatelessWidget {
                 // Display amount of Save
                 Consumer<Post>(
                   builder: (context, value, child) => Text(
-                    post.postSave.length.toString(), // count like
+                    "0", //post.postSave.length.toString(), // count like
                     style: TextStyle(
                       fontSize: 12,
                       color: neutral1Color,
@@ -209,7 +209,7 @@ class PostCardSideBar extends StatelessWidget {
                 // Display amount of Share
                 Consumer<Post>(
                   builder: (context, value, child) => Text(
-                    post.postShare.length.toString(), // count like
+                    "0", //post.postShare.length.toString(), // count like
                     style: TextStyle(
                       fontSize: 12,
                       color: neutral1Color,
